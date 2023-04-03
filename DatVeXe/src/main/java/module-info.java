@@ -7,4 +7,6 @@ module com.mycompany.datvexe {
 
     opens com.mycompany.datvexe to javafx.fxml;
     exports com.mycompany.datvexe;
+    exports com.bookingCoach.services;
+    exports com.bookingCoach.pojo;
 }
