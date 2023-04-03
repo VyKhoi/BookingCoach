@@ -1,4 +1,6 @@
 com\mycompany\datvexe\SecondaryController.class
+com\bookingCoach\services\PhongThiNghiem.class
 module-info.class
+com\bookingCoach\services\JdbcUtils.class
 com\mycompany\datvexe\PrimaryController.class
 com\mycompany\datvexe\App.class

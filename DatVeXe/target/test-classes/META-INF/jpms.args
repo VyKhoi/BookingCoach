@@ -1,0 +1,4 @@
+--patch-module
+com.mycompany.datvexe=_
+--add-reads
+com.mycompany.datvexe=ALL-UNNAMED
