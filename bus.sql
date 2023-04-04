@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bus
+-- Host: localhost    Database: bus
 -- ------------------------------------------------------
 -- Server version	8.0.31
 
@@ -66,7 +66,7 @@ CREATE TABLE `coachstripcoachseat` (
   CONSTRAINT `FK_CCT_coach` FOREIGN KEY (`idCoach`) REFERENCES `coachs` (`idCoach`),
   CONSTRAINT `FK_coach_coach_strips_2` FOREIGN KEY (`idCoachStrips`) REFERENCES `coachstrips` (`idCoachStips`),
   CONSTRAINT `FK_CoachOfCoachStrips_staff` FOREIGN KEY (`idStaff`) REFERENCES `staff` (`idStaff`)
-) ENGINE=InnoDB AUTO_INCREMENT=1201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1203 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `staff`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `staff` (
   `idStaff` int NOT NULL AUTO_INCREMENT,
-  `passWord` int DEFAULT NULL,
+  `passWord` varchar(255) DEFAULT NULL,
   `userName` varchar(255) DEFAULT NULL,
   `addressUser` varchar(255) DEFAULT NULL,
   `roles` varchar(255) DEFAULT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,12345678,'nva','Hà Nội','Nhân viên','Nguyễn Văn An',25,'Nam',987654321,'2001-01-01'),(2,87654321,'ttb','Hồ Chí Minh','Nhân viên','Trần Thị Bình',30,'Nữ',123456789,'1995-06-30'),(3,13572468,'lvc','Hà Nội','Nhân viên','Lê Văn Cẩn',28,'Nam',987123456,'1997-08-15'),(4,56781234,'ptd','Đà Nẵng','Nhân viên','Phạm Thị Diểm',22,'Nữ',129876543,'2000-02-29'),(5,24681357,'nte','Hải Phòng','Nhân viên','Nguyễn Thành Én',29,'Nam',976543210,'1994-05-20'),(6,13579753,'tvt','Huế','Tài Xế','Trần Văn Thuận',26,'Nam',123456780,'1996-09-12'),(7,75395128,'ltg','Cần Thơ','Tài Xế','Lê Thị Giang',32,'Nữ',908765432,'1990-11-25'),(8,36985214,'pvh','Hà Nội','Tài Xế','Phạm Văn Hoài',27,'Nam',987654321,'1994-07-14'),(9,98765432,'nti','Hải Phòng','Tài Xế','Nguyễn Thị Iến',31,'Nữ',123456789,'1991-12-24'),(10,45678912,'tvk','Hồ Chí Minh','Tài Xế','Trần Văn Kiên',23,'Nam',987123456,'1999-03-07'),(11,123456,'nln','Hà Nội','Tài xế','Nguyễn Lê Nhung',26,'Nữ',987654321,'1995-03-25'),(12,234567,'ptl','Đà Nẵng','Tài xế','Phạm Thanh Lộc',29,'Nam',123456789,'1993-09-17'),(13,345678,'lth','Hà Nội','Tài xế','Lê Thị Hà',28,'Nữ',976543210,'1994-11-23'),(14,456789,'ntn','Hồ Chí Minh','Tài xế','Nguyễn Thị Nhung',30,'Nữ',908765432,'1992-06-10'),(15,567890,'tvn','Hà Nội','Tài xế','Trần Văn Nam',32,'Nam',891234567,'1990-12-31'),(16,868196036,'nnl','Bình Thuận','Admin','Nguyễn Ngọc Luân',21,'Nam',868196036,'2000-11-07');
+INSERT INTO `staff` VALUES (1,'12345678','nva','Hà Nội','Nhân viên','Nguyễn Văn An',25,'Nam',987654321,'2001-01-01'),(2,'87654321','ttb','Hồ Chí Minh','Nhân viên','Trần Thị Bình',30,'Nữ',123456789,'1995-06-30'),(3,'13572468','lvc','Hà Nội','Nhân viên','Lê Văn Cẩn',28,'Nam',987123456,'1997-08-15'),(4,'56781234','ptd','Đà Nẵng','Nhân viên','Phạm Thị Diểm',22,'Nữ',129876543,'2000-02-29'),(5,'24681357','nte','Hải Phòng','Nhân viên','Nguyễn Thành Én',29,'Nam',976543210,'1994-05-20'),(6,'13579753','tvt','Huế','Tài Xế','Trần Văn Thuận',26,'Nam',123456780,'1996-09-12'),(7,'75395128','ltg','Cần Thơ','Tài Xế','Lê Thị Giang',32,'Nữ',908765432,'1990-11-25'),(8,'36985214','pvh','Hà Nội','Tài Xế','Phạm Văn Hoài',27,'Nam',987654321,'1994-07-14'),(9,'98765432','nti','Hải Phòng','Tài Xế','Nguyễn Thị Iến',31,'Nữ',123456789,'1991-12-24'),(10,'45678912','tvk','Hồ Chí Minh','Tài Xế','Trần Văn Kiên',23,'Nam',987123456,'1999-03-07'),(11,'123456','nln','Hà Nội','Tài xế','Nguyễn Lê Nhung',26,'Nữ',987654321,'1995-03-25'),(12,'234567','ptl','Đà Nẵng','Tài xế','Phạm Thanh Lộc',29,'Nam',123456789,'1993-09-17'),(13,'345678','lth','Hà Nội','Tài xế','Lê Thị Hà',28,'Nữ',976543210,'1994-11-23'),(14,'456789','ntn','Hồ Chí Minh','Tài xế','Nguyễn Thị Nhung',30,'Nữ',908765432,'1992-06-10'),(15,'567890','tvn','Hà Nội','Tài xế','Trần Văn Nam',32,'Nam',891234567,'1990-12-31'),(16,'868196036','nnl','Bình Thuận','Admin','Nguyễn Ngọc Luân',21,'Nam',868196036,'2000-11-07');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,4 +288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-03 16:03:31
+-- Dump completed on 2023-04-03 16:37:12
