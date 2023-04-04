@@ -14,5 +14,4 @@ com\bookingCoach\services\JdbcUtils.class
 com\bookingCoach\Alias\AliasTicket.class
 com\bookingCoach\pojo\Customer.class
 com\mycompany\datvexe\PrimaryController.class
-com\mycompany\datvexe\ChangeTicketController.class
 com\bookingCoach\pojo\TypeOfCoach.class
