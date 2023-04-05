@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: ChangeTicketTester
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.675 s <<< FAILURE! - in ChangeTicketTester
-testNumbersNotEqual  Time elapsed: 0.006 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <5> but was: <6>
-	at ChangeTicketTester.testNumbersNotEqual(ChangeTicketTester.java:46)
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.598 s <<< FAILURE! - in ChangeTicketTester
+testNumbersAreEqual  Time elapsed: 0.013 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <5> but was: <9>
+	at ChangeTicketTester.testNumbersAreEqual(ChangeTicketTester.java:39)
 

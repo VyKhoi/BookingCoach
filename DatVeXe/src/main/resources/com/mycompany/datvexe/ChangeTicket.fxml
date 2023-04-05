@@ -6,7 +6,6 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -72,7 +71,7 @@
          <children>
             <Pane id="header" prefHeight="68.0" prefWidth="809.0" style="-fx-min-width: 100%;" stylesheets="@../../../styles/changeticket.css">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="12.0" prefHeight="17.0" prefWidth="443.0" text="Quảng Lý Đặt Vé Xe" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="12.0" prefHeight="17.0" prefWidth="443.0" text="Quản Lý Đặt Vé Xe" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -93,15 +92,15 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="727.0">
                                  <children>
-                                    <TextField layoutX="80.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" promptText="nhập id vé" style="-fx-background-color: white;" />
+                                    <TextField fx:id="tSearchIdTicket" layoutX="80.0" layoutY="14.0" onKeyPressed="#SearchIdTicket" prefHeight="25.0" prefWidth="169.0" promptText="nhập id vé" style="-fx-background-color: white;" />
                                     <Label layoutX="14.0" layoutY="18.0" prefHeight="15.0" prefWidth="59.0" text="TÌm kiếm" />
                                     <TableView fx:id="tableViewSearch" layoutY="207.0" onSort="#loadTableViewSearchId" prefHeight="229.0" prefWidth="809.0" />
-                                    <RadioButton layoutX="14.0" layoutY="48.0" mnemonicParsing="false" text="ID Vé">
+                                    <RadioButton fx:id="SearchIdRadioButton" layoutX="14.0" layoutY="48.0" mnemonicParsing="false" text="ID Vé">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="typelookupchangeseat" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton layoutX="94.0" layoutY="48.0" mnemonicParsing="false" text="SĐT Khách Hàng" toggleGroup="$typelookupchangeseat" />
+                                    <RadioButton fx:id="SearchNumberPhoneRadioButton" layoutX="94.0" layoutY="48.0" mnemonicParsing="false" text="SĐT Khách Hàng" toggleGroup="$typelookupchangeseat" />
                                     <Label layoutX="14.0" layoutY="90.0" text="Tên Khách" />
                                     <Label layoutX="16.0" layoutY="129.0" text="SĐT" />
                                     <Label layoutX="16.0" layoutY="172.0" text="Địa Chỉ" />
@@ -125,28 +124,7 @@
                                     <Label layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label layoutX="94.0" layoutY="129.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label layoutX="289.0" layoutY="129.0" text="nhân viên bán" />
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab text="HỦY VÉ">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="18.0" text="Tìm Kiếm" />
-                                    <TextField layoutX="77.0" layoutY="14.0" prefHeight="25.0" prefWidth="169.0" style="-fx-background-color: white;" />
-                                    <RadioButton layoutX="14.0" layoutY="52.0" mnemonicParsing="false" text="Mã Vé">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="typelookupdeleteticket" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton layoutX="114.0" layoutY="52.0" mnemonicParsing="false" text="Số Điện Thoại" toggleGroup="$typelookupdeleteticket" />
-                                    <TableView layoutX="-1.0" layoutY="226.0" prefHeight="211.0" prefWidth="809.0">
-                                       <columns>
-                                          <TableColumn prefWidth="75.0" text="C2" />
-                                          <TableColumn prefWidth="75.0" text="C1" />
-                                       </columns>
-                                    </TableView>
+                                    <Button layoutX="601.0" layoutY="176.0" mnemonicParsing="false" text="HỦY VÉ" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -155,7 +133,6 @@
                   </TabPane>
                </children>
             </Pane>
-            <Pane disable="true" prefHeight="413.0" prefWidth="725.0" style="-fx-background-color: #46f807;" visible="false" />
          </children>
       </StackPane>
    </children>
