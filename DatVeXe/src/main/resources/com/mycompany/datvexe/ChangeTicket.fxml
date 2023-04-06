@@ -108,23 +108,24 @@
                                     <Label layoutX="590.0" layoutY="24.0" text="Đi" />
                                     <Label layoutX="584.0" layoutY="59.0" text="Đến" />
                                     <Label layoutX="558.0" layoutY="99.0" text="Ngày Giờ" />
-                                    <Label layoutX="369.0" layoutY="21.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label layoutX="627.0" layoutY="59.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label layoutX="627.0" layoutY="24.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label layoutX="627.0" layoutY="99.0" style="-fx-background-color: white;" text="Label" />
+                                    <Label fx:id="idTicketLabel" layoutX="369.0" layoutY="21.0" style="-fx-background-color: white;" text="Label" />
+                                    <Label fx:id="nameStationEndLabel" layoutX="627.0" layoutY="59.0" style="-fx-background-color: white;" text="Label" />
+                                    <Label fx:id="nameStationStartLabel" layoutX="627.0" layoutY="24.0" style="-fx-background-color: white;" text="Label" />
+                                    <Label fx:id="departureTimeLabel" layoutX="627.0" layoutY="99.0" style="-fx-background-color: white;" text="Label" />
                                     <Label layoutX="289.0" layoutY="57.0" text="Ngày Đặt" />
-                                    <Label layoutX="369.0" layoutY="57.0" style="-fx-background-color: white;" text="Ngày Đặt" />
+                                    <Label fx:id="dateBookingLabel" layoutX="369.0" layoutY="57.0" style="-fx-background-color: white;" text="Ngày Đặt" />
                                     <Label layoutX="326.0" layoutY="97.0" text="XE" />
-                                    <Label layoutX="369.0" layoutY="97.0" style="-fx-background-color: white;" text="số xe" />
+                                    <Label fx:id="coachNumberLabel" layoutX="369.0" layoutY="97.0" style="-fx-background-color: white;" text="số xe" />
                                     <Label layoutX="536.0" layoutY="127.0" text="Ghế được chọn" />
                                     <ComboBox layoutX="641.0" layoutY="123.0" prefWidth="150.0" />
                                     <Button layoutX="751.0" layoutY="176.0" mnemonicParsing="false" text="SAVE" />
                                     <Button layoutX="659.0" layoutY="176.0" mnemonicParsing="false" text="ĐỔI CHUYẾN" />
-                                    <Label layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
-                                    <Label layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
-                                    <Label layoutX="94.0" layoutY="129.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
+                                    <Label fx:id="nameCustomerLabel" layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
+                                    <Label fx:id="addressCustomerLabel" layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
+                                    <Label fx:id="phoneCustomerLabel" layoutX="94.0" layoutY="129.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label layoutX="289.0" layoutY="129.0" text="nhân viên bán" />
                                     <Button layoutX="601.0" layoutY="176.0" mnemonicParsing="false" text="HỦY VÉ" />
+                                    <Label fx:id="nameStaffLabel" layoutX="367.0" layoutY="129.0" style="-fx-background-color: white;" text="nhân viên bán" />
                                  </children>
                               </AnchorPane>
                            </content>

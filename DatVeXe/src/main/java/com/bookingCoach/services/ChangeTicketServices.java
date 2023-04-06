@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class ChangeTicketServices {
             AliasTicket tickets;
             String query = "SELECT t.idTicket, c.name nameCustomer, c.phoneNumber, c.addressCus, t.bookingDate\n"
                     + ",coach.numberCoach, s.nameStaff, cscs.departureTime , cscs.nameSeat,cscs.idCSCS\n"
-                    + ",cscs.idCoachStrips \n"
+                    + ",cscs.idCoachStrips,t.status \n"
                     + "FROM bus.ticket t, bus.customer c, bus.staff s, bus.coachstripcoachseat cscs, bus.coachs coach\n"
                     + "where t.idCustomer = c.idCustomer\n"
                     + "and t.idStaff = s.idStaff\n"
@@ -72,13 +74,19 @@ public class ChangeTicketServices {
                 System.out.println("Chạy ra roi 6");
                 String addressCus = rs.getString("addressCus");
                 System.out.println("Chạy ra roi 7");
-                Date bookingDate = rs.getDate("bookingDate");
+
+                Timestamp bookingDateTimestamp = rs.getTimestamp("bookingDate");
+                Date bookingDate = new Date(bookingDateTimestamp.getTime());
+
                 System.out.println("Chạy ra roi 8");
                 int numberCoach = rs.getInt("numberCoach");
                 System.out.println("Chạy ra roi 9");
                 String nameStaff = rs.getString("nameStaff");
                 System.out.println("Chạy ra roi 10");
-                Date departureTime = rs.getDate("departureTime");
+
+                Timestamp departureTimestamp = rs.getTimestamp("departureTime");
+                Date departureTime = new Date(departureTimestamp.getTime());
+
                 System.out.println("Chạy ra roi 11");
                 String nameSeat = rs.getString("nameSeat");
                 System.out.println("Chạy ra roi 12");
@@ -95,9 +103,10 @@ public class ChangeTicketServices {
                 String nameEndStation = rs2.getString("nameEndStation");
                 String addressEnd = rs2.getString("addressEnd");
 
+                int status = rs.getInt("status");
                 System.out.println("het luôn");
 
-                tickets = new AliasTicket(idTicket, nameCustomer, phoneNumber, addressCus, bookingDate, numberCoach, nameStaff, departureTime, nameSeat, idCSCS, idCoachStrips, idStart, nameStartStation, addressStart, idEnd, nameEndStation, addressEnd);
+                tickets = new AliasTicket(idTicket, nameCustomer, phoneNumber, addressCus, bookingDate, numberCoach, nameStaff, departureTime, nameSeat, idCSCS, idCoachStrips, idStart, nameStartStation, addressStart, idEnd, nameEndStation, addressEnd, status);
 
                 return tickets;
             }
@@ -117,7 +126,7 @@ public class ChangeTicketServices {
             AliasTicket tickets;
             String query = "SELECT t.idTicket, c.name nameCustomer, c.phoneNumber, c.addressCus, t.bookingDate\n"
                     + ",coach.numberCoach, s.nameStaff, cscs.departureTime , cscs.nameSeat,cscs.idCSCS\n"
-                    + ",cscs.idCoachStrips \n"
+                    + ",cscs.idCoachStrips,t.status \n"
                     + "FROM bus.ticket t, bus.customer c, bus.staff s, bus.coachstripcoachseat cscs, bus.coachs coach\n"
                     + "where t.idCustomer = c.idCustomer\n"
                     + "and t.idStaff = s.idStaff\n"
@@ -158,13 +167,19 @@ public class ChangeTicketServices {
                 System.out.println("Chạy ra roi 6");
                 String addressCus = rs.getString("addressCus");
                 System.out.println("Chạy ra roi 7");
-                Date bookingDate = rs.getDate("bookingDate");
+
+                Timestamp bookingDateTimestamp = rs.getTimestamp("bookingDate");
+                Date bookingDate = new Date(bookingDateTimestamp.getTime());
+
                 System.out.println("Chạy ra roi 8");
                 int numberCoach = rs.getInt("numberCoach");
                 System.out.println("Chạy ra roi 9");
                 String nameStaff = rs.getString("nameStaff");
                 System.out.println("Chạy ra roi 10");
-                Date departureTime = rs.getDate("departureTime");
+
+                Timestamp departureTimestamp = rs.getTimestamp("departureTime");
+                Date departureTime = new Date(departureTimestamp.getTime());
+
                 System.out.println("Chạy ra roi 11");
                 String nameSeat = rs.getString("nameSeat");
                 System.out.println("Chạy ra roi 12");
@@ -180,10 +195,10 @@ public class ChangeTicketServices {
                 int idEnd = rs2.getInt("idEnd");
                 String nameEndStation = rs2.getString("nameEndStation");
                 String addressEnd = rs2.getString("addressEnd");
-
+                int status = rs.getInt("status");
                 System.out.println("het luôn");
 
-                tickets = new AliasTicket(idTicket, nameCustomer, phoneNumber, addressCus, bookingDate, numberCoach, nameStaff, departureTime, nameSeat, idCSCS, idCoachStrips, idStart, nameStartStation, addressStart, idEnd, nameEndStation, addressEnd);
+                tickets = new AliasTicket(idTicket, nameCustomer, phoneNumber, addressCus, bookingDate, numberCoach, nameStaff, departureTime, nameSeat, idCSCS, idCoachStrips, idStart, nameStartStation, addressStart, idEnd, nameEndStation, addressEnd, status);
 
                 ds.add(tickets);
             }
@@ -198,7 +213,7 @@ public class ChangeTicketServices {
 ////            alert.setContentText();
 //
 //            alert.showAndWait();
-             System.out.println(ex.getMessage()); 
+            System.out.println(ex.getMessage());
         }
 
         return null;
@@ -209,6 +224,7 @@ public class ChangeTicketServices {
         ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
             System.out.println(h.toString());
         });
+//        System.out.println(ds.getTickets(1).toString());
 
     }
 }

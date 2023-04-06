@@ -9,6 +9,7 @@ import com.bookingCoach.services.ChangeTicketServices;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -41,6 +44,28 @@ public class ChangeTicketController implements Initializable {
     private RadioButton SearchIdRadioButton = new RadioButton();
     @FXML
     private RadioButton SearchNumberPhoneRadioButton = new RadioButton();
+
+    // phần các label trên giao diện 
+    @FXML
+    private Label nameCustomerLabel = new Label();
+    @FXML
+    private Label phoneCustomerLabel = new Label();
+    @FXML
+    private Label addressCustomerLabel = new Label();
+    @FXML
+    private Label idTicketLabel = new Label();
+    @FXML
+    private Label dateBookingLabel = new Label();
+    @FXML
+    private Label coachNumberLabel = new Label();
+    @FXML
+    private Label nameStaffLabel = new Label();
+    @FXML
+    private Label nameStationStartLabel = new Label();
+    @FXML
+    private Label nameStationEndLabel = new Label();
+    @FXML
+    private Label departureTimeLabel = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,6 +102,7 @@ public class ChangeTicketController implements Initializable {
 
             TableColumn<AliasTicket, String> nameEndStationCol = new TableColumn<>("Tên điểm cuối");
             TableColumn<AliasTicket, String> addressEndCol = new TableColumn<>("Địa chỉ điểm cuối");
+            TableColumn<AliasTicket, Integer> statusTicket = new TableColumn<>("Trạng thái");
 
 // Đặt giá trị cho các cột
             idTicketCol.setCellValueFactory(new PropertyValueFactory<>("idTicket"));
@@ -94,22 +120,59 @@ public class ChangeTicketController implements Initializable {
 
             nameEndStationCol.setCellValueFactory(new PropertyValueFactory<>("nameEndStation"));
             addressEndCol.setCellValueFactory(new PropertyValueFactory<>("addressEnd"));
+            statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
+//            statusTicket.setCellFactory(column -> new TableCell<AliasTicket, Integer>() {
+//                @Override
+//                protected void updateItem(Integer status, boolean empty) {
+//                    super.updateItem(status, empty);
+//                   
+//                        setText(dt.getStatusString(status));
+//                  
+//                }
+//            });
 
 // Tạo TableView và thêm các cột vào TableView
-            tableViewSearch.getColumns().addAll(idTicketCol, nameCustomerCol, phoneNumberCol, addressCusCol, bookingDateCol, numberCoachCol, nameStaffCol, departureTimeCol, nameSeatCol, nameStartStationCol, addressStartCol, nameEndStationCol, addressEndCol);
+            tableViewSearch.getColumns().addAll(idTicketCol, nameCustomerCol, phoneNumberCol, addressCusCol, bookingDateCol, numberCoachCol, nameStaffCol, departureTimeCol, nameSeatCol, nameStartStationCol, addressStartCol, nameEndStationCol, addressEndCol, statusTicket);
 
 // Thêm đối tượng dt vào TableView
             tableViewSearch.getItems().add(dt);
 
-        }catch(NumberFormatException ex){
-             Alert alert = new Alert(AlertType.WARNING);
+            tableViewSearch.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 1) { // kiểm tra xem người dùng click một lần hay không
+                    AliasTicket selectedItem = (AliasTicket) tableViewSearch.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+                        nameCustomerLabel.setText(selectedItem.getNameCustomer());
+                        phoneCustomerLabel.setText(selectedItem.getPhoneNumber());
+                        addressCustomerLabel.setText(selectedItem.getAddressCus());
+                        idTicketLabel.setText(String.valueOf(selectedItem.getIdTicket()));
+                        // Chuyển đổi kiểu Date sang String để hiển thị trên Label
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                        dateBookingLabel.setText(formatter.format(selectedItem.getBookingDate()));
+
+                        coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
+                        nameStaffLabel.setText(selectedItem.getNameStaff());
+                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
+                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        // Chuyển đổi kiểu Date sang String để hiển thị trên Label
+                        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                        departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
+//                        // Xuất giá trị ra console
+                        System.out.println("gia tri duoc click là " + selectedItem);
+                    }
+                    System.out.println("Có vô ìf");
+                }
+                System.out.println("Có click");
+            });
+
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
             alert.setHeaderText("Nhập mã vé sai");
 //            alert.setContentText();
 
             alert.showAndWait();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
             alert.setHeaderText(ex.getMessage());
@@ -128,10 +191,9 @@ public class ChangeTicketController implements Initializable {
         try {
 
             System.out.println("có chạy loadTableViewSearchNumberPhone()");
-            
-            if( ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).size() == 0)
-            {
-               throw new Exception("Không có dữ liệu trả về");
+
+            if (ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).size() == 0) {
+                throw new Exception("Không có dữ liệu trả về");
             }
             System.out.println("co chay toi day");
             ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).forEach(h -> {
@@ -151,6 +213,7 @@ public class ChangeTicketController implements Initializable {
 
                 TableColumn<AliasTicket, String> nameEndStationCol = new TableColumn<>("Tên điểm cuối");
                 TableColumn<AliasTicket, String> addressEndCol = new TableColumn<>("Địa chỉ điểm cuối");
+                TableColumn<AliasTicket, Integer> statusTicket = new TableColumn<>("Trạng thái");
 
 // Đặt giá trị cho các cột
                 idTicketCol.setCellValueFactory(new PropertyValueFactory<>("idTicket"));
@@ -168,10 +231,11 @@ public class ChangeTicketController implements Initializable {
 
                 nameEndStationCol.setCellValueFactory(new PropertyValueFactory<>("nameEndStation"));
                 addressEndCol.setCellValueFactory(new PropertyValueFactory<>("addressEnd"));
+                statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
 
 // Tạo TableView và thêm các cột vào TableView
                 if (checkaddCol == false) {
-                    tableViewSearch.getColumns().addAll(idTicketCol, nameCustomerCol, phoneNumberCol, addressCusCol, bookingDateCol, numberCoachCol, nameStaffCol, departureTimeCol, nameSeatCol, nameStartStationCol, addressStartCol, nameEndStationCol, addressEndCol);
+                    tableViewSearch.getColumns().addAll(idTicketCol, nameCustomerCol, phoneNumberCol, addressCusCol, bookingDateCol, numberCoachCol, nameStaffCol, departureTimeCol, nameSeatCol, nameStartStationCol, addressStartCol, nameEndStationCol, addressEndCol,statusTicket);
                     tableViewSearch.getItems().add(h);
                     checkaddCol = true;
                 } else {
@@ -179,16 +243,43 @@ public class ChangeTicketController implements Initializable {
                     tableViewSearch.getItems().add(h);
                 }
             });
-           
-        }catch(NumberFormatException ex){
-             Alert alert = new Alert(AlertType.WARNING);
+
+            tableViewSearch.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 1) { // kiểm tra xem người dùng click một lần hay không
+                    AliasTicket selectedItem = (AliasTicket) tableViewSearch.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+                        nameCustomerLabel.setText(selectedItem.getNameCustomer());
+                        phoneCustomerLabel.setText(selectedItem.getPhoneNumber());
+                        addressCustomerLabel.setText(selectedItem.getAddressCus());
+                        idTicketLabel.setText(String.valueOf(selectedItem.getIdTicket()));
+                        // Chuyển đổi kiểu Date sang String để hiển thị trên Label
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                        dateBookingLabel.setText(formatter.format(selectedItem.getBookingDate()));
+
+                        coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
+                        nameStaffLabel.setText(selectedItem.getNameStaff());
+                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
+                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        // Chuyển đổi kiểu Date sang String để hiển thị trên Label
+                        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                        departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
+//                        // Xuất giá trị ra console
+                        System.out.println("gia tri duoc click là " + selectedItem);
+                    }
+                    System.out.println("Có vô ìf");
+                }
+                System.out.println("Có click");
+            });
+
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
             alert.setHeaderText("Nhập sai");
 //            alert.setContentText();
 
             alert.showAndWait();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
             alert.setHeaderText(ex.getMessage());
