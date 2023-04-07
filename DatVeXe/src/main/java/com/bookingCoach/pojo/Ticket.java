@@ -8,18 +8,19 @@ package com.bookingCoach.pojo;
  *
  * @author Vy Khoi
  */
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Ticket {
     private int idTicket;
     private int idStationBuy;
-    private LocalDateTime bookingDate;
+    private Date bookingDate;
     private int idCustomer;
     private int idStaff;
     private int status;
     private int idCoachStripCoachSeat;
 
-    public Ticket(int idTicket, int idStationBuy, LocalDateTime bookingDate, int idCustomer, int idStaff, int status,
+    public Ticket(int idTicket, int idStationBuy, Date bookingDate, int idCustomer, int idStaff, int status,
                   int idCoachStripCoachSeat) {
         this.idTicket = idTicket;
         this.idStationBuy = idStationBuy;
@@ -29,6 +30,11 @@ public class Ticket {
         this.status = status;
         this.idCoachStripCoachSeat = idCoachStripCoachSeat;
     }
+
+    public Ticket() {
+    
+    }
+
 
     public int getIdTicket() {
         return idTicket;
@@ -46,11 +52,11 @@ public class Ticket {
         this.idStationBuy = idStationBuy;
     }
 
-    public LocalDateTime getBookingDate() {
+    public Date getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(LocalDateTime bookingDate) {
+    public void setBookingDate(Date bookingDate) {
         this.bookingDate = bookingDate;
     }
 
@@ -76,6 +82,11 @@ public class Ticket {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" + "idTicket=" + idTicket + ", idStationBuy=" + idStationBuy + ", bookingDate=" + bookingDate + ", idCustomer=" + idCustomer + ", idStaff=" + idStaff + ", status=" + status + ", idCoachStripCoachSeat=" + idCoachStripCoachSeat + '}';
     }
 
     public int getIdCoachStripCoachSeat() {

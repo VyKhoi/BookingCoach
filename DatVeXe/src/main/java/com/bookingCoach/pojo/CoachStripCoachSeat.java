@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.bookingCoach.pojo;
+
 import java.time.LocalDateTime;
 
 /**
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
  * @author Vy Khoi
  */
 public class CoachStripCoachSeat {
+
     private int idCSCS;
     private int idCoach;
     private int idCoachStrips;
@@ -28,6 +30,10 @@ public class CoachStripCoachSeat {
         this.statusSeat = statusSeat;
         this.nameSeat = nameSeat;
         this.idStaff = idStaff;
+    }
+
+    public CoachStripCoachSeat() {
+
     }
 
     public int getIdCSCS() {
@@ -88,6 +94,11 @@ public class CoachStripCoachSeat {
 
     public int getIdStaff() {
         return idStaff;
+    }
+
+    @Override
+    public String toString() {
+        return "CoachStripCoachSeat{" + "idCSCS=" + idCSCS + ", idCoach=" + idCoach + ", idCoachStrips=" + idCoachStrips + ", price=" + price + ", departureTime=" + departureTime + ", statusSeat=" + statusSeat + ", nameSeat=" + nameSeat + ", idStaff=" + idStaff + '}';
     }
 
     public void setIdStaff(int idStaff) {

@@ -64,7 +64,7 @@ public class AliasTicket {
             case 1:
                 result = "Đã nhận";
                 break;
-            case 2:
+            case 0:
                 result = "Chưa nhận";
                 break;
             default:

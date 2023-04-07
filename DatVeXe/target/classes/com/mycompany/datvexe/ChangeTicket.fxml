@@ -71,7 +71,7 @@
          <children>
             <Pane id="header" prefHeight="68.0" prefWidth="809.0" style="-fx-min-width: 100%;" stylesheets="@../../../styles/changeticket.css">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="12.0" prefHeight="17.0" prefWidth="443.0" text="Quản Lý Đặt Vé Xe" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="12.0" onKeyPressed="#SearchIdTicket" prefHeight="17.0" prefWidth="443.0" text="Quản Lý Đặt Vé Xe" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -94,7 +94,7 @@
                                  <children>
                                     <TextField fx:id="tSearchIdTicket" layoutX="80.0" layoutY="14.0" onKeyPressed="#SearchIdTicket" prefHeight="25.0" prefWidth="169.0" promptText="nhập id vé" style="-fx-background-color: white;" />
                                     <Label layoutX="14.0" layoutY="18.0" prefHeight="15.0" prefWidth="59.0" text="TÌm kiếm" />
-                                    <TableView fx:id="tableViewSearch" layoutY="207.0" onSort="#loadTableViewSearchId" prefHeight="229.0" prefWidth="809.0" />
+                                    <TableView fx:id="tableViewSearch" layoutY="207.0" prefHeight="229.0" prefWidth="809.0" />
                                     <RadioButton fx:id="SearchIdRadioButton" layoutX="14.0" layoutY="48.0" mnemonicParsing="false" text="ID Vé">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="typelookupchangeseat" />
@@ -117,14 +117,14 @@
                                     <Label layoutX="326.0" layoutY="97.0" text="XE" />
                                     <Label fx:id="coachNumberLabel" layoutX="369.0" layoutY="97.0" style="-fx-background-color: white;" text="số xe" />
                                     <Label layoutX="536.0" layoutY="127.0" text="Ghế được chọn" />
-                                    <ComboBox layoutX="641.0" layoutY="123.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="comboBoxSeatOke" layoutX="641.0" layoutY="123.0" prefWidth="150.0" />
                                     <Button layoutX="751.0" layoutY="176.0" mnemonicParsing="false" text="SAVE" />
                                     <Button layoutX="659.0" layoutY="176.0" mnemonicParsing="false" text="ĐỔI CHUYẾN" />
                                     <Label fx:id="nameCustomerLabel" layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label fx:id="addressCustomerLabel" layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label fx:id="phoneCustomerLabel" layoutX="94.0" layoutY="129.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label layoutX="289.0" layoutY="129.0" text="nhân viên bán" />
-                                    <Button layoutX="601.0" layoutY="176.0" mnemonicParsing="false" text="HỦY VÉ" />
+                                    <Button layoutX="601.0" layoutY="176.0" mnemonicParsing="false" onAction="#deleteTicket" text="HỦY VÉ" />
                                     <Label fx:id="nameStaffLabel" layoutX="367.0" layoutY="129.0" style="-fx-background-color: white;" text="nhân viên bán" />
                                  </children>
                               </AnchorPane>
