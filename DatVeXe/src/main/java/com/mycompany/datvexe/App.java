@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import javafx.stage.StageStyle;
 
 /**
  * JavaFX App
@@ -22,6 +23,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException, SQLException {
         scene = new Scene(loadFXML("ChangeTicket"));
         stage.setScene(scene);
+//        stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
         stage.setMinWidth(900);
         stage.setMinHeight(480);

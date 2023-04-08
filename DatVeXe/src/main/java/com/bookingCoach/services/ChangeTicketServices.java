@@ -215,7 +215,7 @@ public class ChangeTicketServices {
 
                 ds.add(tickets);
             }
-            if (ds.size() == 0) {
+            if (ds.isEmpty()) {
                 throw new Exception("trống");
             }
             return ds;

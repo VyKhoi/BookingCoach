@@ -38,6 +38,12 @@ public class Staff {
         this.birthStaff = birthStaff;
     }
 
+    public Staff() {
+        
+    }
+
+    
+
     public int getIdStaff() {
         return idStaff;
     }
