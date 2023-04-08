@@ -133,15 +133,6 @@ public class ChangeTicketController implements Initializable {
             nameEndStationCol.setCellValueFactory(new PropertyValueFactory<>("nameEndStation"));
             addressEndCol.setCellValueFactory(new PropertyValueFactory<>("addressEnd"));
             statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
-//            statusTicket.setCellFactory(column -> new TableCell<AliasTicket, Integer>() {
-//                @Override
-//                protected void updateItem(Integer status, boolean empty) {
-//                    super.updateItem(status, empty);
-//                   
-//                        setText(dt.getStatusString(status));
-//                  
-//                }
-//            });
 
 // Tạo TableView và thêm các cột vào TableView
             tableViewSearch.getColumns().addAll(idTicketCol, nameCustomerCol, phoneNumberCol, addressCusCol, bookingDateCol, numberCoachCol, nameStaffCol, departureTimeCol, nameSeatCol, nameStartStationCol, addressStartCol, nameEndStationCol, addressEndCol, statusTicket);
@@ -177,6 +168,7 @@ public class ChangeTicketController implements Initializable {
                     try {
                         // hiển thị các ghế còn trống
                         ArrayList<CoachStripCoachSeat> ds = ctk.getEmtySeat(selectedItem.getIdTicket());
+                        comboBoxSeatOke.getItems().clear();
                         for (CoachStripCoachSeat seat : ds) {
                             comboBoxSeatOke.getItems().add(seat.getNameSeat());
                         }
@@ -367,13 +359,21 @@ public class ChangeTicketController implements Initializable {
 
     public void deleteTicket() throws SQLException {
         if (selectedItem != null) {
-            ctk.deleteTicket(selectedItem.getIdTicket());
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText("Hủy thành công");
+            if (ctk.deleteTicket(selectedItem.getIdTicket()) == 1) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("Hủy thành công");
 //            alert.setContentText();
 
-            alert.showAndWait();
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("Vé đã nhận, không thể hủy");
+//            alert.setContentText();
+
+                alert.showAndWait();
+            }
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");

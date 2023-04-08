@@ -1,5 +1,6 @@
 package com.mycompany.datvexe;
 
+import com.bookingCoach.services.ChangeTicketServices;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * JavaFX App
@@ -17,13 +19,17 @@ public class App extends Application {
 
     @Override
 
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
         scene = new Scene(loadFXML("ChangeTicket"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setMinWidth(900);
         stage.setMinHeight(480);
         stage.show();
+        
+        // chạy cập nhật vé
+        ChangeTicketServices.autoUpdateTicket();
+        ChangeTicketServices.autoUpdateCSCS();
     }
 
     static void setRoot(String fxml) throws IOException {
