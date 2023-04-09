@@ -85,13 +85,10 @@ public class ChangeTicketController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            this.loadTableViewSearchId();
+
         SearchIdRadioButton.setSelected(true);
 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ChangeTicketController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
 
     // this is method to load tableview for search with id
