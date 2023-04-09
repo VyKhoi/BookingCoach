@@ -100,8 +100,7 @@ public class ChangeTicketController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            this.loadTableViewSearchId();
+
         SearchIdRadioButton.setSelected(true);
 
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
@@ -110,13 +109,11 @@ public class ChangeTicketController implements Initializable {
             // Xử lý tại đây
         } else {
             // Nhân viên đăng nhập là nhân viên thông thường
-          
+
             lbManagerSystem.setVisible(false);
             // Xử lý tại đây
-             }
-         }
-     
-    
+        }
+    }
 
     // this is method to load tableview for search with id
     public void loadTableViewSearchId() throws SQLException, Exception {
@@ -412,26 +409,27 @@ public class ChangeTicketController implements Initializable {
         }
 
     }
-    
+
     public void logoutButtonOnAction(ActionEvent event) throws IOException {
         Login.loginStaff = null; // xóa thông tin đăng nhập của nhân viên
-    Node source = (Node) event.getSource();
-    FadeTransition fadeOut = new FadeTransition(Duration.millis(500), source);
-    fadeOut.setFromValue(1.0);
-    fadeOut.setToValue(0.0);
-    fadeOut.setOnFinished((ActionEvent event1) -> {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginGUI.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-        }
-    });
-    fadeOut.play();
+        Node source = (Node) event.getSource();
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), source);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished((ActionEvent event1) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginGUI.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+            }
+        });
+        fadeOut.play();
     }
+
     public void saveChangeSeatTicket() throws ParseException, SQLException {
 
         try {
@@ -472,7 +470,7 @@ public class ChangeTicketController implements Initializable {
         } catch (Exception ex) {
             System.out.println("loi xuat ra : " + ex.toString());
         }
-      
+
 //        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
 }

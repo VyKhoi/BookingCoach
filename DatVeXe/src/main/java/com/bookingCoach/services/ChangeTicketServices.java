@@ -237,7 +237,7 @@ public class ChangeTicketServices {
         // hàm này lấy tất cả các ghế còn khả dụng ứng với chuyến mà vé đặt
         System.out.println("da chay vo day");
         try ( Connection conn = JdbcUtils.getConn()) {
-            String query = "SELECT cscs.idCoachStrips, cscs.departureTime FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
+            String query = "SELECT cscs.idCoachStrips, cscs.departureTime, cscs.idCoach FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
                     + "where t.idCoachStripCoachSeat = cscs.idCSCS\n"
                     + "and t.idTicket = ?"; // sử dụng dấu ? thay cho biến idTicket
 
@@ -246,11 +246,15 @@ public class ChangeTicketServices {
             ResultSet rs = pstmt.executeQuery();
 
             int idCoachStrips = -1;
+            int idCoachOfTicket = -1;
             String strDate = null;
 
             // lấy mã chuyến và giờ
             if (rs.next()) {
                 idCoachStrips = rs.getInt("idCoachStrips");
+                // lấy xe
+                idCoachOfTicket = rs.getInt("idCoach");
+
                 //lấy thời gian
                 Timestamp departureTimestamp = rs.getTimestamp("departureTime");
                 Date departureTime = new Date(departureTimestamp.getTime());
@@ -266,12 +270,13 @@ public class ChangeTicketServices {
                         + "where\n"
                         + "cscs.idCoachStrips = ?\n"
                         + "and cscs.departureTime = ?\n"
+                        + "and cscs.idCoach = ?\n"
                         + "and statusSeat = 0"; // sử dụng dấu ? thay cho biến idTicket
 
                 PreparedStatement pstmt2 = conn.prepareStatement(querySelectCSCS);
                 pstmt2.setInt(1, idCoachStrips);
                 pstmt2.setString(2, strDate);
-
+                pstmt2.setInt(3, idCoachOfTicket);
                 ResultSet rs2 = pstmt2.executeQuery();
 
                 // thực hiện nhét vào danh sách
@@ -350,13 +355,27 @@ public class ChangeTicketServices {
     }
 
     public int updateSeatOfTicket(AliasTicket ticket, String departureTime, int numberSeat) throws SQLException {
-       if(ticket.getStatusTicket() == "Đã nhận"){
-           return -1;
-       }
-        
+       
+        if (ticket.getStatusTicket() == "Đã nhận") {
+            return -1;
+        }
+
         try ( Connection conn = JdbcUtils.getConn()) {
 
-            
+            // lấy xe
+            String queryGetCoach = "SELECT cscs.idCoachStrips, cscs.departureTime, cscs.idCoach FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
+                    + "where t.idCoachStripCoachSeat = cscs.idCSCS\n"
+                    + "and t.idTicket = ?"; // sử dụng dấu ? thay cho biến idTicket
+
+            PreparedStatement pstmtGetCoach = conn.prepareStatement(queryGetCoach);
+            pstmtGetCoach.setInt(1, ticket.getIdTicket()); // set giá trị của biến idTicket vào câu lệnh truy vấn
+            ResultSet rsGetCoach = pstmtGetCoach.executeQuery();
+            int idCoachOfTicket = -1;
+            if (rsGetCoach.next()) {
+                idCoachOfTicket = rsGetCoach.getInt("idCoach");
+            }
+            System.out.println("Id cửa chiếc xe là " + idCoachOfTicket);
+
             java.util.Date depa60 = ticket.getDepartureTime();
             Calendar cal = Calendar.getInstance();
             cal.setTime(depa60);
@@ -364,7 +383,7 @@ public class ChangeTicketServices {
             depa60 = cal.getTime();
 
             java.util.Date now = new java.util.Date();
-            
+
             if (now.compareTo(depa60) > 0) {
                 System.out.println("Đéo sửa đc , sau 60 roi " + now + "  :  " + depa60);
                 return 0;
@@ -376,11 +395,13 @@ public class ChangeTicketServices {
 
             String query = "SELECT * FROM bus.coachstripcoachseat cscs\n"
                     + "where cscs.departureTime = ?\n"
+                    + "and cscs.idCoach = ?\n"
                     + "and nameSeat = ?"; // sử dụng dấu ? thay cho biến idTicket
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, departureTime); // set giá trị của biến idTicket vào câu lệnh truy vấn
-            pstmt.setInt(2, numberSeat);
+           pstmt.setInt(2, idCoachOfTicket);
+            pstmt.setInt(3, numberSeat);
 
             System.out.println("chuan bi excute");
             ResultSet rs = pstmt.executeQuery();
