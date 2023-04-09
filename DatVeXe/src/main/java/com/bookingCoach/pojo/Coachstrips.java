@@ -8,25 +8,26 @@ package com.bookingCoach.pojo;
  *
  * @author Vy Khoi
  */
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Coachstrips {
     private int idCoachStrips;
-    private LocalDateTime departureTime;
     private int distance;
-    private LocalTime arrivalTime;
+    private Date arrivalTime;
     private int idStationsStart;
     private int idStationsEnd;
 
-    public Coachstrips(int idCoachStrips, LocalDateTime departureTime, int distance, LocalTime arrivalTime, int idStationsStart, int idStationsEnd) {
+    public Coachstrips(int idCoachStrips, int distance, Date arrivalTime, int idStationsStart, int idStationsEnd) {
         this.idCoachStrips = idCoachStrips;
-        this.departureTime = departureTime;
         this.distance = distance;
         this.arrivalTime = arrivalTime;
         this.idStationsStart = idStationsStart;
         this.idStationsEnd = idStationsEnd;
     }
+
 
     // getters and setters
 
@@ -38,13 +39,8 @@ public class Coachstrips {
         this.idCoachStrips = idCoachStrips;
     }
 
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
-    }
+
 
     public int getDistance() {
         return distance;
@@ -54,11 +50,11 @@ public class Coachstrips {
         this.distance = distance;
     }
 
-    public LocalTime getArrivalTime() {
+    public Date getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalTime arrivalTime) {
+    public void setArrivalTime(Date arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

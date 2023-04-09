@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat;
  * @author Vy Khoi
  */
 public class AliasTicket {
-
+  SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                     
     private int idTicket;
     private String nameCustomer;
     private String phoneNumber;
@@ -64,7 +65,7 @@ public class AliasTicket {
             case 1:
                 result = "Đã nhận";
                 break;
-            case 2:
+            case 0:
                 result = "Chưa nhận";
                 break;
             default:

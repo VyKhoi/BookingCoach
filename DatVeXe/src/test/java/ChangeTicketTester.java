@@ -1,8 +1,11 @@
 
+import com.bookingCoach.pojo.CoachStripCoachSeat;
 import com.bookingCoach.services.ChangeTicketServices;
 import com.bookingCoach.services.JdbcUtils;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,9 +57,17 @@ public class ChangeTicketTester {
     }
 
     @Test
-    public void testGetTicketsƯithNumberPhoneNotFound() throws SQLException {
+    public void testGetTicketswithNumberPhoneNotFound() throws SQLException {
         int numberphone = 1; // giả định rằng không có vé nào có idTicket là -1
         Assertions.assertNull(c.getTicketsWithNumberPhone(numberphone));
+    }
+
+    
+    // hàm test trả về rỗng khi không có ticket
+    @Test
+    public void checkGetCSCSWithIdTicketNotFind() throws SQLException {
+        ArrayList<CoachStripCoachSeat> result = c.getEmtySeat(-10);
+        Assertions.assertEquals(0, result.size());
     }
 
 }

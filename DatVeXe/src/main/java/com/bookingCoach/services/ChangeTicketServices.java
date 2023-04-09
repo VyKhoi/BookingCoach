@@ -5,6 +5,7 @@
 package com.bookingCoach.services;
 
 import com.bookingCoach.Alias.AliasTicket;
+import com.bookingCoach.pojo.CoachStripCoachSeat;
 import com.bookingCoach.pojo.Ticket;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,18 +14,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
-import javafx.scene.control.Alert;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javax.security.auth.AuthPermission;
 
 /**
  *
  * @author Vy Khoi
  */
 public class ChangeTicketServices {
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public AliasTicket getTickets(int idTicket) throws SQLException {
 
@@ -113,7 +126,6 @@ public class ChangeTicketServices {
 
         } // Khối mã xử lý ngoại lệ IOException
         catch (Exception e) {
-            e.printStackTrace();
         }
 
         return null;
@@ -207,24 +219,216 @@ public class ChangeTicketServices {
             }
             return ds;
         } catch (Exception ex) {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Thông báo");
-//            alert.setHeaderText(ex.getMessage());
-////            alert.setContentText();
-//
-//            alert.showAndWait();
+
             System.out.println(ex.getMessage());
         }
 
-        return null;
+        return ds;
+    }
+
+    public ArrayList<CoachStripCoachSeat> getEmtySeat(int idTicket) throws SQLException {
+        ArrayList<CoachStripCoachSeat> ds = new ArrayList<>();
+        // hàm này lấy tất cả các ghế còn khả dụng ứng với chuyến mà vé đặt
+        System.out.println("da chay vo day");
+        try ( Connection conn = JdbcUtils.getConn()) {
+            String query = "SELECT cscs.idCoachStrips, cscs.departureTime FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
+                    + "where t.idCoachStripCoachSeat = cscs.idCSCS\n"
+                    + "and t.idTicket = ?"; // sử dụng dấu ? thay cho biến idTicket
+
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idTicket); // set giá trị của biến idTicket vào câu lệnh truy vấn
+            ResultSet rs = pstmt.executeQuery();
+
+            int idCoachStrips = -1;
+            String strDate = null;
+
+            // lấy mã chuyến và giờ
+            if (rs.next()) {
+                idCoachStrips = rs.getInt("idCoachStrips");
+                //lấy thời gian
+                Timestamp departureTimestamp = rs.getTimestamp("departureTime");
+                Date departureTime = new Date(departureTimestamp.getTime());
+
+                // Chuyển đổi sang định dạng cần thiết
+                strDate = dateFormat.format(departureTime);
+                System.out.println("idCoachStrips: " + idCoachStrips + ", departureTime: " + strDate);
+            }
+
+            if (idCoachStrips != -1) {
+                // lọc xem các ghế còn trống trong chuyến đó, giờ đó
+                String querySelectCSCS = "SELECT * FROM bus.coachstripcoachseat cscs\n"
+                        + "where\n"
+                        + "cscs.idCoachStrips = ?\n"
+                        + "and cscs.departureTime = ?\n"
+                        + "and statusSeat = 0"; // sử dụng dấu ? thay cho biến idTicket
+
+                PreparedStatement pstmt2 = conn.prepareStatement(querySelectCSCS);
+                pstmt2.setInt(1, idCoachStrips);
+                pstmt2.setString(2, strDate);
+
+                ResultSet rs2 = pstmt2.executeQuery();
+
+                // thực hiện nhét vào danh sách
+                while (rs2.next()) {
+                    int idCSCS = rs2.getInt("idCSCS");
+                    int idCoach = rs2.getInt("idCoach");
+                    int idCoachStrip = rs2.getInt("idCoachStrips");
+                    double price = rs2.getDouble("price");
+                    LocalDateTime departureTime2 = rs2.getObject("departureTime", LocalDateTime.class);
+
+                    int statusSeat = rs2.getInt("statusSeat");
+                    int nameSeat = rs2.getInt("nameSeat");
+                    int idStaff = rs2.getInt("idStaff");
+
+                    // Tạo đối tượng CoachStripCoachSeat từ các giá trị lấy được từ ResultSet
+                    CoachStripCoachSeat seat = new CoachStripCoachSeat(idCSCS, idCoach, idCoachStrip, price, departureTime2, statusSeat, nameSeat, idStaff);
+                    // Thêm đối tượng CoachStripCoachSeat vào ArrayList
+                    ds.add(seat);
+                }
+                return ds;
+            }
+        }
+        return ds;
+    }
+
+    public int deleteTicket(int idTicket) throws SQLException {
+        // lấy thông tin vé được xóa
+        Ticket t;
+        try ( Connection conn = JdbcUtils.getConn()) {
+            String query = "SELECT * FROM bus.ticket t\n"
+                    + "where t.idTicket = ?"; // sử dụng dấu ? thay cho biến idTicket
+
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idTicket); // set giá trị của biến idTicket vào câu lệnh truy vấn
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                int status = rs.getInt("status");
+                if(status == 1){
+                    return 0;
+                }
+                int idTicket2 = rs.getInt("idTicket");
+                int idStationBuy = rs.getInt("idStationBuy");
+
+                //lấy thời gian
+                Timestamp bookingDateStamp = rs.getTimestamp("bookingDate");
+                Date bookingDate = new Date(bookingDateStamp.getTime());
+//                Date bookingDate = dateFormat.format(departureTime);
+
+                int idCustomer = rs.getInt("idCustomer");
+                int idStaff = rs.getInt("idStaff");
+                
+                int idCoachStripCoachSeat = rs.getInt("idCoachStripCoachSeat");
+
+                t = new Ticket(idTicket2, idStationBuy, bookingDate, idCustomer, idStaff, status, idCoachStripCoachSeat);
+
+                System.err.println(t.toString());
+
+                // xóa vé 
+                String querydeleTicket = "DELETE FROM bus.ticket WHERE idTicket = ?";
+                PreparedStatement pstmtDelete = conn.prepareStatement(querydeleTicket);
+                pstmtDelete.setInt(1, idTicket);
+                int affectedRows = pstmtDelete.executeUpdate();
+
+                /// xóa đi chỗ đặt ghế
+                String query2 = "UPDATE bus.coachstripcoachseat SET statusSeat = 0 WHERE idCSCS = ?";
+                PreparedStatement pstmt2 = conn.prepareStatement(query2);
+                pstmt2.setInt(1, t.getIdCoachStripCoachSeat());
+                int affectedRows2 = pstmt2.executeUpdate();
+
+                return 1;
+            }
+            return 0;
+        }
+
+    }
+
+    public static final void autoUpdateTicket() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, event -> {
+                    // Gọi phương thức cập nhật dữ liệu của bạn ở đây
+                    System.out.println("Có chạy 10s");
+
+                    try ( Connection conn = JdbcUtils.getConn()) {
+                        String query = "SELECT * FROM bus.ticket WHERE status = 0;";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        ResultSet rs = pstmt.executeQuery();
+                        // rs danh sách ticket đang đặt mà chưa nhận
+                        while (rs.next()) {
+                            ChangeTicketServices c = new ChangeTicketServices();
+                            int idTK = rs.getInt("idTicket");
+
+                            //ghế
+                            int idCSCS = rs.getInt("idCoachStripCoachSeat");
+
+                            //check xem với cái vé chưa nhận nài nó có quá hạn chưa
+                            String query2 = "SELECT * FROM bus.coachstripcoachseat cscs\n"
+                                    + "where cscs.idCSCS = ?"; // sử dụng dấu ? thay cho biến idTicket
+
+                            PreparedStatement pstmt2 = conn.prepareStatement(query2);
+                            pstmt2.setInt(1, idCSCS); // set giá trị của biến idTicket vào câu lệnh truy vấn
+                            ResultSet rs2 = pstmt2.executeQuery();
+
+                            // kiểm tra ngày hiện tại
+                            if (rs2.next()) {
+                                LocalDateTime departureTime = rs2.getTimestamp("departureTime").toLocalDateTime();
+                                LocalDateTime timeBefore30Min = departureTime.minusMinutes(30);
+                                LocalDateTime now = LocalDateTime.now();
+                                System.out.println(timeBefore30Min + "   :   " + now);
+                                long minutesDifference = ChronoUnit.MINUTES.between(timeBefore30Min, now);
+                                if (now.isAfter(timeBefore30Min)) {
+                                    c.deleteTicket(idTK);
+                                    System.out.println("xóa " + idTK);
+                                }
+
+                                System.out.println("da check update cac ve ");
+                            }
+
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ChangeTicketServices.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }),
+                new KeyFrame(Duration.seconds(10))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    public static void autoUpdateCSCS() throws SQLException {
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, event -> {
+                    try ( Connection conn = JdbcUtils.getConn()) {
+                        String query = "UPDATE bus.coachstripcoachseat SET statusSeat = 1 WHERE DATE_SUB(departureTime, INTERVAL 5 MINUTE) <= ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        
+                        pstmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                        int updatedRows = pstmt.executeUpdate();
+                        
+                        System.out.println("đã check update ghế "+updatedRows);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ChangeTicketServices.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }),
+                new KeyFrame(Duration.seconds(10))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     public static void main(String[] args) throws SQLException {
         ChangeTicketServices ds = new ChangeTicketServices();
-        ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
-            System.out.println(h.toString());
-        });
-//        System.out.println(ds.getTickets(1).toString());
+        //        ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
+        //            System.out.println(h.toString());
+        //        });
+        //        System.out.println(ds.getTickets(1).toString());
+        //        ds.getEmtySeat(1).forEach(h -> {
+        //            System.out.println(h.toString());
+        //        });;
+        //        System.err.println(ds.deleteTicket(-1));
+        ChangeTicketServices.autoUpdateCSCS();
 
     }
 }

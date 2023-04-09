@@ -10,9 +10,11 @@ B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Role.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\ChangeTicketController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\PrimaryController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\Alias\AliasTicket.java
+B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\BookTicketController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Customer.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\ChangeTicketServices.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\PhongThiNghiem.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Coachstrips.java
+B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\BookTicKet.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\TypeOfCoach.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Coachs.java
