@@ -6,20 +6,33 @@ package com.mycompany.datvexe;
 
 import com.bookingCoach.Alias.AliasTicket;
 import com.bookingCoach.pojo.CoachStripCoachSeat;
+import com.bookingCoach.pojo.Role;
 import com.bookingCoach.services.ChangeTicketServices;
+import com.bookingCoach.services.Login;
+import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
+import javafx.event.EventHandler;
+import java.util.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +48,7 @@ import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -77,7 +91,12 @@ public class ChangeTicketController implements Initializable {
 
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Label lbManagerSystem;
     AliasTicket selectedItem = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,10 +104,19 @@ public class ChangeTicketController implements Initializable {
 //            this.loadTableViewSearchId();
         SearchIdRadioButton.setSelected(true);
 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ChangeTicketController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
+        if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
+//         
+            lbManagerSystem.setVisible(true);
+            // Xử lý tại đây
+        } else {
+            // Nhân viên đăng nhập là nhân viên thông thường
+          
+            lbManagerSystem.setVisible(false);
+            // Xử lý tại đây
+             }
+         }
+     
+    
 
     // this is method to load tableview for search with id
     public void loadTableViewSearchId() throws SQLException, Exception {
@@ -323,7 +351,7 @@ public class ChangeTicketController implements Initializable {
     }
 
     public void SearchIdTicket(KeyEvent event) throws SQLException, Exception {
-
+        selectedItem = null;
         // xóa trắng 
         nameCustomerLabel.setText("");
         phoneCustomerLabel.setText("");
@@ -335,7 +363,7 @@ public class ChangeTicketController implements Initializable {
         nameStationStartLabel.setText("");
         nameStationEndLabel.setText("");
         departureTimeLabel.setText("");
-
+        comboBoxSeatOke.getItems().clear();
         if (SearchIdRadioButton.isSelected()) {
             this.tableViewSearch.getColumns().clear();
             this.tableViewSearch.getItems().clear();
@@ -383,5 +411,68 @@ public class ChangeTicketController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+    
+    public void logoutButtonOnAction(ActionEvent event) throws IOException {
+        Login.loginStaff = null; // xóa thông tin đăng nhập của nhân viên
+    Node source = (Node) event.getSource();
+    FadeTransition fadeOut = new FadeTransition(Duration.millis(500), source);
+    fadeOut.setFromValue(1.0);
+    fadeOut.setToValue(0.0);
+    fadeOut.setOnFinished((ActionEvent event1) -> {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginGUI.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+        }
+    });
+    fadeOut.play();
+    }
+    public void saveChangeSeatTicket() throws ParseException, SQLException {
+
+        try {
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+            Date date = dateFormat2.parse(departureTimeLabel.getText());
+//        System.out.println("bị sai lúc chuyển");
+
+//        System.out.println("Ngày lấy ra được là: " + dateFormat2.format(date));
+            // Sử dụng đối tượng DateFormat để chuyển đổi ngược lại thành chuỗi
+            String formattedDate = dateFormat.format(date);
+// lấy tên ghế
+            int selectedSeat = (int) comboBoxSeatOke.getValue();
+
+            System.out.println("lay dc ngay gio "
+                    + formattedDate + " ghế " + selectedSeat + " ghế cũ " + selectedItem.getNameSeat());
+            int runUpdate = ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
+            if (runUpdate == 1) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("sửa thành công");
+                alert.showAndWait();
+            } else {
+                if (runUpdate == -1) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("Vé đã nhận không thể sửa");
+                    alert.showAndWait();
+                }
+                if (runUpdate == 0) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("sửa thất bại do quá 60 phút kể từ xe chạy");
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (Exception ex) {
+            System.out.println("loi xuat ra : " + ex.toString());
+        }
+      
+//        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
 }

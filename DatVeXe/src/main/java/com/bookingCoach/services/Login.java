@@ -18,7 +18,12 @@ import java.time.LocalDate;
  * @author Kiet
  */
 public class Login {
-    public int validateLogin(String username, String password) throws SQLException{
+    
+     
+    public  static Staff loginStaff = null;
+    
+    
+    public Staff validateLogin(String username, String password) throws SQLException{
          try ( Connection conn = JdbcUtils.getConn()) {
             Staff st;
             String query = "SELECT * FROM bus.staff\n"
@@ -37,14 +42,23 @@ public class Login {
                 String addressUser = rs.getString("addressUser");
                 String roles = rs.getString("roles");
                 String nameStaff = rs.getString("nameStaff");
-                int age = rs.getInt("age");
                 String gender = rs.getString("gender");
-                int phone = rs.getInt("phone");
+                String phone = rs.getString("phone");
                 LocalDate birthStaff = rs.getDate("brithStaff").toLocalDate(); 
+                
+                st = new Staff(idStaff, passWord, userName, addressUser, roles, nameStaff, gender, phone, birthStaff);
+                System.out.println(st.toString());
+                
+                return  st;
             }
          }
-        return 0;
+        return null;
          
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        Login lg = new Login();
+        lg.validateLogin("nva", "12345678");
     }
 }
 

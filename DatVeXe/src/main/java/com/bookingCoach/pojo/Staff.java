@@ -19,23 +19,27 @@ public class Staff {
     private String addressUser;
     private String roles;
     private String nameStaff;
-    private int age;
     private String gender;
-    private int phone;
+    private String phone;
     private LocalDate birthStaff;
     
     public Staff(int idStaff, String passWord, String userName, String addressUser, String roles,
-                 String nameStaff, int age, String gender, int phone, LocalDate birthStaff) {
+                 String nameStaff, String gender, String phone, LocalDate birthStaff) {
         this.idStaff = idStaff;
         this.passWord = passWord;
         this.userName = userName;
         this.addressUser = addressUser;
         this.roles = roles;
         this.nameStaff = nameStaff;
-        this.age = age;
+
         this.gender = gender;
         this.phone = phone;
         this.birthStaff = birthStaff;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" + "idStaff=" + idStaff + ", passWord=" + passWord + ", userName=" + userName + ", addressUser=" + addressUser + ", roles=" + roles + ", nameStaff=" + nameStaff +  ", gender=" + gender + ", phone=" + getPhone() + ", birthStaff=" + birthStaff + '}';
     }
 
     public Staff() {
@@ -92,13 +96,6 @@ public class Staff {
         this.nameStaff = nameStaff;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getGender() {
         return gender;
@@ -108,13 +105,7 @@ public class Staff {
         this.gender = gender;
     }
 
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
-    }
+   
 
     public LocalDate getBirthStaff() {
         return birthStaff;
@@ -122,6 +113,20 @@ public class Staff {
 
     public void setBirthStaff(LocalDate birthStaff) {
         this.birthStaff = birthStaff;
+    }
+
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
 

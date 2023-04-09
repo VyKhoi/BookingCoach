@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.LoginGUIController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="282.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
@@ -47,7 +46,7 @@
          </children>
       </AnchorPane>
    </left>
-   <center>
+   <right>
       <AnchorPane prefHeight="400.0" prefWidth="340.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" layoutX="2.0" layoutY="53.0" prefHeight="28.0" prefWidth="335.0" text="Secure Login" textFill="#807373">
@@ -78,7 +77,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button fx:id="signupButton" layoutX="18.0" layoutY="284.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="38.0" prefWidth="296.0" style="-fx-background-color: #263F73;" text="Sign in" textFill="#e8dfdf">
+            <Button fx:id="signinButton" layoutX="18.0" layoutY="284.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="38.0" prefWidth="296.0" style="-fx-background-color: #263F73;" text="Sign in" textFill="#e8dfdf">
                <font>
                   <Font size="14.0" />
                </font>
@@ -95,5 +94,5 @@
             </Label>
          </children>
       </AnchorPane>
-   </center>
+   </right>
 </BorderPane>
