@@ -27,9 +27,11 @@ public class App extends Application {
         stage.setMinHeight(480);
         stage.show();
         
-        // chạy cập nhật vé
+
+//         chạy cập nhật vé
 //        ChangeTicketServices.autoUpdateTicket();
 //        ChangeTicketServices.autoUpdateCSCS();
+
     }
 
     static void setRoot(String fxml) throws IOException {

@@ -8,8 +8,11 @@ import com.bookingCoach.Alias.AliasTicket;
 import com.bookingCoach.pojo.CoachStripCoachSeat;
 import com.bookingCoach.services.ChangeTicketServices;
 import java.net.URL;
-import java.sql.Date;
+
+import java.util.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -78,16 +81,14 @@ public class ChangeTicketController implements Initializable {
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
     AliasTicket selectedItem = null;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            this.loadTableViewSearchId();
+
         SearchIdRadioButton.setSelected(true);
 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ChangeTicketController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
 
     // this is method to load tableview for search with id
@@ -323,7 +324,7 @@ public class ChangeTicketController implements Initializable {
     }
 
     public void SearchIdTicket(KeyEvent event) throws SQLException, Exception {
-
+        selectedItem = null;
         // xóa trắng 
         nameCustomerLabel.setText("");
         phoneCustomerLabel.setText("");
@@ -335,7 +336,7 @@ public class ChangeTicketController implements Initializable {
         nameStationStartLabel.setText("");
         nameStationEndLabel.setText("");
         departureTimeLabel.setText("");
-
+        comboBoxSeatOke.getItems().clear();
         if (SearchIdRadioButton.isSelected()) {
             this.tableViewSearch.getColumns().clear();
             this.tableViewSearch.getItems().clear();
@@ -383,5 +384,48 @@ public class ChangeTicketController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+
+    public void saveChangeSeatTicket() throws ParseException, SQLException {
+
+        try {
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+            Date date = dateFormat2.parse(departureTimeLabel.getText());
+//        System.out.println("bị sai lúc chuyển");
+
+//        System.out.println("Ngày lấy ra được là: " + dateFormat2.format(date));
+            // Sử dụng đối tượng DateFormat để chuyển đổi ngược lại thành chuỗi
+            String formattedDate = dateFormat.format(date);
+// lấy tên ghế
+            int selectedSeat = (int) comboBoxSeatOke.getValue();
+
+            System.out.println("lay dc ngay gio "
+                    + formattedDate + " ghế " + selectedSeat + " ghế cũ " + selectedItem.getNameSeat());
+            int runUpdate = ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
+            if (runUpdate == 1) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("sửa thành công");
+                alert.showAndWait();
+            } else {
+                if (runUpdate == -1) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("Vé đã nhận không thể sửa");
+                    alert.showAndWait();
+                }
+                if (runUpdate == 0) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("sửa thất bại do quá 60 phút kể từ xe chạy");
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (Exception ex) {
+            System.out.println("loi xuat ra : " + ex.toString());
+        }
+//        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
 }

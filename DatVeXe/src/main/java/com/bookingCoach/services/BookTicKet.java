@@ -246,7 +246,9 @@ public class BookTicKet {
             statement.setInt(4, nameSeat);
             ResultSet resultSet = statement.executeQuery();
 
-            idCSCS = resultSet.getInt("idCSCS");
+            while (resultSet.next()) {
+                idCSCS = resultSet.getInt("idCSCS");
+            }
             statement.close();
             conn.close();
         } catch (SQLException ex) {
