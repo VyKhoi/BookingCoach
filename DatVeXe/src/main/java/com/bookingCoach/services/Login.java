@@ -55,10 +55,4 @@ public class Login {
         return null;
          
     }
-    
-    public static void main(String[] args) throws SQLException {
-        Login lg = new Login();
-        lg.validateLogin("nva", "12345678");
-    }
 }
-

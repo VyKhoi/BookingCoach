@@ -7,6 +7,7 @@ package com.mycompany.datvexe;
 import com.bookingCoach.services.Login;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +49,7 @@ public class LoginGUIController implements Initializable {
         stage.close();
     }
 
-    public void loginButtonOnAction(ActionEvent e) throws SQLException, IOException {
+    public void loginButtonOnAction(ActionEvent e) throws SQLException, IOException, NoSuchAlgorithmException {
         if (usernameTextField.getText().isBlank() == false && passwordPasswordField.getText().isBlank() == false) {
 //            loginMessageLabel.setText("You try to login");
             Login.loginStaff = lg.validateLogin(usernameTextField.getText(), passwordPasswordField.getText());

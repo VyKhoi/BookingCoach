@@ -4,6 +4,8 @@
  */
 package com.bookingCoach.services;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,14 +26,19 @@ public class RegisterService {
             String gender,
             String phone,
             LocalDate birthStaff
-    ) throws SQLException {
+    ) throws SQLException, NoSuchAlgorithmException {
         try (Connection conn = JdbcUtils.getConn()) {
+             // Băm mật khẩu sử dụng SHA-512
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            byte[] passwordBytes = passWord.getBytes();
+            byte[] hashedBytes = digest.digest(passwordBytes);
+            String hashedPassword = bytesToHex(hashedBytes);
             String query = "INSERT INTO staff (userName, passWord, addressUser, roles, nameStaff, gender, phone, brithStaff)\n"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userName); // set giá trị của biến userName vào câu lệnh truy vấn
-            pstmt.setString(2, passWord); // set giá trị của biến passWord vào câu lệnh truy vấn
+            pstmt.setString(2, hashedPassword); // set giá trị của biến passWord vào câu lệnh truy vấn
             pstmt.setString(3, addressUser);
             pstmt.setString(4, roles);
             pstmt.setString(5, nameStaff);
@@ -58,6 +65,16 @@ public class RegisterService {
             System.out.println(ex.toString());
             return -1;
         }
-
+        
+    }
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }

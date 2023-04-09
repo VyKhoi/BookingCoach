@@ -6,6 +6,7 @@ package com.mycompany.datvexe;
 
 import com.bookingCoach.services.RegisterService;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -45,7 +46,7 @@ public class SystemManagerController implements Initializable {
     @FXML
     private DatePicker birthdayPicker;
 
-    public void signupButtonOnAction(ActionEvent e) throws SQLException {
+    public void signupButtonOnAction(ActionEvent e) throws SQLException, NoSuchAlgorithmException {
         String username = usernameTextField.getText();
         String password = passwordPasswordField.getText();
         String namestaff = namestaffTextField.getText();

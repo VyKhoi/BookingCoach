@@ -20,7 +20,7 @@ public class App extends Application {
     @Override
 
     public void start(Stage stage) throws IOException, SQLException {
-        scene = new Scene(loadFXML("ManagerSystem"));
+        scene = new Scene(loadFXML("LoginGUI"));
         stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
@@ -28,9 +28,9 @@ public class App extends Application {
         stage.setMinHeight(580);
         stage.show();
         
-//         chạy cập nhật vé
-//        ChangeTicketServices.autoUpdateTicket();
-//        ChangeTicketServices.autoUpdateCSCS();
+        // chạy cập nhật vé
+        ChangeTicketServices.autoUpdateTicket();
+        ChangeTicketServices.autoUpdateCSCS();
     }
 
     static void setRoot(String fxml) throws IOException {
