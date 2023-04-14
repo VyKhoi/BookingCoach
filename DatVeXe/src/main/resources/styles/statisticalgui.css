@@ -1,0 +1,36 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.date-time-picker > .text-field {
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+    -fx-pref-width: 250px;
+    -fx-pref-height: 40px;
+    -fx-background-color: white;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+.date-time-picker > .arrow-button {
+    -fx-padding: 5px;
+    -fx-pref-height: 40px;
+    -fx-background-color: white;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+.date-time-picker > .arrow-button > .arrow {
+    -fx-background-color: black;
+}
+
+.date-time-picker > .arrow-button > .arrow:hover {
+    -fx-background-color: gray;
+}
+
+
+
+

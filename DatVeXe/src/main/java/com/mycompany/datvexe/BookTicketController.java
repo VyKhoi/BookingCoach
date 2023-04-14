@@ -16,6 +16,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import com.bookingCoach.services.BookTicKet;
+import com.bookingCoach.services.Login;
+import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +27,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -51,7 +60,18 @@ public class BookTicketController implements Initializable {
 
         // Gán chuỗi vào text của Label
         timeOrder.setText(formattedDateTime);
+//
+//        xửa lý niếu là admin hiện button quản trị
+        if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
+//         
+            lbManagerSystem.setVisible(true);
+            // Xử lý tại đây
+        } else {
+            // Nhân viên đăng nhập là nhân viên thông thường
 
+            lbManagerSystem.setVisible(false);
+            // Xử lý tại đây
+        }
     }
 
     @FXML
@@ -80,6 +100,8 @@ public class BookTicketController implements Initializable {
 
     @FXML
     private TextField number;
+    @FXML
+    private Button lbManagerSystem;
 
     public void renderStrips() {
         BookTicKet ds = new BookTicKet();
@@ -180,13 +202,11 @@ public class BookTicketController implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
 
-            
             //Lấy được idCus
             int idCus = ds.getIdCus(ten, soDienThoai, diaChi);
-            
+
             System.out.println("id cua customer " + idCus);
-            
-            
+
             System.out.println("========lay idCuss=======");
             ds.addTicKet(idCus, idCSCS, timeOrders);
         } catch (Exception ex) {
@@ -194,4 +214,54 @@ public class BookTicketController implements Initializable {
         }
     }
 
+    public void switchStistical(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticalGUI.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+    public void switchSystemManager(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerSystem.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+    public void switchChangeTicket(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
 }
