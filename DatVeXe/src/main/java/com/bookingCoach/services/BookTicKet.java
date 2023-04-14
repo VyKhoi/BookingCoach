@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -257,6 +259,46 @@ public class BookTicKet {
         return idCSCS;
 
     }
+    
+    public double getPrice(int idCoach) {
+        double price = 0;
+        String sql = "SELECT price FROM bus.coachstripcoachseat WHERE idCoach = ?";
+        try {
+            Connection conn = JdbcUtils.getConn();
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, idCoach);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                price = resultSet.getDouble("price");
+            }
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return price;
+
+    }
+    
+    public void updateCSCSStatus(int idCSCS) {
+    String sql = "UPDATE bus.coachstripcoachseat SET statusSeat = 1 WHERE idCSCS = ?";
+    try {
+        Connection conn = JdbcUtils.getConn();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, idCSCS);
+        int rowsUpdated = statement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Trạng thái CSCS đã được cập nhật thành công.");
+        }
+        statement.close();
+        conn.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
 
     public int getIdCus(String ten, String number, String Address) {
         int idCus = 0;
@@ -295,6 +337,10 @@ public class BookTicKet {
     }
 
     public void addTicKet(int idCus, int idCSCS, LocalDateTime Time) {
+        
+        
+        
+        
         try {
             Connection conn = JdbcUtils.getConn();
 
@@ -323,6 +369,7 @@ public class BookTicKet {
         }
     }
 
+   
     public static void main(String[] args) {
         BookTicKet ds = new BookTicKet();
 //        List<Coachstrips> chuyenxe = ds.getAllChuyenXe();

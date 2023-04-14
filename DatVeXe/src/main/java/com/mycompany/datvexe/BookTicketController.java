@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import com.bookingCoach.services.BookTicKet;
 import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * FXML Controller class
@@ -38,6 +42,7 @@ public class BookTicketController implements Initializable {
      *
      * @param url
      */
+//    private RequiredFieldValidator validator;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         renderStrips();
@@ -81,6 +86,9 @@ public class BookTicketController implements Initializable {
     @FXML
     private TextField number;
 
+    @FXML
+    private Label price;
+
     public void renderStrips() {
         BookTicKet ds = new BookTicKet();
         ObservableList<String> list = FXCollections.observableArrayList(ds.addStrips());
@@ -94,7 +102,9 @@ public class BookTicketController implements Initializable {
         int selectedIndex = strips.getSelectionModel().getSelectedIndex() + 1;
         LocalDateTime now = LocalDateTime.now();
         List<CoachStripCoachSeat> listCoachStripCoachSeat = ds.getListCoachStripCanOrder(selectedIndex, now);
-
+        double prices = ds.getPrice(selectedIndex);
+        String pricesString = Double.toString(prices);
+        price.setText(pricesString);
         List<LocalDateTime> listTime = new ArrayList<>();
         for (CoachStripCoachSeat coachStripCoachSeat : listCoachStripCoachSeat) {
             listTime.add(coachStripCoachSeat.getDepartureTime());
@@ -107,9 +117,11 @@ public class BookTicketController implements Initializable {
     @FXML
     public void onTimeSelected() {
         BookTicKet ds = new BookTicKet();
-        if (time.getValue() instanceof LocalDateTime) {
+        LocalDateTime localDateTime = (LocalDateTime) time.getValue();
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(localDateTime, now);
+        if (time.getValue() instanceof LocalDateTime && duration.toMinutes() < 60) {
             System.out.print("nó vô đây");
-            LocalDateTime localDateTime = (LocalDateTime) time.getValue();
             System.out.print(localDateTime);
             List<Integer> listIdCoach = ds.getListIDCoach(localDateTime);
             List<Coachs> ListCoach = ds.getListCoach(listIdCoach);
@@ -144,7 +156,14 @@ public class BookTicketController implements Initializable {
                 }
             });
 
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Phải đặt vé trước 60 phút kể từ khi xe bắt đầu chạy!");
+            alert.showAndWait();
         }
+
     }
 
     @FXML
@@ -160,6 +179,58 @@ public class BookTicketController implements Initializable {
 
     @FXML
     public void orderTicKet() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        if (strips.getSelectionModel().isEmpty()) {
+
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn tuyến xe.");
+            alert.showAndWait();
+             return;
+        } else if (time.getSelectionModel().isEmpty()) {
+             alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn thời gian khởi hành.");
+            alert.showAndWait();
+            return;
+        } else if (typeOfCar.getSelectionModel().isEmpty()) {
+             alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn loại xe.");
+            alert.showAndWait();
+             return;
+        } else if (numberOfCar.getSelectionModel().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn số xe.");
+            alert.showAndWait();
+             return;
+        } else if (nameSeat.getSelectionModel().isEmpty()) {
+           alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn số ghế.");
+            alert.showAndWait();
+             return;
+        } else if (nameOfCus.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập tên khách hàng.");
+            alert.showAndWait();
+             return;
+        } else if (address.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập địa chỉ.");
+            alert.showAndWait();
+             return;
+        } else if (number.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập số điện thoại.");
+            alert.showAndWait();
+             return;
+        }
+
         try {
             System.out.println("orderTIcKet da vo day");
             BookTicKet ds = new BookTicKet();
@@ -169,7 +240,6 @@ public class BookTicketController implements Initializable {
             int nameSeats = Integer.parseInt(nameSeat.getValue().toString());
             //Lấy được idCSCS
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
-            System.out.println("========lay id cscs=======" + idCSCS);
 
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
@@ -180,18 +250,52 @@ public class BookTicketController implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
 
-            
             //Lấy được idCus
             int idCus = ds.getIdCus(ten, soDienThoai, diaChi);
-            
+
             System.out.println("id cua customer " + idCus);
-            
-            
+
+            /// kiểm tra tất cả điều đã chọnn
+//            Alert alert = new Alert(AlertType.WARNING);
+//            alert.setTitle("Thông báo");
+//            alert.setHeaderText("Lỗi chỗ bị");
+            // add vé
             System.out.println("========lay idCuss=======");
             ds.addTicKet(idCus, idCSCS, timeOrders);
+            ds.updateCSCSStatus(idCSCS);
+
+            // Thông báo
+            Alert alert2 = new Alert(AlertType.INFORMATION);
+            alert2.setTitle("Thông báo");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Đặt vé thành công!");
+            alert2.showAndWait();
+
+//            // add vé
+//            System.out.println("========lay idCuss=======");
+//            ds.addTicKet(idCus, idCSCS, timeOrders);
+//            ds.updateCSCSStatus(idCSCS);
+//
+//            // Thông báo
+//            Alert alert = new Alert(AlertType.INFORMATION);
+//            alert.setTitle("Thông báo");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Đặt vé thành công!");
+//            alert.showAndWait();
         } catch (Exception ex) {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
+    }
+    @FXML
+    private void handleClearAll() {
+        time.getSelectionModel().clearSelection();
+        strips.getSelectionModel().clearSelection();
+        nameSeat.getSelectionModel().clearSelection();
+        typeOfCar.getSelectionModel().clearSelection();
+        numberOfCar.getSelectionModel().clearSelection();
+        nameOfCus.clear();
+        address.clear();
+        number.clear();
     }
 
 }
