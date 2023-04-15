@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b7a3600-ccde-4f3e-bcfd-b2328551a3ec" name="Changes" comment="" />
+    <list default="true" id="9b7a3600-ccde-4f3e-bcfd-b2328551a3ec" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/DatVeXe/src/main/java/com/mycompany/datvexe/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/src/main/java/com/mycompany/datvexe/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/src/main/resources/com/mycompany/datvexe/ManagerSystem.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/src/main/resources/com/mycompany/datvexe/ManagerSystem.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/DatVeXe-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/DatVeXe-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/.netbeans_automatic_build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/CoachStripCoachSeat.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/CoachStripCoachSeat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/Staff.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/Staff.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/Ticket.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/pojo/Ticket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/services/ChangeTicketServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/bookingCoach/services/ChangeTicketServices.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/ChangeTicketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/ChangeTicketController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/ManagerSystem.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/ManagerSystem.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/SystemManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/classes/com/mycompany/datvexe/SystemManagerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/DatVeXe/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DatVeXe/target/test-classes/.netbeans_automatic_build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bus.sql" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,13 +38,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "settings.editor.selected.configurable": "editor.preferences.import"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

@@ -283,7 +283,7 @@ public class BookTicKet {
 
     }
     
-    public void updateCSCSStatus(int idCSCS) {
+    public void updateStatusSeat(int idCSCS) {
     String sql = "UPDATE bus.coachstripcoachseat SET statusSeat = 1 WHERE idCSCS = ?";
     try {
         Connection conn = JdbcUtils.getConn();
@@ -337,10 +337,6 @@ public class BookTicKet {
     }
 
     public void addTicKet(int idCus, int idCSCS, LocalDateTime Time) {
-        
-        
-        
-        
         try {
             Connection conn = JdbcUtils.getConn();
 
@@ -352,6 +348,34 @@ public class BookTicKet {
             insertStatement.setInt(3, idCus);
             insertStatement.setInt(4, 3);
             insertStatement.setInt(5, 0);
+            insertStatement.setInt(6, idCSCS);
+            insertStatement.executeUpdate();
+
+            System.out.println("da add vao tick et moi");
+
+            ResultSet generatedKeys = insertStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+//                int idTicket = generatedKeys.getInt(1);
+                // xử lý dữ liệu khi lấy được idBooking tự động tăng
+            }
+            insertStatement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
+    public void sellTicKet(int idCus, int idCSCS, LocalDateTime Time) {
+        try {
+            Connection conn = JdbcUtils.getConn();
+
+            System.out.println("da chay toi addTiket");
+            String insertSql = "INSERT INTO bus.ticket (idStationBuy, bookingDate, idCustomer, idStaff, status, idCoachStripCoachSeat) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement insertStatement = conn.prepareStatement(insertSql);
+            insertStatement.setInt(1, 1);
+            insertStatement.setTimestamp(2, Timestamp.valueOf(Time));
+            insertStatement.setInt(3, idCus);
+            insertStatement.setInt(4, 3);
+            insertStatement.setInt(5, 1);
             insertStatement.setInt(6, idCSCS);
             insertStatement.executeUpdate();
 
@@ -385,10 +409,12 @@ public class BookTicKet {
 //        chuyenxe2.forEach(trip->{
 //            System.out.println(trip.getDepartureTime());
 //        });
-        int id = ds.getIdCus("Võ Hữu Hữu", "0374516098", "Gia Lai");
-        System.out.print(id);
-        LocalDateTime now = LocalDateTime.now();
-        ds.addTicKet(id, id, now);
-
+//        int id = ds.getIdCus("Võ Hữu Hữu", "0374516098", "Gia Lai");
+//        System.out.print(id);
+//        LocalDateTime now = LocalDateTime.now();
+//        ds.addTicKet(id, id, now);
+            LocalDateTime now = LocalDateTime.now();
+            System.out.print(now);
     }
+    
 }

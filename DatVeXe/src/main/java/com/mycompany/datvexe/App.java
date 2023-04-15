@@ -21,28 +21,27 @@ public class App extends Application {
 
     public void start(Stage stage) throws IOException, SQLException {
 
-        scene = new Scene(loadFXML("BookTicKet"));
+        try {
+//        scene = new Scene(loadFXML("BookTicKet"));
 
-//        scene = new Scene(loadFXML("LoginGUI"));
+            scene = new Scene(loadFXML("BookTicket"));
 
-        stage.setScene(scene);
+
+            stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(false);
-        stage.setMinWidth(900);
-        stage.setMinHeight(480);
-        stage.show();
-        
 
+            stage.setResizable(false);
+            stage.setMinWidth(900);
+            stage.setMinHeight(480);
+            stage.show();
 
-//         chạy cập nhật vé
+////         chạy cập nhật vé
 //        ChangeTicketServices.autoUpdateTicket();
 //        ChangeTicketServices.autoUpdateCSCS();
-
-
-        // chạy cập nhật vé
-        ChangeTicketServices.autoUpdateTicket();
-        ChangeTicketServices.autoUpdateCSCS();
-
+           
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
 
     static void setRoot(String fxml) throws IOException {

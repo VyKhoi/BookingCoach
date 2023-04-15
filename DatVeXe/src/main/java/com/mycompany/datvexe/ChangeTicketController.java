@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -39,15 +39,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumnBase;
-import javafx.scene.control.TableRow;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.TableColumnHeader;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+
 import javafx.stage.Stage;
 
 /**
@@ -91,10 +89,11 @@ public class ChangeTicketController implements Initializable {
 
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
+    
     @FXML
     private Button logoutButton;
     @FXML
-    private Label lbManagerSystem;
+    private Button lbManagerSystem;
     AliasTicket selectedItem = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -473,4 +472,58 @@ public class ChangeTicketController implements Initializable {
 
 //        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
+    
+    
+//    bộ 3 hàm chuyển page 
+    public void switchStistical(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticalGUI.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+    public void switchSystemManager(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerSystem.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+    
+    public void switchBookTicket(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
 }
