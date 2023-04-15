@@ -7,10 +7,17 @@ package com.mycompany.datvexe;
 import com.bookingCoach.Alias.AliasStatistical;
 import com.bookingCoach.services.Login;
 import com.bookingCoach.services.StatisticalServices;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -25,22 +32,33 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
 
 /**
  * FXML Controller class
  *
  * @author Vy Khoi
  */
+
+
 public class StatisticalGUIController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
+//    piechart nài dùng để hiển thị biểu đồ theo ngày
     @FXML
-    private PieChart pieChart;
+    private PieChart pieChart = new PieChart();
+
+//    biểu đồ theo tháng
+    @FXML
+    private PieChart pieChartMonth = new PieChart();
+
     @FXML
     private Button lbManagerSystem;
 
@@ -51,20 +69,35 @@ public class StatisticalGUIController implements Initializable {
 
     private StatisticalServices st = new StatisticalServices();
 
+//    combobox select belong to month
+    @FXML
+    ComboBox<String> comboBoxMonth = new ComboBox<>();
+    //combobox select belong to year
+    @FXML
+    ComboBox<String> comboBoxYear = new ComboBox<>();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 //        xửa lý niếu là admin hiện button quản trị
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
-//         
             lbManagerSystem.setVisible(true);
             // Xử lý tại đây
         } else {
             // Nhân viên đăng nhập là nhân viên thông thường
-
             lbManagerSystem.setVisible(false);
             // Xử lý tại đây
         }
+
+//         thực hiện render các tháng và năm 
+        comboBoxMonth.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+        comboBoxYear.getItems().addAll("2022", "2023");
+//       đặt giá trị mặt định là tháng hiện tại
+        comboBoxMonth.setValue(String.valueOf(java.time.LocalDate.now().getMonthValue()));
+
+        comboBoxYear.setValue("2023");
+
     }
+//    hàm này để chạy thống kê theo ngày khi lick ok
 
     public void handleStatistical() throws SQLException {
         // clear dữ liệu cũ
@@ -105,10 +138,57 @@ public class StatisticalGUIController implements Initializable {
         pieChart.getData().addAll(pieChartDataList);
 
         for (Data data : pieChart.getData()) {
-            data.setName(data.getName() + ": " + String.format("%.0f", data.getPieValue()));
+            data.setName(data.getName() + ": " + String.format("%.00f", data.getPieValue()));
         }
 
     }
+
+//    hàm này để chạy thống kê theo tháng khi lick ok 
+    public void handleStatisticalMonth() throws SQLException {
+        // clear dữ liệu cũ
+        pieChartMonth.getData().clear();
+//        dateTimePicker.setValue(null);
+
+        if (comboBoxMonth.getValue() == null || comboBoxYear.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Vui lòng chọn tháng , năm ");
+
+            alert.showAndWait();
+            return;
+        }
+
+//        System.out.println(dateTimePicker.getValue().toString());
+        int monthSelect = Integer.parseInt(comboBoxMonth.getValue());
+        int yearSelect = Integer.parseInt(comboBoxYear.getValue());
+        ArrayList<AliasStatistical> ds = st.getSumOfCoachsStripOfMonth(monthSelect, yearSelect);
+        ArrayList<Data> pieChartDataList = new ArrayList<>();
+
+        if (ds.size() == 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Không có dữ liệu");
+
+            alert.showAndWait();
+            return;
+        }
+
+        // TODO
+        // Tạo Pie Chart Data cho các giá trị đã tính toán được
+        for (int i = 0; i < ds.size(); i++) {
+            AliasStatistical stat = ds.get(i);
+            pieChartDataList.add(new Data(stat.getLocationStart() + " đến " + stat.getLocationEnd(), stat.getTotal_price()));
+        }
+
+// Thêm Pie Chart Data vào Pie Chart
+        pieChartMonth.getData().addAll(pieChartDataList);
+
+        for (Data data : pieChartMonth.getData()) {
+            data.setName(data.getName() + ": " + String.format("%.00f", data.getPieValue()));
+        }
+
+    }
+
 
 //    bộ các hàm xử lý chuyển page
     public void switchSystemManager(ActionEvent e) throws IOException {

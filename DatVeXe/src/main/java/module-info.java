@@ -3,7 +3,8 @@ module com.mycompany.datvexe {
     requires javafx.fxml;
     requires java.sql;
     requires java.base;
-    
+    requires itextpdf;
+
 
 
     opens com.mycompany.datvexe to javafx.fxml;

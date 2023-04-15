@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: ChangeTicketTester
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 1.029 s <<< FAILURE! - in ChangeTicketTester
+testGetTicketswithNumberPhoneNotFound  Time elapsed: 0.343 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <[]>
+	at ChangeTicketTester.testGetTicketswithNumberPhoneNotFound(ChangeTicketTester.java:62)
+
+testNumbersAreEqual  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <5> but was: <9>
+	at ChangeTicketTester.testNumbersAreEqual(ChangeTicketTester.java:42)
+

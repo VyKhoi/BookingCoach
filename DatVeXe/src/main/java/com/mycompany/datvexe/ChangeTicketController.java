@@ -178,8 +178,8 @@ public class ChangeTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
@@ -297,8 +297,8 @@ public class ChangeTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
@@ -429,7 +429,7 @@ public class ChangeTicketController implements Initializable {
     }
 
     public void saveChangeSeatTicket() throws ParseException, SQLException {
-
+        System.out.println("Vào hàm save");
         try {
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
             Date date = dateFormat2.parse(departureTimeLabel.getText());
