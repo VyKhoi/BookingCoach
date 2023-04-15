@@ -13,10 +13,13 @@ com\bookingCoach\pojo\CoachStripCoachSeat.class
 com\bookingCoach\pojo\Coachs.class
 com\bookingCoach\pojo\Ticket.class
 com\bookingCoach\services\BookTicKet.class
+com\bookingCoach\services\StatisticalServices.class
 com\bookingCoach\services\ChangeTicketServices.class
 com\bookingCoach\services\RegisterService.class
+com\mycompany\datvexe\App.class
 com\bookingCoach\pojo\Staff.class
 com\mycompany\datvexe\StatisticalGUIController.class
+com\bookingCoach\Alias\AliasStatistical.class
 com\bookingCoach\services\JdbcUtils.class
 com\bookingCoach\Alias\AliasTicket.class
 com\mycompany\datvexe\LoginGUIController.class

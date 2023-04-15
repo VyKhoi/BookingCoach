@@ -354,7 +354,7 @@ public class ChangeTicketServices {
     }
 
     public int updateSeatOfTicket(AliasTicket ticket, String departureTime, int numberSeat) throws SQLException {
-       
+
         if (ticket.getStatusTicket() == "Đã nhận") {
             return -1;
         }
@@ -399,7 +399,7 @@ public class ChangeTicketServices {
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, departureTime); // set giá trị của biến idTicket vào câu lệnh truy vấn
-           pstmt.setInt(2, idCoachOfTicket);
+            pstmt.setInt(2, idCoachOfTicket);
             pstmt.setInt(3, numberSeat);
 
             System.out.println("chuan bi excute");
@@ -437,6 +437,43 @@ public class ChangeTicketServices {
             System.out.println(ex.toString());
         }
         return 0;
+    }
+
+    public int checkCanChange(AliasTicket ticket) throws SQLException {
+        if (ticket.getStatusTicket() == "Đã nhận") {
+            return -1;
+        }
+
+        try ( Connection conn = JdbcUtils.getConn()) {
+
+            // lấy xe
+            String queryGetCoach = "SELECT cscs.idCoachStrips, cscs.departureTime, cscs.idCoach FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
+                    + "where t.idCoachStripCoachSeat = cscs.idCSCS\n"
+                    + "and t.idTicket = ?"; // sử dụng dấu ? thay cho biến idTicket
+
+            PreparedStatement pstmtGetCoach = conn.prepareStatement(queryGetCoach);
+            pstmtGetCoach.setInt(1, ticket.getIdTicket()); // set giá trị của biến idTicket vào câu lệnh truy vấn
+            ResultSet rsGetCoach = pstmtGetCoach.executeQuery();
+            int idCoachOfTicket = -1;
+            if (rsGetCoach.next()) {
+                idCoachOfTicket = rsGetCoach.getInt("idCoach");
+            }
+            System.out.println("Id cửa chiếc xe là " + idCoachOfTicket);
+
+            java.util.Date depa60 = ticket.getDepartureTime();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(depa60);
+            cal.add(Calendar.MINUTE, -60);
+            depa60 = cal.getTime();
+
+            java.util.Date now = new java.util.Date();
+
+            if (now.compareTo(depa60) > 0) {
+                System.out.println("Đéo sửa đc , sau 60 roi " + now + "  :  " + depa60);
+                return 0;
+            }
+            return 1;
+        }
     }
 
     public static final void autoUpdateTicket() {

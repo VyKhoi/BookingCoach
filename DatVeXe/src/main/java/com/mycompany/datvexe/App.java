@@ -39,7 +39,7 @@ public class App extends Application {
 //         chạy cập nhật vé
 //        ChangeTicketServices.autoUpdateTicket();
 //        ChangeTicketServices.autoUpdateCSCS();
-           
+//           
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }

@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,6 +72,9 @@ import org.w3c.dom.Document;
  */
 public class BookTicketController implements Initializable {
 
+//    vé được chuyển qua để thực hiện thay đổi chuyến
+    public static AliasTicket ticketChangeCoachStrip = null;
+
     /**
      * Initializes the controller class.
      *
@@ -80,6 +84,15 @@ public class BookTicketController implements Initializable {
 //    private RequiredFieldValidator validator;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         acceptChangeCoachStrip.setDisable(true);
+        if (ticketChangeCoachStrip != null) {
+            System.out.println("xuat thong tin ve chuyen " + ticketChangeCoachStrip.toString());
+            nameOfCus.setText(ticketChangeCoachStrip.getNameCustomer());
+            address.setText(ticketChangeCoachStrip.getAddressCus());
+            number.setText(ticketChangeCoachStrip.getPhoneNumber());
+            acceptChangeCoachStrip.setDisable(false);
+        }
+
         renderStrips();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -137,6 +150,8 @@ public class BookTicketController implements Initializable {
 
     @FXML
     private Label price;
+    @FXML
+    private Button acceptChangeCoachStrip;
 
     // thuộc tính của nhận vé lấy từ changeTicKet
     ChangeTicketServices ctk = new ChangeTicketServices();
@@ -376,6 +391,120 @@ public class BookTicketController implements Initializable {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
     }
+    
+     @FXML
+    public void changeTicKet() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        
+        if (strips.getSelectionModel().isEmpty()) {
+
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn tuyến xe.");
+            alert.showAndWait();
+            return;
+        } else if (time.getSelectionModel().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn thời gian khởi hành.");
+            alert.showAndWait();
+            return;
+        } else if (typeOfCar.getSelectionModel().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn loại xe.");
+            alert.showAndWait();
+            return;
+        } else if (numberOfCar.getSelectionModel().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn số xe.");
+            alert.showAndWait();
+            return;
+        } else if (nameSeat.getSelectionModel().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn số ghế.");
+            alert.showAndWait();
+            return;
+        } else if (nameOfCus.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập tên khách hàng.");
+            alert.showAndWait();
+            return;
+        } else if (address.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập địa chỉ.");
+            alert.showAndWait();
+            return;
+        } else if (number.getText().isEmpty()) {
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập số điện thoại.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            System.out.println("orderTIcKet da vo day");
+            BookTicKet ds = new BookTicKet();
+            ChangeTicketServices chticket = new ChangeTicketServices();
+            int idCoach = Integer.parseInt(numberOfCar.getValue().toString());
+            int idCoachstrip = strips.getSelectionModel().getSelectedIndex() + 1;
+            LocalDateTime localDateTime = (LocalDateTime) time.getValue();
+            int nameSeats = Integer.parseInt(nameSeat.getValue().toString());
+            //Lấy được idCSCS
+            int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
+
+            String ten = nameOfCus.getText();
+            String diaChi = address.getText();
+            String soDienThoai = number.getText();
+
+            String times = timeOrder.getText();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
+
+            //Lấy được idCus
+            int idCus = ds.getIdCus(ten, soDienThoai, diaChi);
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime thresholdTime = localDateTime.minusMinutes(60);
+            if (now.isBefore(thresholdTime)) {
+                ds.addTicKet(idCus, idCSCS, timeOrders);
+                ds.updateStatusSeat(idCSCS);
+                chticket.deleteTicket(ticketChangeCoachStrip.getIdTicket());
+                ticketChangeCoachStrip = null;
+            } else {
+                Alert alert2 = new Alert(AlertType.INFORMATION);
+                alert2.setTitle("Thông báo");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Đặt vé thất bại!");
+                alert2.showAndWait();
+            }
+                
+            if(ticketChangeCoachStrip == null){
+                acceptChangeCoachStrip.setDisable(true);
+                nameOfCus.setText("");
+                address.setText("");
+                number.setText("");
+            }
+
+            
+            
+            // Thông báo
+            Alert alert2 = new Alert(AlertType.INFORMATION);
+            alert2.setTitle("Thông báo");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Đặt vé thành công!");
+            alert2.showAndWait();
+
+
+        } catch (Exception ex) {
+            System.out.println("loi ben ham orderTicket" + ex.toString());
+        }
+    }
 
     @FXML
     private void handleClearAll() {
@@ -444,9 +573,11 @@ public class BookTicketController implements Initializable {
 
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
+
             String idTicKet = Integer.toString(idTicket);
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("Mã vé: " + idTicKet + "\n");
+
                 writer.write("Họ và tên: " + nameOfCus.getText() + "\n");
                 writer.write("Địa chỉ: " + address.getText() + "\n");
                 writer.write("Số điện thoại: " + number.getText() + "\n");
@@ -462,12 +593,14 @@ public class BookTicketController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void printTicketByReceive(int IdTicket) {
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
             String idTicket = Integer.toString(IdTicket);
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("Mã vé: " + idTicket + "\n");
+
                 writer.write("Họ và tên: " + nameCustomerLabel.getText() + "\n");
                 writer.write("Địa chỉ: " + addressCustomerLabel.getText() + "\n");
                 writer.write("Số điện thoại: " + phoneCustomerLabel.getText() + "\n");
@@ -546,7 +679,7 @@ public class BookTicketController implements Initializable {
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
             System.out.print("Mã chuyến");
             System.out.print(idCSCS);
-            
+
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
             String soDienThoai = number.getText();
@@ -564,7 +697,7 @@ public class BookTicketController implements Initializable {
             if (now.isBefore(thresholdTime)) {
                 ds.sellTicKet(idCus, idCSCS, timeOrders);
                 ds.updateStatusSeat(idCSCS);
-                
+
             } else {
                 Alert alert2 = new Alert(AlertType.INFORMATION);
                 alert2.setTitle("Thông báo");
@@ -585,9 +718,11 @@ public class BookTicketController implements Initializable {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
     }
+    
+    
 
-    public void receiveTicket() {
-        int idTicket = Integer.parseInt(idTicketLabel.getText()) ;
+    public void receiveTicket() throws URISyntaxException {
+        int idTicket = Integer.parseInt(idTicketLabel.getText());
         String mySQL = "UPDATE bus.ticket SET status = 1 WHERE idTicket = ?";
         try {
             Connection conn = JdbcUtils.getConn();

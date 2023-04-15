@@ -121,6 +121,7 @@
                                        </font>
                                     </Label>
                                     <Button layoutX="596.0" layoutY="331.0" mnemonicParsing="false" onAction="#sellTicKet" prefHeight="46.0" prefWidth="82.0" text="BÁN VÉ" />
+                                    <Button fx:id="acceptChangeCoachStrip" layoutX="325.0" layoutY="333.0" mnemonicParsing="false" onAction="#changeTicKet" prefHeight="42.0" prefWidth="142.0" text="Xác nhận đổi chuyến" />
                                  </children>
                               </AnchorPane>
                            </content>

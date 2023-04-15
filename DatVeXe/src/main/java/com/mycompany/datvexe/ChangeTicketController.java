@@ -89,11 +89,12 @@ public class ChangeTicketController implements Initializable {
 
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
-    
+
     @FXML
     private Button logoutButton;
     @FXML
     private Button lbManagerSystem;
+    // selectedItem đây là alias dduwojcnajp khi mình lick trên dòng
     AliasTicket selectedItem = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -472,8 +473,52 @@ public class ChangeTicketController implements Initializable {
 
 //        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
-    
-    
+
+    public void switchToChangeCoachStrip(ActionEvent e) throws IOException, SQLException {
+        if (selectedItem == null) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("vui lòng chọn vé để đổi chuyến");
+            alert.showAndWait();
+            return;
+        }
+//        check có quuyen doi khong
+        int check = ctk.checkCanChange(selectedItem);
+        if (check == 0 || check == -1) {
+            if (check == 0) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("Không được đổi dưới 60 phút xe chạy");
+                alert.showAndWait();
+                return;
+            }
+             if (check == -1) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("vé đã nhận không được đổi");
+                alert.showAndWait();
+                return;
+            }
+        }
+        BookTicketController.ticketChangeCoachStrip = selectedItem;
+
+//         thực hiện chuyển page
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
 //    bộ 3 hàm chuyển page 
     public void switchStistical(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
@@ -508,7 +553,7 @@ public class ChangeTicketController implements Initializable {
         // Đóng Stage hiện tại
         currentStage.close();
     }
-    
+
     public void switchBookTicket(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
