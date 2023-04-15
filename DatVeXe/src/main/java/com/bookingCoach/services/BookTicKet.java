@@ -28,6 +28,8 @@ import javafx.scene.control.TextField;
  * @author ACER
  */
 public class BookTicKet {
+    
+    
 
     public List<Coachstrips> getAllChuyenXe() {
         List<Coachstrips> chuyenXeList = new ArrayList<>();

@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,6 +72,9 @@ import org.w3c.dom.Document;
  */
 public class BookTicketController implements Initializable {
 
+//    vé được chuyển qua để thực hiện thay đổi chuyến
+    public static AliasTicket ticketChangeCoachStrip = null;
+    
     /**
      * Initializes the controller class.
      *
@@ -80,6 +84,8 @@ public class BookTicketController implements Initializable {
 //    private RequiredFieldValidator validator;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("xuat thong tin ve chuyen "+ ticketChangeCoachStrip.toString());
+        
         renderStrips();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -443,7 +449,7 @@ public class BookTicketController implements Initializable {
     private void printTicket() {
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
-            try (FileWriter writer = new FileWriter(file)) {
+            try ( FileWriter writer = new FileWriter(file)) {
                 writer.write("Họ và tên: " + nameOfCus.getText() + "\n");
                 writer.write("Địa chỉ: " + address.getText() + "\n");
                 writer.write("Số điện thoại: " + number.getText() + "\n");
@@ -459,10 +465,12 @@ public class BookTicketController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void printTicketByReceive() {
+
+    private void printTicketByReceive() throws URISyntaxException {
         try {
-            File file = new File("B:\\PrintTicket/ticket.txt");
-            try (FileWriter writer = new FileWriter(file)) {
+            File file = new File("C:\\Users\\Vy Khoi\\Desktop\\KiemThu\\KiemThuProject\\DatVeXe\\src\\main\\java\\TicketExport\\ticket.txt");
+
+            try ( FileWriter writer = new FileWriter(file)) {
                 writer.write("Họ và tên: " + nameCustomerLabel.getText() + "\n");
                 writer.write("Địa chỉ: " + addressCustomerLabel.getText() + "\n");
                 writer.write("Số điện thoại: " + phoneCustomerLabel.getText() + "\n");
@@ -557,7 +565,7 @@ public class BookTicketController implements Initializable {
             if (now.isBefore(thresholdTime)) {
                 ds.sellTicKet(idCus, idCSCS, timeOrders);
                 ds.updateStatusSeat(idCSCS);
-                
+
                 printTicket();
             } else {
                 Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -579,8 +587,8 @@ public class BookTicketController implements Initializable {
         }
     }
 
-    public void receiveTicket() {
-        int idTicket = Integer.parseInt(idTicketLabel.getText()) ;
+    public void receiveTicket() throws URISyntaxException {
+        int idTicket = Integer.parseInt(idTicketLabel.getText());
         String mySQL = "UPDATE bus.ticket SET status = 1 WHERE idTicket = ?";
         try {
             Connection conn = JdbcUtils.getConn();
