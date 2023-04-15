@@ -440,10 +440,13 @@ public class BookTicketController implements Initializable {
         currentStage.close();
     }
 
-    private void printTicket() {
+    private void printTicket(int idTicket) {
+
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
+            String idTicKet = Integer.toString(idTicket);
             try (FileWriter writer = new FileWriter(file)) {
+                writer.write("Mã vé: " + idTicKet + "\n");
                 writer.write("Họ và tên: " + nameOfCus.getText() + "\n");
                 writer.write("Địa chỉ: " + address.getText() + "\n");
                 writer.write("Số điện thoại: " + number.getText() + "\n");
@@ -459,10 +462,12 @@ public class BookTicketController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void printTicketByReceive() {
+    private void printTicketByReceive(int IdTicket) {
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
+            String idTicket = Integer.toString(IdTicket);
             try (FileWriter writer = new FileWriter(file)) {
+                writer.write("Mã vé: " + idTicket + "\n");
                 writer.write("Họ và tên: " + nameCustomerLabel.getText() + "\n");
                 writer.write("Địa chỉ: " + addressCustomerLabel.getText() + "\n");
                 writer.write("Số điện thoại: " + phoneCustomerLabel.getText() + "\n");
@@ -539,7 +544,9 @@ public class BookTicketController implements Initializable {
             int nameSeats = Integer.parseInt(nameSeat.getValue().toString());
             //Lấy được idCSCS
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
-
+            System.out.print("Mã chuyến");
+            System.out.print(idCSCS);
+            
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
             String soDienThoai = number.getText();
@@ -558,7 +565,6 @@ public class BookTicketController implements Initializable {
                 ds.sellTicKet(idCus, idCSCS, timeOrders);
                 ds.updateStatusSeat(idCSCS);
                 
-                printTicket();
             } else {
                 Alert alert2 = new Alert(AlertType.INFORMATION);
                 alert2.setTitle("Thông báo");
@@ -566,7 +572,8 @@ public class BookTicketController implements Initializable {
                 alert2.setContentText("Chỉ được bán vé trước 5 phút kể từ khi xe bắt đầu chạy!");
                 alert2.showAndWait();
             }
-
+            int idTicket = ds.getIdTicket(idCSCS);
+            printTicket(idTicket);
             // Thông báo
             Alert alert2 = new Alert(AlertType.INFORMATION);
             alert2.setTitle("Thông báo");
@@ -588,7 +595,7 @@ public class BookTicketController implements Initializable {
             statement.setInt(1, idTicket);
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                printTicketByReceive();
+                printTicketByReceive(idTicket);
             }
             statement.close();
             conn.close();

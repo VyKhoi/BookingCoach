@@ -259,7 +259,7 @@ public class BookTicKet {
         return idCSCS;
 
     }
-    
+
     public double getPrice(int idCoach) {
         double price = 0;
         String sql = "SELECT price FROM bus.coachstripcoachseat WHERE idCoach = ?";
@@ -282,24 +282,51 @@ public class BookTicKet {
         return price;
 
     }
-    
-    public void updateStatusSeat(int idCSCS) {
-    String sql = "UPDATE bus.coachstripcoachseat SET statusSeat = 1 WHERE idCSCS = ?";
-    try {
-        Connection conn = JdbcUtils.getConn();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, idCSCS);
-        int rowsUpdated = statement.executeUpdate();
-        if (rowsUpdated > 0) {
-            System.out.println("Trạng thái CSCS đã được cập nhật thành công.");
-        }
-        statement.close();
-        conn.close();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    }
-}
 
+    public void updateStatusSeat(int idCSCS) {
+        String sql = "UPDATE bus.coachstripcoachseat SET statusSeat = 1 WHERE idCSCS = ?";
+        try {
+            Connection conn = JdbcUtils.getConn();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, idCSCS);
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Trạng thái CSCS đã được cập nhật thành công.");
+            }
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    
+    
+    public int getIdTicket(int idCSCS){
+        int idTicket = 0;
+        String mySQL = "SELECT idTicket FROM bus.ticket WHERE idCoachStripCoachSeat = ? ";
+        try {
+            Connection conn = JdbcUtils.getConn();
+
+            PreparedStatement statement = conn.prepareStatement(mySQL);
+            statement.setInt(1, idCSCS);
+ 
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                idTicket = resultSet.getInt("idTicket");
+            }
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return idTicket;
+    }
+    
+    
+    
+    
     public int getIdCus(String ten, String number, String Address) {
         int idCus = 0;
         String sql = "SELECT idCustomer FROM customer WHERE name = ? AND phoneNumber = ?";
@@ -364,6 +391,7 @@ public class BookTicKet {
             System.out.println(ex.toString());
         }
     }
+
     public void sellTicKet(int idCus, int idCSCS, LocalDateTime Time) {
         try {
             Connection conn = JdbcUtils.getConn();
@@ -393,28 +421,12 @@ public class BookTicKet {
         }
     }
 
-   
     public static void main(String[] args) {
         BookTicKet ds = new BookTicKet();
-//        List<Coachstrips> chuyenxe = ds.getAllChuyenXe();
-//        chuyenxe.forEach(trip->{
-//            System.out.println(trip.getDistance());
-//        });
-//        List<Station> chuyenxe1 = ds.getAllStation();
-//        chuyenxe1.forEach(trip->{
-//            System.out.println(trip.getAddress());
-//        });
-//LocalDateTime now = LocalDateTime.now();
-//        List<CoachStripCoachSeat> chuyenxe2 = ds.getListCoachStripCanOrder(1, now);
-//        chuyenxe2.forEach(trip->{
-//            System.out.println(trip.getDepartureTime());
-//        });
-//        int id = ds.getIdCus("Võ Hữu Hữu", "0374516098", "Gia Lai");
-//        System.out.print(id);
-//        LocalDateTime now = LocalDateTime.now();
-//        ds.addTicKet(id, id, now);
-            LocalDateTime now = LocalDateTime.now();
-            System.out.print(now);
+//      
+        int idTicket = ds.getIdTicket(300);
+
+        System.out.print(idTicket);
     }
-    
+
 }
