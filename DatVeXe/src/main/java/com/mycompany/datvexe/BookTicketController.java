@@ -667,8 +667,8 @@ public class BookTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
@@ -786,8 +786,8 @@ public class BookTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));

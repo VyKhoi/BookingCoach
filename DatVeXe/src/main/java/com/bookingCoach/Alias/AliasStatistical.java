@@ -4,6 +4,8 @@
  */
 package com.bookingCoach.Alias;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Vy Khoi
@@ -34,7 +36,9 @@ public class AliasStatistical {
 
     @Override
     public String toString() {
-        return "AliasStatistical{" + "departureTime=" + departureTime + ", idCoachStrips=" + idCoachStrips + ", total_price=" + total_price + ", idStationsStart=" + idStationsStart + ", idStationsEnd=" + idStationsEnd + ", locationStart=" + locationStart + ", locationEnd=" + locationEnd + '}';
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String formattedNumber = decimalFormat.format(total_price);
+        return "AliasStatistical{" + "departureTime=" + departureTime + ", idCoachStrips=" + idCoachStrips + ", total_price=" + formattedNumber + ", idStationsStart=" + idStationsStart + ", idStationsEnd=" + idStationsEnd + ", locationStart=" + locationStart + ", locationEnd=" + locationEnd + '}';
     }
 
     public void setDepartureTime(String departureTime) {

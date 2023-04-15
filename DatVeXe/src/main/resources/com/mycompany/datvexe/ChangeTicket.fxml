@@ -118,7 +118,7 @@
                                     <Label fx:id="coachNumberLabel" layoutX="369.0" layoutY="97.0" style="-fx-background-color: white;" text="số xe" />
                                     <Label layoutX="536.0" layoutY="127.0" text="Ghế được chọn" />
                                     <ComboBox fx:id="comboBoxSeatOke" layoutX="641.0" layoutY="123.0" prefWidth="150.0" />
-                                    <Button layoutX="751.0" layoutY="176.0" mnemonicParsing="false" text="SAVE" />
+                                    <Button layoutX="751.0" layoutY="176.0" mnemonicParsing="false" onAction="#saveChangeSeatTicket" text="SAVE" />
                                     <Button layoutX="659.0" layoutY="176.0" mnemonicParsing="false" text="ĐỔI CHUYẾN" />
                                     <Label fx:id="nameCustomerLabel" layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
                                     <Label fx:id="addressCustomerLabel" layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
