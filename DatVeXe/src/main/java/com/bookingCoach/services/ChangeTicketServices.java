@@ -131,6 +131,7 @@ public class ChangeTicketServices {
 
         } // Khối mã xử lý ngoại lệ IOException
         catch (Exception e) {
+            System.out.println(e.toString());
         }
 
         return null;
