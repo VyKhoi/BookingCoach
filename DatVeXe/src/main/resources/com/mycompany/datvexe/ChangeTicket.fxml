@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="1003.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.ChangeTicketController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="1003.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.ChangeTicketController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.33331298828125" minWidth="10.0" prefWidth="164.66667683919272" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.99999237060547" minWidth="10.0" prefWidth="129.99998982747397" />
@@ -102,31 +102,31 @@
                                     </RadioButton>
                                     <RadioButton fx:id="SearchNumberPhoneRadioButton" layoutX="94.0" layoutY="48.0" mnemonicParsing="false" text="SĐT Khách Hàng" toggleGroup="$typelookupchangeseat" />
                                     <Label layoutX="14.0" layoutY="90.0" text="Tên Khách" />
-                                    <Label layoutX="16.0" layoutY="129.0" text="SĐT" />
-                                    <Label layoutX="16.0" layoutY="172.0" text="Địa Chỉ" />
+                                    <Label layoutX="17.0" layoutY="122.0" text="SĐT" />
+                                    <Label layoutX="14.0" layoutY="158.0" text="Địa Chỉ" />
                                     <Label layoutX="308.0" layoutY="21.0" text="Mã vé" />
                                     <Label layoutX="590.0" layoutY="24.0" text="Đi" />
                                     <Label layoutX="584.0" layoutY="59.0" text="Đến" />
-                                    <Label layoutX="558.0" layoutY="99.0" text="Ngày Giờ" />
-                                    <Label fx:id="idTicketLabel" layoutX="369.0" layoutY="21.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label fx:id="nameStationEndLabel" layoutX="627.0" layoutY="59.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label fx:id="nameStationStartLabel" layoutX="627.0" layoutY="24.0" style="-fx-background-color: white;" text="Label" />
-                                    <Label fx:id="departureTimeLabel" layoutX="627.0" layoutY="99.0" style="-fx-background-color: white;" text="Label" />
+                                    <Label layoutX="558.0" layoutY="90.0" prefHeight="17.0" prefWidth="50.0" text="Ngày Giờ" />
+                                    <Label fx:id="idTicketLabel" layoutX="369.0" layoutY="21.0" prefHeight="18.0" prefWidth="139.0" style="-fx-background-color: white;" />
+                                    <Label fx:id="nameStationEndLabel" layoutX="627.0" layoutY="59.0" prefHeight="18.0" prefWidth="162.0" style="-fx-background-color: white;" />
+                                    <Label fx:id="nameStationStartLabel" layoutX="629.0" layoutY="27.0" prefHeight="18.0" prefWidth="158.0" style="-fx-background-color: white;" />
+                                    <Label fx:id="departureTimeLabel" layoutX="627.0" layoutY="89.0" prefHeight="18.0" prefWidth="163.0" style="-fx-background-color: white;" />
                                     <Label layoutX="289.0" layoutY="57.0" text="Ngày Đặt" />
-                                    <Label fx:id="dateBookingLabel" layoutX="369.0" layoutY="57.0" style="-fx-background-color: white;" text="Ngày Đặt" />
-                                    <Label layoutX="326.0" layoutY="97.0" text="XE" />
-                                    <Label fx:id="coachNumberLabel" layoutX="369.0" layoutY="97.0" style="-fx-background-color: white;" text="số xe" />
-                                    <Label layoutX="536.0" layoutY="127.0" text="Ghế được chọn" />
-                                    <ComboBox fx:id="comboBoxSeatOke" layoutX="641.0" layoutY="123.0" prefWidth="150.0" />
+                                    <Label fx:id="dateBookingLabel" layoutX="369.0" layoutY="57.0" prefHeight="18.0" prefWidth="139.0" style="-fx-background-color: white;" />
+                                    <Label layoutX="327.0" layoutY="89.0" text="XE" />
+                                    <Label fx:id="coachNumberLabel" layoutX="370.0" layoutY="89.0" prefHeight="18.0" prefWidth="139.0" style="-fx-background-color: white;" />
+                                    <Label layoutX="537.0" layoutY="120.0" text="Ghế được chọn" />
+                                    <ComboBox fx:id="comboBoxSeatOke" layoutX="627.0" layoutY="116.0" prefWidth="150.0" />
                                     <Button layoutX="751.0" layoutY="176.0" mnemonicParsing="false" onAction="#saveChangeSeatTicket" text="SAVE" />
                                     <Button layoutX="659.0" layoutY="176.0" mnemonicParsing="false" onAction="#switchToChangeCoachStrip" text="ĐỔI CHUYẾN" />
-                                    <Label fx:id="nameCustomerLabel" layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
-                                    <Label fx:id="addressCustomerLabel" layoutX="94.0" layoutY="172.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
-                                    <Label fx:id="phoneCustomerLabel" layoutX="94.0" layoutY="129.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" text="Tên Khách" />
-                                    <Label layoutX="289.0" layoutY="129.0" text="nhân viên bán" />
+                                    <Label fx:id="nameCustomerLabel" layoutX="94.0" layoutY="90.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" />
+                                    <Label fx:id="addressCustomerLabel" layoutX="92.0" layoutY="158.0" prefHeight="18.0" prefWidth="417.0" style="-fx-background-color: white;" />
+                                    <Label fx:id="phoneCustomerLabel" layoutX="95.0" layoutY="122.0" prefHeight="17.0" prefWidth="157.0" style="-fx-background-color: white;" />
+                                    <Label layoutX="290.0" layoutY="122.0" text="nhân viên bán" />
                                     <Button layoutX="601.0" layoutY="176.0" mnemonicParsing="false" onAction="#deleteTicket" text="HỦY VÉ" />
-                                    <Label fx:id="nameStaffLabel" layoutX="367.0" layoutY="129.0" style="-fx-background-color: white;" text="nhân viên bán" />
-                                    <Button fx:id="logoutButton" layoutX="466.0" layoutY="167.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="27.0" prefWidth="92.0" text="Đăng xuất">
+                                    <Label fx:id="nameStaffLabel" layoutX="368.0" layoutY="122.0" prefHeight="18.0" prefWidth="140.0" style="-fx-background-color: white;" />
+                                    <Button fx:id="logoutButton" layoutX="537.0" layoutY="144.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="17.0" prefWidth="42.0" text="Đăng xuất">
                                        <font>
                                           <Font size="13.0" />
                                        </font>

@@ -205,9 +205,6 @@ public class BookTicketController implements Initializable {
         int selectedIndex = strips.getSelectionModel().getSelectedIndex() + 1;
         LocalDateTime now = LocalDateTime.now();
         List<CoachStripCoachSeat> listCoachStripCoachSeat = ds.getListCoachStripCanOrder(selectedIndex, now);
-        double prices = ds.getPrice(selectedIndex);
-        String pricesString = Double.toString(prices);
-        price.setText(pricesString);
         List<LocalDateTime> listTime = new ArrayList<>();
         for (CoachStripCoachSeat coachStripCoachSeat : listCoachStripCoachSeat) {
             listTime.add(coachStripCoachSeat.getDepartureTime());
@@ -274,6 +271,9 @@ public class BookTicketController implements Initializable {
     public void renderNameSeat() {
         BookTicKet ds = new BookTicKet();
         int idCoach = Integer.parseInt(numberOfCar.getValue().toString());
+        double prices = ds.getPrice(idCoach);
+        String pricesString = Double.toString(prices);
+        price.setText(pricesString);
         int idCoachstrip = strips.getSelectionModel().getSelectedIndex() + 1;
         LocalDateTime localDateTime = (LocalDateTime) time.getValue();
         List<Integer> listNameSeat = ds.getListNameSeat(idCoach, idCoachstrip, localDateTime);
