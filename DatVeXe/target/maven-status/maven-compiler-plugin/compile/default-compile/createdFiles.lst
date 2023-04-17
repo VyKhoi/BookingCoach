@@ -12,7 +12,6 @@ com\mycompany\datvexe\BookTicketController$1.class
 com\bookingCoach\pojo\CoachStripCoachSeat.class
 com\bookingCoach\pojo\Coachs.class
 com\bookingCoach\pojo\Ticket.class
-com\bookingCoach\services\BookTicKet.class
 com\bookingCoach\services\StatisticalServices.class
 com\bookingCoach\services\ChangeTicketServices.class
 com\bookingCoach\services\RegisterService.class

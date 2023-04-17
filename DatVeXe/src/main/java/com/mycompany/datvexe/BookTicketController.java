@@ -84,7 +84,7 @@ public class BookTicketController implements Initializable {
 //    private RequiredFieldValidator validator;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         acceptChangeCoachStrip.setDisable(true);
+        acceptChangeCoachStrip.setDisable(true);
         if (ticketChangeCoachStrip != null) {
             System.out.println("xuat thong tin ve chuyen " + ticketChangeCoachStrip.toString());
             nameOfCus.setText(ticketChangeCoachStrip.getNameCustomer());
@@ -117,6 +117,21 @@ public class BookTicketController implements Initializable {
             lbManagerSystem.setVisible(false);
             // Xử lý tại đây
         }
+
+        number.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Kiểm tra xem chuỗi nhập vào có đúng định dạng không
+            if (newValue.matches("^0\\d{9}$")) {
+                
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("NHẬP SAI SĐT");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng nhập đúng số điện thoại, bắt đầu từ 0 và chỉ có 10 số");
+                alert.showAndWait();
+                number.setText("");
+            }
+        });
     }
     // thuộc tính của đặt vé
     @FXML
@@ -391,11 +406,11 @@ public class BookTicketController implements Initializable {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
     }
-    
-     @FXML
+
+    @FXML
     public void changeTicKet() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        
+
         if (strips.getSelectionModel().isEmpty()) {
 
             alert.setTitle("Thông báo");
@@ -483,23 +498,20 @@ public class BookTicketController implements Initializable {
                 alert2.setContentText("Đặt vé thất bại!");
                 alert2.showAndWait();
             }
-                
-            if(ticketChangeCoachStrip == null){
+
+            if (ticketChangeCoachStrip == null) {
                 acceptChangeCoachStrip.setDisable(true);
                 nameOfCus.setText("");
                 address.setText("");
                 number.setText("");
             }
 
-            
-            
             // Thông báo
             Alert alert2 = new Alert(AlertType.INFORMATION);
             alert2.setTitle("Thông báo");
             alert2.setHeaderText(null);
             alert2.setContentText("Đặt vé thành công!");
             alert2.showAndWait();
-
 
         } catch (Exception ex) {
             System.out.println("loi ben ham orderTicket" + ex.toString());
@@ -573,7 +585,9 @@ public class BookTicketController implements Initializable {
 
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
-
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
             String idTicKet = Integer.toString(idTicket);
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("Mã vé: " + idTicKet + "\n");
@@ -581,12 +595,13 @@ public class BookTicketController implements Initializable {
                 writer.write("Họ và tên: " + nameOfCus.getText() + "\n");
                 writer.write("Địa chỉ: " + address.getText() + "\n");
                 writer.write("Số điện thoại: " + number.getText() + "\n");
-                writer.write("Loại xe: " + typeOfCar.getValue().toString() + "\n");
                 writer.write("Số xe: " + numberOfCar.getValue().toString() + "\n");
                 writer.write("Tuyến: " + strips.getValue().toString() + "\n");
                 writer.write("Số ghế: " + nameSeat.getValue().toString() + "\n");
                 writer.write("Thời gian xuất phát: " + time.getValue().toString() + "\n");
-                writer.write("Giá vé: " + price.getText() + "\n");
+                writer.write("Giá vé: " + price.getText() + "VNĐ" + "\n");
+                writer.write("Nhân viên: " + Login.loginStaff.getNameStaff() + "\n");
+                writer.write("Ngày in: " + formattedDateTime + "\n");
             }
             System.out.println("Ticket saved to file.");
         } catch (IOException e) {
@@ -598,16 +613,20 @@ public class BookTicketController implements Initializable {
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
             String idTicket = Integer.toString(IdTicket);
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("Mã vé: " + idTicket + "\n");
-
                 writer.write("Họ và tên: " + nameCustomerLabel.getText() + "\n");
                 writer.write("Địa chỉ: " + addressCustomerLabel.getText() + "\n");
                 writer.write("Số điện thoại: " + phoneCustomerLabel.getText() + "\n");
                 writer.write("Số xe: " + coachNumberLabel.getText() + "\n");
                 writer.write("Tuyến: " + nameStationStartLabel.getText() + " - " + nameStationEndLabel.getText() + "\n");
-
+                writer.write("Giá vé: " + price.getText() + "VNĐ" + "\n");
                 writer.write("Thời gian xuất phát: " + departureTimeLabel.getText() + "\n");
+                writer.write("Nhân viên: " + Login.loginStaff.getNameStaff() + "\n");
+                writer.write("Ngày in: " + formattedDateTime + "\n");
             }
             System.out.println("Ticket saved to file.");
         } catch (IOException e) {
@@ -718,8 +737,6 @@ public class BookTicketController implements Initializable {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
     }
-    
-    
 
     public void receiveTicket() throws URISyntaxException {
         int idTicket = Integer.parseInt(idTicketLabel.getText());
