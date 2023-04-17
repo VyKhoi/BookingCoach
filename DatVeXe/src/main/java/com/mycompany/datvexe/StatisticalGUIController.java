@@ -44,8 +44,6 @@ import org.w3c.dom.Document;
  *
  * @author Vy Khoi
  */
-
-
 public class StatisticalGUIController implements Initializable {
 
     /**
@@ -76,8 +74,15 @@ public class StatisticalGUIController implements Initializable {
     @FXML
     ComboBox<String> comboBoxYear = new ComboBox<>();
 
+    @FXML
+    private Label nameSatff = new Label();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
 //        xửa lý niếu là admin hiện button quản trị
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
             lbManagerSystem.setVisible(true);
@@ -98,7 +103,6 @@ public class StatisticalGUIController implements Initializable {
 
     }
 //    hàm này để chạy thống kê theo ngày khi lick ok
-
     public void handleStatistical() throws SQLException {
         // clear dữ liệu cũ
         pieChart.getData().clear();
@@ -131,7 +135,7 @@ public class StatisticalGUIController implements Initializable {
         // Tạo Pie Chart Data cho các giá trị đã tính toán được
         for (int i = 0; i < ds.size(); i++) {
             AliasStatistical stat = ds.get(i);
-            pieChartDataList.add(new Data(stat.getLocationStart() + " đến " + stat.getLocationEnd(), stat.getTotal_price()));
+            pieChartDataList.add(new Data(stat.getLocationStart() + "->" + stat.getLocationEnd() + " lúc: "+stat.getDepartureTimeHHmmss(), stat.getTotal_price()));
         }
 
 // Thêm Pie Chart Data vào Pie Chart
@@ -188,7 +192,6 @@ public class StatisticalGUIController implements Initializable {
         }
 
     }
-
 
 //    bộ các hàm xử lý chuyển page
     public void switchSystemManager(ActionEvent e) throws IOException {

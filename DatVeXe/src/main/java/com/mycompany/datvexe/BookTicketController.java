@@ -71,6 +71,9 @@ import org.w3c.dom.Document;
  * @author ACER
  */
 public class BookTicketController implements Initializable {
+    
+    @FXML
+    private Label nameSatff = new Label();
 
 //    vé được chuyển qua để thực hiện thay đổi chuyến
     public static AliasTicket ticketChangeCoachStrip = null;
@@ -92,7 +95,7 @@ public class BookTicketController implements Initializable {
             number.setText(ticketChangeCoachStrip.getPhoneNumber());
             acceptChangeCoachStrip.setDisable(false);
         }
-
+        
         renderStrips();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -107,9 +110,13 @@ public class BookTicketController implements Initializable {
         // ChangeTicKet
         SearchIdRadioButton.setSelected(true);
 //        xửa lý niếu là admin hiện button quản trị
+        if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
 //         
             lbManagerSystem.setVisible(true);
+
             // Xử lý tại đây
         } else {
             // Nhân viên đăng nhập là nhân viên thông thường
@@ -136,33 +143,33 @@ public class BookTicketController implements Initializable {
     // thuộc tính của đặt vé
     @FXML
     private ComboBox time;
-
+    
     @FXML
     private ComboBox strips;
-
+    
     @FXML
     private ComboBox nameSeat;
-
+    
     @FXML
     private ComboBox typeOfCar;
-
+    
     @FXML
     private ComboBox numberOfCar;
-
+    
     @FXML
     private Label timeOrder;
-
+    
     @FXML
     private TextField nameOfCus;
-
+    
     @FXML
     private TextField address;
-
+    
     @FXML
     private TextField number;
     @FXML
     private Button lbManagerSystem;
-
+    
     @FXML
     private Label price;
     @FXML
@@ -200,20 +207,20 @@ public class BookTicketController implements Initializable {
     private Label nameStationEndLabel = new Label();
     @FXML
     private Label departureTimeLabel = new Label();
-
+    
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
-
+    
     AliasTicket selectedItem = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    
     public void renderStrips() {
         BookTicKet ds = new BookTicKet();
         ObservableList<String> list = FXCollections.observableArrayList(ds.addStrips());
         strips.setItems(list);
-
+        
     }
-
+    
     @FXML
     public void onStripsSelected() {
         BookTicKet ds = new BookTicKet();
@@ -226,9 +233,9 @@ public class BookTicketController implements Initializable {
         }
         ObservableList<LocalDateTime> observableListTime = FXCollections.observableList(listTime);
         time.setItems(observableListTime);
-
+        
     }
-
+    
     @FXML
     public void onTimeSelected() {
         BookTicKet ds = new BookTicKet();
@@ -245,7 +252,7 @@ public class BookTicketController implements Initializable {
             List<Integer> listNumberCoach = new ArrayList<>();
             for (Coachs listCoach : ListCoach) {
                 listTypeCar.add(listCoach.getTypeOfCoach());
-
+                
             }
             ObservableList<String> observableListTime = FXCollections.observableList(listTypeCar);
             typeOfCar.setItems(observableListTime);
@@ -271,7 +278,7 @@ public class BookTicketController implements Initializable {
                     numberOfCar.getItems().setAll(observablelistNumberCoach);
                 }
             });
-
+            
         } else {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Thông báo");
@@ -279,9 +286,9 @@ public class BookTicketController implements Initializable {
             alert.setContentText("Phải đặt vé trước 60 phút kể từ khi xe bắt đầu chạy!");
             alert.showAndWait();
         }
-
+        
     }
-
+    
     @FXML
     public void renderNameSeat() {
         BookTicKet ds = new BookTicKet();
@@ -295,12 +302,12 @@ public class BookTicketController implements Initializable {
         ObservableList<Integer> observablelistNumberSeat = FXCollections.observableList(listNameSeat);
         nameSeat.getItems().setAll(observablelistNumberSeat);
     }
-
+    
     @FXML
     public void orderTicKet() {
         Alert alert = new Alert(AlertType.INFORMATION);
         if (strips.getSelectionModel().isEmpty()) {
-
+            
             alert.setTitle("Thông báo");
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng chọn tuyến xe.");
@@ -349,7 +356,7 @@ public class BookTicketController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        
         try {
             System.out.println("orderTIcKet da vo day");
             BookTicKet ds = new BookTicKet();
@@ -359,13 +366,13 @@ public class BookTicketController implements Initializable {
             int nameSeats = Integer.parseInt(nameSeat.getValue().toString());
             //Lấy được idCSCS
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
-
+            
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
             String soDienThoai = number.getText();
-
+            
             String times = timeOrder.getText();
-
+            
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
 
@@ -412,7 +419,7 @@ public class BookTicketController implements Initializable {
         Alert alert = new Alert(AlertType.INFORMATION);
 
         if (strips.getSelectionModel().isEmpty()) {
-
+            
             alert.setTitle("Thông báo");
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng chọn tuyến xe.");
@@ -461,7 +468,7 @@ public class BookTicketController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        
         try {
             System.out.println("orderTIcKet da vo day");
             BookTicKet ds = new BookTicKet();
@@ -472,13 +479,13 @@ public class BookTicketController implements Initializable {
             int nameSeats = Integer.parseInt(nameSeat.getValue().toString());
             //Lấy được idCSCS
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
-
+            
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
             String soDienThoai = number.getText();
-
+            
             String times = timeOrder.getText();
-
+            
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
 
@@ -517,7 +524,7 @@ public class BookTicketController implements Initializable {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
     }
-
+    
     @FXML
     private void handleClearAll() {
         time.getSelectionModel().clearSelection();
@@ -529,7 +536,7 @@ public class BookTicketController implements Initializable {
         address.clear();
         number.clear();
     }
-
+    
     public void switchStistical(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
@@ -540,13 +547,13 @@ public class BookTicketController implements Initializable {
         Scene scene = new Scene(root);
         Stage newStage = new Stage();
         newStage.setScene(scene);
-
+        
         newStage.show();
 
         // Đóng Stage hiện tại
         currentStage.close();
     }
-
+    
     public void switchSystemManager(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
@@ -557,13 +564,13 @@ public class BookTicketController implements Initializable {
         Scene scene = new Scene(root);
         Stage newStage = new Stage();
         newStage.setScene(scene);
-
+        
         newStage.show();
 
         // Đóng Stage hiện tại
         currentStage.close();
     }
-
+    
     public void switchChangeTicket(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
@@ -574,24 +581,26 @@ public class BookTicketController implements Initializable {
         Scene scene = new Scene(root);
         Stage newStage = new Stage();
         newStage.setScene(scene);
-
+        
         newStage.show();
 
         // Đóng Stage hiện tại
         currentStage.close();
     }
-
+    
     private void printTicket(int idTicket) {
-
+        
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
+
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDateTime = now.format(formatter);
-            String idTicKet = Integer.toString(idTicket);
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("Mã vé: " + idTicKet + "\n");
 
+            String idTicKet = Integer.toString(idTicket);
+            try ( FileWriter writer = new FileWriter(file)) {
+                writer.write("Mã vé: " + idTicKet + "\n");
+                
                 writer.write("Họ và tên: " + nameOfCus.getText() + "\n");
                 writer.write("Địa chỉ: " + address.getText() + "\n");
                 writer.write("Số điện thoại: " + number.getText() + "\n");
@@ -608,22 +617,27 @@ public class BookTicketController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     private void printTicketByReceive(int IdTicket) {
         try {
             File file = new File("B:\\PrintTicket/ticket.txt");
             String idTicket = Integer.toString(IdTicket);
+
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDateTime = now.format(formatter);
-            try (FileWriter writer = new FileWriter(file)) {
+
+            try ( FileWriter writer = new FileWriter(file)) {
                 writer.write("Mã vé: " + idTicket + "\n");
+
                 writer.write("Họ và tên: " + nameCustomerLabel.getText() + "\n");
                 writer.write("Địa chỉ: " + addressCustomerLabel.getText() + "\n");
                 writer.write("Số điện thoại: " + phoneCustomerLabel.getText() + "\n");
                 writer.write("Số xe: " + coachNumberLabel.getText() + "\n");
                 writer.write("Tuyến: " + nameStationStartLabel.getText() + " - " + nameStationEndLabel.getText() + "\n");
+
                 writer.write("Giá vé: " + price.getText() + "VNĐ" + "\n");
+
                 writer.write("Thời gian xuất phát: " + departureTimeLabel.getText() + "\n");
                 writer.write("Nhân viên: " + Login.loginStaff.getNameStaff() + "\n");
                 writer.write("Ngày in: " + formattedDateTime + "\n");
@@ -633,11 +647,11 @@ public class BookTicketController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     public void sellTicKet() {
         Alert alert = new Alert(AlertType.INFORMATION);
         if (strips.getSelectionModel().isEmpty()) {
-
+            
             alert.setTitle("Thông báo");
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng chọn tuyến xe.");
@@ -686,7 +700,7 @@ public class BookTicketController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        
         try {
             System.out.println("orderTIcKet da vo day");
             BookTicKet ds = new BookTicKet();
@@ -698,13 +712,13 @@ public class BookTicketController implements Initializable {
             int idCSCS = ds.getIdCSCS(idCoach, idCoachstrip, localDateTime, nameSeats);
             System.out.print("Mã chuyến");
             System.out.print(idCSCS);
-
+            
             String ten = nameOfCus.getText();
             String diaChi = address.getText();
             String soDienThoai = number.getText();
-
+            
             String times = timeOrder.getText();
-
+            
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime timeOrders = LocalDateTime.parse(times, formatter);
 
@@ -716,7 +730,7 @@ public class BookTicketController implements Initializable {
             if (now.isBefore(thresholdTime)) {
                 ds.sellTicKet(idCus, idCSCS, timeOrders);
                 ds.updateStatusSeat(idCSCS);
-
+                
             } else {
                 Alert alert2 = new Alert(AlertType.INFORMATION);
                 alert2.setTitle("Thông báo");
@@ -732,7 +746,7 @@ public class BookTicketController implements Initializable {
             alert2.setHeaderText(null);
             alert2.setContentText("Bán vé thành công!");
             alert2.showAndWait();
-
+            
         } catch (Exception ex) {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
@@ -779,10 +793,10 @@ public class BookTicketController implements Initializable {
             TableColumn<AliasTicket, String> nameStaffCol = new TableColumn<>("Tên nhân viên");
             TableColumn<AliasTicket, Date> departureTimeCol = new TableColumn<>("Giờ xuất phát");
             TableColumn<AliasTicket, String> nameSeatCol = new TableColumn<>("Tên ghế");
-
+            
             TableColumn<AliasTicket, String> nameStartStationCol = new TableColumn<>("Tên điểm đầu");
             TableColumn<AliasTicket, String> addressStartCol = new TableColumn<>("Địa chỉ điểm đầu");
-
+            
             TableColumn<AliasTicket, String> nameEndStationCol = new TableColumn<>("Tên điểm cuối");
             TableColumn<AliasTicket, String> addressEndCol = new TableColumn<>("Địa chỉ điểm cuối");
             TableColumn<AliasTicket, Integer> statusTicket = new TableColumn<>("Trạng thái");
@@ -800,7 +814,7 @@ public class BookTicketController implements Initializable {
 //      
             nameStartStationCol.setCellValueFactory(new PropertyValueFactory<>("nameStartStation"));
             addressStartCol.setCellValueFactory(new PropertyValueFactory<>("addressStart"));
-
+            
             nameEndStationCol.setCellValueFactory(new PropertyValueFactory<>("nameEndStation"));
             addressEndCol.setCellValueFactory(new PropertyValueFactory<>("addressEnd"));
             statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
@@ -810,7 +824,7 @@ public class BookTicketController implements Initializable {
 
 // Thêm đối tượng dt vào TableView
             tableViewSearch.getItems().add(dt);
-
+            
             tableViewSearch.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 1) { // kiểm tra xem người dùng click một lần hay không
                     selectedItem = (AliasTicket) tableViewSearch.getSelectionModel().getSelectedItem();
@@ -823,7 +837,7 @@ public class BookTicketController implements Initializable {
 
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         dateBookingLabel.setText(formatter.format(selectedItem.getBookingDate()));
-
+                        
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
                         nameStationStartLabel.setText(selectedItem.getAddressStart());
@@ -835,7 +849,7 @@ public class BookTicketController implements Initializable {
                         System.out.println("gia tri duoc click là " + selectedItem);
                     }
                     System.out.println("Có vô ìf");
-
+                    
                     try {
                         // hiển thị các ghế còn trống
                         ArrayList<CoachStripCoachSeat> ds = ctk.getEmtySeat(selectedItem.getIdTicket());
@@ -843,14 +857,14 @@ public class BookTicketController implements Initializable {
                         for (CoachStripCoachSeat seat : ds) {
                             comboBoxSeatOke.getItems().add(seat.getNameSeat());
                         }
-
+                        
                     } catch (SQLException ex) {
                         Logger.getLogger(ChangeTicketController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 System.out.println("Có click");
             });
-
+            
         } catch (NumberFormatException ex) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
@@ -866,18 +880,18 @@ public class BookTicketController implements Initializable {
 
             alert.showAndWait();
         }
-
+        
     }
 
 // this is method to load tableview for search with Number phone customer
     boolean checkaddCol = false;
-
+    
     public void loadTableViewSearchNumberPhone() {
         checkaddCol = false;
         try {
-
+            
             System.out.println("có chạy loadTableViewSearchNumberPhone()");
-
+            
             if (ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).isEmpty()) {
                 throw new Exception("Không có dữ liệu trả adu về");
             }
@@ -893,10 +907,10 @@ public class BookTicketController implements Initializable {
                 TableColumn<AliasTicket, String> nameStaffCol = new TableColumn<>("Tên nhân viên");
                 TableColumn<AliasTicket, Date> departureTimeCol = new TableColumn<>("Giờ xuất phát");
                 TableColumn<AliasTicket, String> nameSeatCol = new TableColumn<>("Tên ghế");
-
+                
                 TableColumn<AliasTicket, String> nameStartStationCol = new TableColumn<>("Tên điểm đầu");
                 TableColumn<AliasTicket, String> addressStartCol = new TableColumn<>("Địa chỉ điểm đầu");
-
+                
                 TableColumn<AliasTicket, String> nameEndStationCol = new TableColumn<>("Tên điểm cuối");
                 TableColumn<AliasTicket, String> addressEndCol = new TableColumn<>("Địa chỉ điểm cuối");
                 TableColumn<AliasTicket, Integer> statusTicket = new TableColumn<>("Trạng thái");
@@ -914,7 +928,7 @@ public class BookTicketController implements Initializable {
 //      
                 nameStartStationCol.setCellValueFactory(new PropertyValueFactory<>("nameStartStation"));
                 addressStartCol.setCellValueFactory(new PropertyValueFactory<>("addressStart"));
-
+                
                 nameEndStationCol.setCellValueFactory(new PropertyValueFactory<>("nameEndStation"));
                 addressEndCol.setCellValueFactory(new PropertyValueFactory<>("addressEnd"));
                 statusTicket.setCellValueFactory(new PropertyValueFactory<>("statusTicket"));
@@ -929,7 +943,7 @@ public class BookTicketController implements Initializable {
                     tableViewSearch.getItems().add(h);
                 }
             });
-
+            
             tableViewSearch.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 1) { // kiểm tra xem người dùng click một lần hay không
                     selectedItem = (AliasTicket) tableViewSearch.getSelectionModel().getSelectedItem();
@@ -942,7 +956,7 @@ public class BookTicketController implements Initializable {
 
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         dateBookingLabel.setText(formatter.format(selectedItem.getBookingDate()));
-
+                        
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
                         nameStationStartLabel.setText(selectedItem.getAddressStart());
@@ -959,22 +973,22 @@ public class BookTicketController implements Initializable {
                     try {
                         // hiển thị các ghế còn trống
                         ArrayList<CoachStripCoachSeat> ds = ctk.getEmtySeat(selectedItem.getIdTicket());
-
+                        
                         comboBoxSeatOke.getItems().clear();
                         for (CoachStripCoachSeat seat : ds) {
-
+                            
                             comboBoxSeatOke.getItems().add(seat.getNameSeat());
                         }
-
+                        
                     } catch (SQLException ex) {
                         Logger.getLogger(ChangeTicketController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    
                 }
                 System.out.println("Có click");
-
+                
             });
-
+            
         } catch (NumberFormatException ex) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Thông báo");
@@ -990,9 +1004,9 @@ public class BookTicketController implements Initializable {
 
             alert.showAndWait();
         }
-
+        
     }
-
+    
     public void SearchIdTicket(KeyEvent event) throws SQLException, Exception {
         selectedItem = null;
         // xóa trắng 
@@ -1010,24 +1024,24 @@ public class BookTicketController implements Initializable {
         if (SearchIdRadioButton.isSelected()) {
             this.tableViewSearch.getColumns().clear();
             this.tableViewSearch.getItems().clear();
-
+            
             if (event.getCode() == KeyCode.ENTER) {
                 System.out.println("nó vào key enter search id");
                 loadTableViewSearchId();
             }
         }
-
+        
         if (SearchNumberPhoneRadioButton.isSelected()) {
             this.tableViewSearch.getColumns().clear();
             this.tableViewSearch.getItems().clear();
-
+            
             if (event.getCode() == KeyCode.ENTER) {
                 System.out.println("nó vào key enter search numbetphone");
                 loadTableViewSearchNumberPhone();
             }
         }
     }
-
+    
     public void deleteTicket() throws SQLException {
         if (selectedItem != null) {
             if (ctk.deleteTicket(selectedItem.getIdTicket()) == 1) {
@@ -1053,9 +1067,9 @@ public class BookTicketController implements Initializable {
 
             alert.showAndWait();
         }
-
+        
     }
-
+    
     public void logoutButtonOnAction(ActionEvent event) throws IOException {
         Login.loginStaff = null; // xóa thông tin đăng nhập của nhân viên
         Node source = (Node) event.getSource();
@@ -1075,9 +1089,9 @@ public class BookTicketController implements Initializable {
         });
         fadeOut.play();
     }
-
+    
     public void saveChangeSeatTicket() throws ParseException, SQLException {
-
+        
         try {
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
             Date date = dateFormat2.parse(departureTimeLabel.getText());
@@ -1088,7 +1102,7 @@ public class BookTicketController implements Initializable {
             String formattedDate = dateFormat.format(date);
 // lấy tên ghế
             int selectedSeat = (int) comboBoxSeatOke.getValue();
-
+            
             System.out.println("lay dc ngay gio "
                     + formattedDate + " ghế " + selectedSeat + " ghế cũ " + selectedItem.getNameSeat());
             int runUpdate = ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
@@ -1110,9 +1124,9 @@ public class BookTicketController implements Initializable {
                     alert.setHeaderText("sửa thất bại do quá 60 phút kể từ xe chạy");
                     alert.showAndWait();
                 }
-
+                
             }
-
+            
         } catch (Exception ex) {
             System.out.println("loi xuat ra : " + ex.toString());
         }

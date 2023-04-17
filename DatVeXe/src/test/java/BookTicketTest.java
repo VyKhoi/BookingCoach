@@ -85,7 +85,7 @@ public class BookTicketTest {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime localDateTime = LocalDateTime.parse(time_now, formatter);
             List<CoachStripCoachSeat> listCoachstrips = c.getListCoachStripCanOrder(idCoachStrips, localDateTime);
-            Assertions.assertEquals(3, listCoachstrips.size());
+            Assertions.assertEquals(6, listCoachstrips.size());
         } catch (Exception e) {
             System.out.println(e.toString());
             Assertions.assertFalse(true);
