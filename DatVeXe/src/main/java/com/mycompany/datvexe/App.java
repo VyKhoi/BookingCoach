@@ -20,17 +20,26 @@ public class App extends Application {
     @Override
 
     public void start(Stage stage) throws IOException, SQLException {
-        scene = new Scene(loadFXML("ManagerSystem"));
-        stage.setScene(scene);
+
+        try {
+//        scene = new Scene(loadFXML("BookTicKet"));
+
+            scene = new Scene(loadFXML("ManagerSystem"));
+
+            stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(false);
-        stage.setMinWidth(900);
-        stage.setMinHeight(480);
-        stage.show();
-        
-        // chạy cập nhật vé
-        ChangeTicketServices.autoUpdateTicket();
-        ChangeTicketServices.autoUpdateCSCS();
+
+            stage.setResizable(false);
+            stage.setMinWidth(900);
+            stage.setMinHeight(480);
+            stage.show();
+
+            ChangeTicketServices.autoUpdateTicket();
+            ChangeTicketServices.autoUpdateCSCS();
+//           
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
 
     static void setRoot(String fxml) throws IOException {

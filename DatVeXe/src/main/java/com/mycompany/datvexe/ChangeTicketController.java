@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -39,15 +39,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumnBase;
-import javafx.scene.control.TableRow;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.TableColumnHeader;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+
 import javafx.stage.Stage;
 
 /**
@@ -91,18 +89,24 @@ public class ChangeTicketController implements Initializable {
 
     @FXML
     ComboBox<Integer> comboBoxSeatOke = new ComboBox<>();
+
     @FXML
     private Button logoutButton;
     @FXML
-    private Label lbManagerSystem;
+    private Button lbManagerSystem;
+    // selectedItem đây là alias dduwojcnajp khi mình lick trên dòng
     AliasTicket selectedItem = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    @FXML
+    private Label nameSatff = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         SearchIdRadioButton.setSelected(true);
-
+        if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
 //         
             lbManagerSystem.setVisible(true);
@@ -180,8 +184,8 @@ public class ChangeTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
@@ -299,8 +303,8 @@ public class ChangeTicketController implements Initializable {
 
                         coachNumberLabel.setText(String.valueOf(selectedItem.getNumberCoach()));
                         nameStaffLabel.setText(selectedItem.getNameStaff());
-                        nameStationStartLabel.setText(selectedItem.getNameStartStation());
-                        nameStationEndLabel.setText(selectedItem.getNameEndStation());
+                        nameStationStartLabel.setText(selectedItem.getAddressStart());
+                        nameStationEndLabel.setText(selectedItem.getAddressEnd());
                         // Chuyển đổi kiểu Date sang String để hiển thị trên Label
                         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
                         departureTimeLabel.setText(timeFormatter.format(selectedItem.getDepartureTime()));
@@ -431,7 +435,7 @@ public class ChangeTicketController implements Initializable {
     }
 
     public void saveChangeSeatTicket() throws ParseException, SQLException {
-
+        System.out.println("Vào hàm save");
         try {
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
             Date date = dateFormat2.parse(departureTimeLabel.getText());
@@ -473,4 +477,102 @@ public class ChangeTicketController implements Initializable {
 
 //        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
+
+    public void switchToChangeCoachStrip(ActionEvent e) throws IOException, SQLException {
+        if (selectedItem == null) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("vui lòng chọn vé để đổi chuyến");
+            alert.showAndWait();
+            return;
+        }
+//        check có quuyen doi khong
+        int check = ctk.checkCanChange(selectedItem);
+        if (check == 0 || check == -1) {
+            if (check == 0) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("Không được đổi dưới 60 phút xe chạy");
+                alert.showAndWait();
+                return;
+            }
+            if (check == -1) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("vé đã nhận không được đổi");
+                alert.showAndWait();
+                return;
+            }
+        }
+        BookTicketController.ticketChangeCoachStrip = selectedItem;
+
+//         thực hiện chuyển page
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+//    bộ 3 hàm chuyển page 
+    public void switchStistical(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticalGUI.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+    public void switchSystemManager(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerSystem.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
+    public void switchBookTicket(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+
 }

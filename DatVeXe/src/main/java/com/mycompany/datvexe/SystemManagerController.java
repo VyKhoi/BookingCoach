@@ -4,13 +4,18 @@
  */
 package com.mycompany.datvexe;
 
+
 import com.bookingCoach.pojo.CoachStripCoachSeat;
 import com.bookingCoach.pojo.Staff;
 import com.bookingCoach.pojo.Station;
 import com.bookingCoach.services.CoachService;
 import com.bookingCoach.services.CoachStripService;
-import com.bookingCoach.services.RegisterService;
 import com.bookingCoach.services.StripService;
+
+import com.bookingCoach.services.Login;
+import com.bookingCoach.services.RegisterService;
+import java.io.IOException;
+
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -21,29 +26,35 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
+import javafx.stage.Stage;
+
 
 /**
  *
  * @author Kiet
  */
+
+
 public class SystemManagerController implements Initializable {
 
     @FXML
@@ -64,6 +75,7 @@ public class SystemManagerController implements Initializable {
     private ComboBox<String> roleComboBox;
     @FXML
     private DatePicker birthdayPicker;
+
     @FXML
     private TextField coachTextField;
     @FXML
@@ -106,6 +118,10 @@ public class SystemManagerController implements Initializable {
     private Label stationEndLb;
     @FXML
     private Label coachStripInfoLabel;
+    @FXML
+    private Label nameSatff = new Label();
+
+
 
     public void signupButtonOnAction(ActionEvent e) throws SQLException, NoSuchAlgorithmException {
         String username = usernameTextField.getText();
@@ -301,6 +317,10 @@ public class SystemManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+         if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
         // Thêm các vai trò vào ComboBox
         roleComboBox.getItems().addAll("Nhân Viên", "Tài xế");
 
@@ -382,5 +402,59 @@ public class SystemManagerController implements Initializable {
                 stationEndLb.setText("");
             }
         });
+    }
+
+
+//    nơi đây xử lý chuyển page
+    
+    public void switchStistical(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticalGUI.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+    
+    public void switchChangeTicket(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
+    }
+    
+    public void switchBookTicket(ActionEvent e) throws IOException {
+        Node node = (Node) e.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        // Load trang mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+
+        newStage.show();
+
+        // Đóng Stage hiện tại
+        currentStage.close();
     }
 }
