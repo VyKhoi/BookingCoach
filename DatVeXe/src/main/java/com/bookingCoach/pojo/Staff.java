@@ -36,6 +36,12 @@ public class Staff {
         this.phone = phone;
         this.birthStaff = birthStaff;
     }
+      public Staff(int idStaff, String nameStaff, String phone, String addressUser) {
+        this.idStaff = idStaff;
+        this.nameStaff = nameStaff;
+        this.phone = phone;
+        this.addressUser = addressUser;
+    }
 
     @Override
     public String toString() {

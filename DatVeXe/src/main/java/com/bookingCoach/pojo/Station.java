@@ -18,6 +18,10 @@ public class Station {
         this.name = name;
         this.address = address;
     }
+
+    public Station(String name) {
+        this.name = name;
+    }
     
     public int getIdStation() {
         return idStation;

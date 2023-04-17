@@ -20,12 +20,12 @@ public class App extends Application {
     @Override
 
     public void start(Stage stage) throws IOException, SQLException {
-        scene = new Scene(loadFXML("LoginGUI"));
+        scene = new Scene(loadFXML("ManagerSystem"));
         stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
-        stage.setMinWidth(1200);
-        stage.setMinHeight(580);
+        stage.setMinWidth(900);
+        stage.setMinHeight(480);
         stage.show();
         
         // chạy cập nhật vé

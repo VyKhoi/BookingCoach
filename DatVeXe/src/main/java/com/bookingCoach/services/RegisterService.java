@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -27,34 +28,48 @@ public class RegisterService {
             String phone,
             LocalDate birthStaff
     ) throws SQLException, NoSuchAlgorithmException {
+        if (passWord.isEmpty()) {
+            return -1; // Không thể đăng ký với mật khẩu rỗng
+
+        }
+        if (userName.isEmpty()) {
+            return -1; // Không thể đăng ký với tên đăng nhập rỗng
+        }
+        if (!phone.matches("\\d{10}")) {
+            return -1; // Không thể đăng ký với số điện thoại không hợp lệ
+        }
         try (Connection conn = JdbcUtils.getConn()) {
-             // Băm mật khẩu sử dụng SHA-512
-            MessageDigest digest = MessageDigest.getInstance("SHA-512");
-            byte[] passwordBytes = passWord.getBytes();
-            byte[] hashedBytes = digest.digest(passwordBytes);
-            String hashedPassword = bytesToHex(hashedBytes);
+            // Băm mật khẩu sử dụng SHA-512
+
             String query = "INSERT INTO staff (userName, passWord, addressUser, roles, nameStaff, gender, phone, brithStaff)\n"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, userName); // set giá trị của biến userName vào câu lệnh truy vấn
-            pstmt.setString(2, hashedPassword); // set giá trị của biến passWord vào câu lệnh truy vấn
+            // Hash password using SHA-512
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hash = md.digest(passWord.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            String hashedPassword = sb.toString();
+
+            pstmt.setString(2, hashedPassword);
             pstmt.setString(3, addressUser);
             pstmt.setString(4, roles);
             pstmt.setString(5, nameStaff);
             pstmt.setString(6, gender);
             pstmt.setString(7, phone);
             LocalDate birthStaff2 = birthStaff;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String birthStaffString = birthStaff2.format(formatter);
-            pstmt.setString(8, birthStaffString);
-                                    
-                        
-
-        
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String birthStaffString = birthStaff2.format(formatter);
+                pstmt.setString(8, birthStaffString);
+            } catch (DateTimeException e) {
+                throw new IllegalArgumentException("Invalid birth date", e);
+            }
             int affectedRows = pstmt.executeUpdate();
-            
-            System.out.println("dit me chay qua truy van");
             if (affectedRows > 0) {
                 System.out.println(affectedRows + " record(s) inserted.");
                 return 1;
@@ -65,16 +80,6 @@ public class RegisterService {
             System.out.println(ex.toString());
             return -1;
         }
-        
-    }
-    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
-            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
-        }
-        return new String(hexChars);
+
     }
 }

@@ -23,7 +23,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="914.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.SystemManagerController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="1010.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.SystemManagerController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.33331298828125" minWidth="10.0" prefWidth="164.66667683919272" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.99999237060547" minWidth="10.0" prefWidth="129.99998982747397" />
@@ -84,7 +84,7 @@
                      </font>
                   </Label>
                   <Label layoutX="619.0" layoutY="6.0" text="Tên nhân viên" />
-                  <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="61.0" prefWidth="53.0" />
+                  <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="56.0" prefWidth="53.0" />
                   <Pane layoutX="518.0" layoutY="1.0" prefHeight="56.0" prefWidth="3.0" style="-fx-background-color: red;" />
                </children>
             </Pane>
@@ -92,7 +92,7 @@
       </Pane>
       <StackPane prefHeight="51.0" prefWidth="403.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="9">
          <children>
-            <Pane prefHeight="459.0" prefWidth="793.0" style="-fx-background-color: yellow;">
+            <Pane prefHeight="472.0" prefWidth="801.0" style="-fx-background-color: white;">
                <children>
                   <TabPane prefHeight="467.0" prefWidth="809.0" style="-fx-background-color: #77ffc0;" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
@@ -232,17 +232,197 @@
                         </Tab>
                         <Tab text="Thêm chuyến đi">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="coachTextField" layoutX="94.0" layoutY="60.0" prefHeight="26.0" prefWidth="97.0" promptText="1" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label layoutX="47.0" layoutY="60.0" text="Xe số: ">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="405.0" layoutY="60.0" text="Tuyến xe số: ">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="priceTextField" layoutX="191.0" layoutY="114.0" promptText="Nhập giá tiền" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label layoutX="47.0" layoutY="114.0" text="Giá tiền của chuyến:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="479.0" layoutY="141.0" text="Ngày khởi hành:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="departureTimeTextField" layoutX="602.0" layoutY="142.0" prefHeight="26.0" prefWidth="180.0" promptText="yyyy-MM-dd hh:mm:ss" style="-fx-background-color: white;" />
+                                    <Label layoutX="64.0" layoutY="173.0" text="Tài xế:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="coachstripcoachseatButton" layoutX="578.0" layoutY="327.0" mnemonicParsing="false" onAction="#coachstripcoachseatButtonAction" prefHeight="49.0" prefWidth="180.0" text="Thêm chuyến đi">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="messageLabel" layoutX="307.0" layoutY="372.0" prefHeight="19.0" prefWidth="224.0">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="staffTextField" layoutX="132.0" layoutY="170.0" promptText="Mã tài xế" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <ComboBox fx:id="coachStripsComboBox" layoutX="503.0" layoutY="62.0" prefWidth="150.0" />
+                                    <Label fx:id="staffLabel" layoutX="104.0" layoutY="237.0" prefHeight="24.0" prefWidth="209.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="phoneLabel" layoutX="104.0" layoutY="288.0" prefHeight="24.0" prefWidth="212.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="addressLabel" layoutX="104.0" layoutY="340.0" prefHeight="24.0" prefWidth="266.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="49.0" layoutY="236.0" text="Tên:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="49.0" layoutY="288.0" text="SĐT:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="33.0" layoutY="339.0" text="Địa chỉ:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" layoutX="-1.0" prefHeight="43.0" prefWidth="809.0" style="-fx-background-color: pink;" text="Giao diện thêm chuyến đi">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="coachStripInfoLabel" layoutX="465.0" layoutY="106.0" prefHeight="26.0" prefWidth="275.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children></AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Thêm tuyến đi">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ComboBox fx:id="stationStartCb" layoutX="150.0" layoutY="59.0" prefHeight="26.0" prefWidth="114.0" />
+                                    <Label layoutX="33.0" layoutY="61.0" prefHeight="21.0" prefWidth="102.0" text="Điểm bắt đầu">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="stationEndCb" layoutX="150.0" layoutY="101.0" prefHeight="26.0" prefWidth="115.0" />
+                                    <Label layoutX="33.0" layoutY="106.0" prefHeight="21.0" prefWidth="102.0" text="Điểm kết thúc">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="445.0" layoutY="87.0" text="Khoảng cách dự kiến:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="distanceTxt" layoutX="587.0" layoutY="85.0" prefHeight="26.0" prefWidth="178.0" promptText="km" style="-fx-background-color: white;" />
+                                    <Label layoutX="33.0" layoutY="169.0" text="Thời gian dự kiến:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="arrivalTimeTxt" layoutX="150.0" layoutY="166.0" prefHeight="26.0" prefWidth="178.0" promptText="hh:mm:ss" style="-fx-background-color: white;" />
+                                    <Label alignment="CENTER" layoutX="-1.0" prefHeight="43.0" prefWidth="809.0" style="-fx-background-color: pink;" text="Giao diện thêm tuyến đi">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="addStripButton" layoutX="407.0" layoutY="229.0" mnemonicParsing="false" onAction="#addStripButtonOnAction" prefHeight="42.0" prefWidth="180.0" text="Thêm tuyến đi">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="stationStartLb" layoutX="278.0" layoutY="63.0" prefHeight="25.0" prefWidth="161.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="stationEndLb" layoutX="278.0" layoutY="102.0" prefHeight="25.0" prefWidth="161.0" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children></AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Thêm xe">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="43.0" prefWidth="809.0" style="-fx-background-color: pink;" text="Giao diện thêm xe">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="numberCoachTxt" layoutX="91.0" layoutY="69.0" prefHeight="30.0" prefWidth="65.0" promptText="1" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label layoutX="40.0" layoutY="119.0" text="Sức chứa:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="capacityTxt" layoutX="118.0" layoutY="117.0" promptText="Nhập sức chứa" style="-fx-background-color: white;">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label layoutX="43.0" layoutY="71.0" text="Số xe:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="41.0" layoutY="171.0" text="Loại xe:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="addCoachButton" layoutX="74.0" layoutY="295.0" mnemonicParsing="false" onAction="#addCoachButtonOnAction" prefHeight="49.0" prefWidth="152.0" text="Thêm xe">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <ComboBox fx:id="typeofCoachCb" layoutX="108.0" layoutY="171.0" prefHeight="26.0" prefWidth="172.0" />
+                                    <Pane id="avatarStaff" layoutX="556.0" layoutY="168.0" prefHeight="61.0" prefWidth="53.0" visible="false" />
+                                    <Pane layoutX="327.0" layoutY="68.0" prefHeight="322.0" prefWidth="470.0" style="-fx-background-color: red;" />
+                                 </children></AnchorPane>
                            </content>
                         </Tab>
                      </tabs>

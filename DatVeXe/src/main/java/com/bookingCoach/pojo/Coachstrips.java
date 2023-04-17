@@ -13,20 +13,21 @@ import java.time.LocalTime;
 
 public class Coachstrips {
     private int idCoachStrips;
-    private LocalDateTime departureTime;
     private int distance;
     private LocalTime arrivalTime;
     private int idStationsStart;
     private int idStationsEnd;
 
-    public Coachstrips(int idCoachStrips, LocalDateTime departureTime, int distance, LocalTime arrivalTime, int idStationsStart, int idStationsEnd) {
+    public Coachstrips(int idCoachStrips, int distance, LocalTime arrivalTime, int idStationsStart, int idStationsEnd) {
         this.idCoachStrips = idCoachStrips;
-        this.departureTime = departureTime;
         this.distance = distance;
         this.arrivalTime = arrivalTime;
         this.idStationsStart = idStationsStart;
         this.idStationsEnd = idStationsEnd;
     }
+
+
+    
 
     // getters and setters
 
@@ -36,14 +37,6 @@ public class Coachstrips {
 
     public void setIdCoachStrips(int idCoachStrips) {
         this.idCoachStrips = idCoachStrips;
-    }
-
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
     }
 
     public int getDistance() {

@@ -517,15 +517,15 @@ public class ChangeTicketServices {
 
     public static void main(String[] args) throws SQLException {
         ChangeTicketServices ds = new ChangeTicketServices();
-        //        ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
-        //            System.out.println(h.toString());
-        //        });
-        //        System.out.println(ds.getTickets(1).toString());
-        //        ds.getEmtySeat(1).forEach(h -> {
-        //            System.out.println(h.toString());
-        //        });;
-        //        System.err.println(ds.deleteTicket(-1));
-        ChangeTicketServices.autoUpdateCSCS();
+                ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
+                    System.out.println(h.toString());
+                });
+                System.out.println(ds.getTickets(1).toString());
+                ds.getEmtySeat(1).forEach(h -> {
+                    System.out.println(h.toString());
+                });;
+                System.err.println(ds.deleteTicket(-1));
+//        ChangeTicketServices.autoUpdateCSCS();
 
     }
 }
