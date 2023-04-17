@@ -17,3 +17,13 @@
     -fx-border-radius: 50%;
    -fx-overflow: hidden;
 }
+
+#imageShow{
+    -fx-background-image: url('../image/cringe.jpg');
+   
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-border-radius: 50%;
+   -fx-overflow: hidden;
+}

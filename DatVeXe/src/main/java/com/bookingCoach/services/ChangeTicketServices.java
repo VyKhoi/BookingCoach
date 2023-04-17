@@ -617,6 +617,16 @@ public class ChangeTicketServices {
 
     public static void main(String[] args) throws SQLException {
         ChangeTicketServices ds = new ChangeTicketServices();
+
+                ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
+                    System.out.println(h.toString());
+                });
+                System.out.println(ds.getTickets(1).toString());
+                ds.getEmtySeat(1).forEach(h -> {
+                    System.out.println(h.toString());
+                });;
+                System.err.println(ds.deleteTicket(-1));
+
         ds.deleteTicketIgnoreStatus(858);
 //        //        ds.getTicketsWithNumberPhone(984376291).forEach(h -> {
 //        //            System.out.println(h.toString());
@@ -626,6 +636,7 @@ public class ChangeTicketServices {
 //        //            System.out.println(h.toString());
 //        //        });;
 //        //        System.err.println(ds.deleteTicket(-1));
+
 //        ChangeTicketServices.autoUpdateCSCS();
 
     }

@@ -2,12 +2,15 @@ B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\SecondaryController.
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\SystemManagerController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\JdbcUtils.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Ticket.java
+B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\CoachService.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\ChangeTicketController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\Alias\AliasTicket.java
+B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\StripService.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\StatisticalGUIController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\BookTicketController.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Customer.java
 B:\BookingCoach\DatVeXe\src\main\java\com\mycompany\datvexe\LoginGUIController.java
+B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\services\CoachStripService.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Coachstrips.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\Alias\AliasStatistical.java
 B:\BookingCoach\DatVeXe\src\main\java\com\bookingCoach\pojo\Station.java

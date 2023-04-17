@@ -7,19 +7,12 @@ package com.mycompany.datvexe;
 import com.bookingCoach.Alias.AliasStatistical;
 import com.bookingCoach.services.Login;
 import com.bookingCoach.services.StatisticalServices;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,9 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
-import org.w3c.dom.Document;
 
 /**
  * FXML Controller class

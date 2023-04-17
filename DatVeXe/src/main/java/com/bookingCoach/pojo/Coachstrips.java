@@ -9,9 +9,6 @@ package com.bookingCoach.pojo;
  * @author Vy Khoi
  */
 import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Coachstrips {
     private int idCoachStrips;
@@ -20,14 +17,14 @@ public class Coachstrips {
     private int idStationsStart;
     private int idStationsEnd;
 
-    public Coachstrips(int idCoachStrips, int distance, Date arrivalTime, int idStationsStart, int idStationsEnd) {
+    public Coachstrips(int idCoachStrips, int distance, Date arrivalTime, int idStationsStart, int idStationsEnd) 
+    {
         this.idCoachStrips = idCoachStrips;
         this.distance = distance;
         this.arrivalTime = arrivalTime;
         this.idStationsStart = idStationsStart;
         this.idStationsEnd = idStationsEnd;
     }
-
 
     // getters and setters
 
@@ -38,8 +35,6 @@ public class Coachstrips {
     public void setIdCoachStrips(int idCoachStrips) {
         this.idCoachStrips = idCoachStrips;
     }
-
-
 
 
     public int getDistance() {
