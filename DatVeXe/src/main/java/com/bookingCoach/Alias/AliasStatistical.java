@@ -34,6 +34,12 @@ public class AliasStatistical {
         return departureTime;
     }
 
+    public String getDepartureTimeHHmmss() {
+        String[] parts = departureTime.split(" "); // cắt chuỗi theo khoảng trắng
+        String time = parts[1];
+        return time;
+    }
+
     @Override
     public String toString() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");

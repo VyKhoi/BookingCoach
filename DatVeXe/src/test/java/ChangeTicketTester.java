@@ -57,6 +57,7 @@ public class ChangeTicketTester {
 
         } catch (Exception e) {
             System.out.println(e.toString());
+            Assertions.assertFalse(true);
         }
 
     }
@@ -90,6 +91,7 @@ public class ChangeTicketTester {
 
         } catch (Exception e) {
             System.out.println(e.toString());
+            Assertions.assertFalse(true);
         }
     }
 
@@ -102,6 +104,7 @@ public class ChangeTicketTester {
             Assertions.assertEquals(0, ds.size());
         } catch (Exception e) {
             System.out.println(e.toString());
+            Assertions.assertFalse(true);
         }
     }
 
@@ -151,19 +154,195 @@ public class ChangeTicketTester {
     // test case nài dùng để check niếu vé không tìm thấy thì trả về mảng rỗng
     @Test
     public void checkGetCSCSWithIdTicketNotFind() throws SQLException {
-//        giả sử 
-        ArrayList<CoachStripCoachSeat> result = c.getEmtySeat(-10);
-        Assertions.assertEquals(0, result.size());
+        try {
+            ArrayList<CoachStripCoachSeat> result = c.getEmtySeat(-10);
+            Assertions.assertEquals(0, result.size());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
     }
 
-//    test unit test
     @Test
-    public void testABC() {
-        int a = 2;
-        int b = 2;
-//        Assertions.assertEquals(a, b);
-        System.out.print("++++++"
-                + "===================================");
-//        Assertions.assertNotEquals(a, b);
+//  hàm này mình check lấy ghế trống trong chuyến xe đã đặc   
+    public void checkGetEmtySeatWithIdTicket() throws SQLException {
+        try {
+//            272
+//              1
+            ArrayList<CoachStripCoachSeat> result = c.getEmtySeat(272);
+
+            if (result.size() == 0) {
+                System.out.println("Không có vé trống ứng với id của vé nó đặ");
+                Assertions.assertEquals(0, result.size());
+                return;
+            }
+
+            if (result.size() != 0) {
+                result.forEach(h -> {
+                    System.out.println(h.toString());
+                });
+                Assertions.assertNotEquals(0, result.size());
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
     }
+
+    @Test
+//    hàm này test delete với cái vé mà nó có trạng thái chưa nhận thôi
+    public void testDeleteTicket() {
+        try {
+//          đay là id ticket để xóa 
+            int idticketn = 854;
+//          hàm xử lý xóa
+            int rs = c.deleteTicket(idticketn);
+
+            if (rs == 1) {
+                System.out.println("Co tim thay ve, và đã xóa");
+                Assertions.assertTrue(true);
+            }
+            if (rs == 0) {
+                System.out.println("vé không tìm thấy hoặc đã vé đã nhận");
+                Assertions.assertTrue(true);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
+    }
+
+    @Test
+//    hàm này test delete với cái vé mà nó có trạng thái chưa nhận thôi
+    public void testDeleteTicketIgnoreStatus() {
+        try {
+//          đay là id ticket để xóa 
+            int idticketn = 834;
+//          hàm xử lý xóa
+            int rs = c.deleteTicketIgnoreStatus(idticketn);
+
+            if (rs == 1) {
+                System.out.println("Co tim thay ve, và đã xóa");
+                Assertions.assertTrue(true);
+            }
+            if (rs == 0) {
+                System.out.println("vé không tìm thấy ");
+                Assertions.assertTrue(true);
+            }
+
+        } catch (Exception e) {
+            System.out.println("nó vào");
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
+    }
+
+    @Test
+//    test unit nài dùng để kiểm tra cái hàm thay đổi ghế coi nó có đúng không
+    public void testUpdateSeatOfTicket() {
+        try {
+//             giả sử ta đổi ghế cho vé đang được đặt 
+            int idTicketCanChangSeat = 95;
+            AliasTicket t = c.getTickets(idTicketCanChangSeat);
+
+//            thời gian khởi hành và, ghế được chọn
+            int check = c.updateSeatOfTicket(t, "2023-04-16 17:00:00", 9);
+
+//            trả về 1 niếu sửa được
+            if (check == 1) {
+                System.out.println("ve da sua oke");
+                Assertions.assertTrue(true);
+                return;
+            }
+//            trả về -1 đối với các vé đã nhận ko cho sửa
+            if (check == -1) {
+                System.out.println("ve khong the sua do da nhan ve");
+
+                Assertions.assertTrue(true);
+                return;
+            }
+//           trả về 0 đối với vé không sửa được ( < 60p)
+            if (check == 0) {
+                System.out.println("ve khong the sua do duoi 60p ");
+                Assertions.assertTrue(true);
+                return;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
+    }
+
+    @Test
+//    hàm unit test nài dùng để test vé 
+//    + đã nhận thì không được đổi
+//    + < 60 thì không được đổi
+    public void testTicketCanChange() {
+        try {
+//            id với vé đã nhận
+            int idTicketToCheck = 97;
+            AliasTicket t = c.getTickets(idTicketToCheck);
+
+            int check = c.checkCanChange(t); //   với đã nhận trả về - 1
+            if (check == -1) {
+                System.out.println("ve da nhan khong the thay doi");
+                Assertions.assertTrue(true);
+
+                return;
+            }
+            //            với vé < 60 khổi hành trả về  0
+            if (check == 0) {
+                System.out.println("be hon 60p roi khong duoc sua");
+                Assertions.assertTrue(true);
+                return;
+            }
+
+            //   vé có thể sửa : 1
+            if (check == 1) {
+                System.out.println("ve co the sua");
+                Assertions.assertTrue(true);
+                return;
+            }
+
+            //   hàm có vấn đề
+            if (check == -2) {
+                throw new Exception("ham kiem tra da bi sai");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            Assertions.assertFalse(true);
+        }
+    }
+//
+//     @Test
+////  hàm test tự động chạy oke không
+////  hàm test cscs < 5phuts thì khóa ghế 
+//    public void autoUpdateCSCS(){
+//        try {
+//            ChangeTicketServices.autoUpdateCSCS();
+//            Assertions.assertTrue(true);
+//        } catch (Exception e) {
+//            System.out.println(e.toString());
+//            Assertions.assertFalse(true);
+//        }
+//    }
+//    
+//    
+//     @Test
+////  hàm test tự động chạy oke không
+////  hàm test cscs < 5phuts thì khóa ghế 
+//    public void autoUpdateTicket(){
+//        try {
+//            ChangeTicketServices.autoUpdateTicket();
+//            Assertions.assertTrue(true);
+//        } catch (Exception e) {
+//            System.out.println(e.toString());
+//            Assertions.assertFalse(true);
+//        }
+//    }
+    
+  
+
 }

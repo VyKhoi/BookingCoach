@@ -4,6 +4,7 @@
  */
 package com.mycompany.datvexe;
 
+import com.bookingCoach.services.Login;
 import com.bookingCoach.services.RegisterService;
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +54,10 @@ public class SystemManagerController implements Initializable {
     private ComboBox<String> roleComboBox;
     @FXML
     private DatePicker birthdayPicker;
+    
+      @FXML
+    private Label nameSatff = new Label();
+
 
     public void signupButtonOnAction(ActionEvent e) throws SQLException, NoSuchAlgorithmException {
         String username = usernameTextField.getText();
@@ -108,6 +113,10 @@ public class SystemManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+         if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
         // Thêm các vai trò vào ComboBox
         roleComboBox.getItems().addAll("Nhân Viên", "Tài xế");
 

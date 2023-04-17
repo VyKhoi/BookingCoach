@@ -28,10 +28,11 @@ public class StatisticalServices {
         try ( Connection conn = JdbcUtils.getConn()) {
 
             AliasTicket tickets;
-            String query = "SELECT departureTime ,idCoachStrips , SUM(price) AS total_price  ,cs.idStationsStart,cs.idStationsEnd FROM bus.coachstripcoachseat cscs, bus.coachstrips cs\n"
-                    + " WHERE departureTime like ?\n"
-                    + " and cs.idCoachStips = cscs.idCoachStrips\n"
-                    + " group by departureTime,idCoachStrips"; // sử dụng dấu ? thay cho biến idTicket
+            String query = "SELECT departureTime ,idCoachStrips , SUM(price) AS total_price  ,cs.idStationsStart,cs.idStationsEnd FROM bus.coachstripcoachseat cscs, bus.coachstrips cs, bus.ticket t\n" +
+"                  WHERE departureTime like ?\n" +
+"                  and cs.idCoachStips = cscs.idCoachStrips\n" +
+"                  and cscs.idCSCS = t.idCoachStripCoachSeat\n" +
+"                    group by departureTime,idCoachStrips"; // sử dụng dấu ? thay cho biến idTicket
 
             PreparedStatement pstmt = conn.prepareStatement(query);
 
@@ -92,10 +93,11 @@ public class StatisticalServices {
         try ( Connection conn = JdbcUtils.getConn()) {
 
             AliasTicket tickets;
-            String query = "SELECT departureTime ,idCoachStrips , SUM(price) AS total_price  ,cs.idStationsStart,cs.idStationsEnd FROM bus.coachstripcoachseat cscs, bus.coachstrips cs\n"
-                    + "                   WHERE departureTime like ?\n"
-                    + "                  and cs.idCoachStips = cscs.idCoachStrips\n"
-                    + "                   group by idCoachStrips"; // sử dụng dấu ? thay cho biến idTicket
+            String query = "SELECT departureTime ,idCoachStrips , SUM(price) AS total_price  ,cs.idStationsStart,cs.idStationsEnd FROM bus.coachstripcoachseat cscs, bus.coachstrips cs,bus.ticket t\n" +
+"                               WHERE departureTime like ?\n" +
+"                             and cs.idCoachStips = cscs.idCoachStrips\n" +
+"                             and t.idCoachStripCoachSeat = cscs.idCSCS\n" +
+"                            group by idCoachStrips"; // sử dụng dấu ? thay cho biến idTicket
 
             PreparedStatement pstmt = conn.prepareStatement(query);
 

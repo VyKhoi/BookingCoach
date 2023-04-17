@@ -97,12 +97,16 @@ public class ChangeTicketController implements Initializable {
     // selectedItem đây là alias dduwojcnajp khi mình lick trên dòng
     AliasTicket selectedItem = null;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    @FXML
+    private Label nameSatff = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         SearchIdRadioButton.setSelected(true);
-
+        if (Login.loginStaff != null) {
+            nameSatff.setText(Login.loginStaff.getNameStaff());
+        }
         if (Login.loginStaff != null && "Admin".equals(Login.loginStaff.getRoles())) {
 //         
             lbManagerSystem.setVisible(true);
@@ -492,7 +496,7 @@ public class ChangeTicketController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-             if (check == -1) {
+            if (check == -1) {
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("Thông báo");
                 alert.setHeaderText("vé đã nhận không được đổi");

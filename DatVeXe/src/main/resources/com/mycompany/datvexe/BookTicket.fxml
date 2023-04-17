@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="1003.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.BookTicketController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="1003.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.BookTicketController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.33331298828125" minWidth="10.0" prefWidth="164.66667683919272" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.99999237060547" minWidth="10.0" prefWidth="129.99998982747397" />
@@ -77,7 +77,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="619.0" layoutY="6.0" text="Tên nhân viên" />
+                  <Label fx:id="nameSatff" layoutX="619.0" layoutY="6.0" text="Tên nhân viên" />
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="61.0" prefWidth="53.0" />
                   <Pane layoutX="518.0" layoutY="1.0" prefHeight="56.0" prefWidth="3.0" style="-fx-background-color: red;" />
                </children>
