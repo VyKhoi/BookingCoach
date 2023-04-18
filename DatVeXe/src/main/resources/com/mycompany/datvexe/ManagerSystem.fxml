@@ -261,7 +261,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </TextField>
-                                    <Label layoutX="47.0" layoutY="60.0" text="Xe số: ">
+                                    <Label layoutX="40.0" layoutY="60.0" text="Mã xe:">
                                        <font>
                                           <Font size="16.0" />
                                        </font>

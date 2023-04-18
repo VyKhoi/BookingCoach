@@ -1,7 +1,6 @@
 com\mycompany\datvexe\SecondaryController.class
 com\bookingCoach\services\PhongThiNghiem.class
 com\bookingCoach\pojo\Role.class
-com\mycompany\datvexe\SystemManagerController.class
 com\bookingCoach\services\Login.class
 com\bookingCoach\pojo\Station.class
 module-info.class
@@ -24,7 +23,6 @@ com\bookingCoach\Alias\AliasStatistical.class
 com\bookingCoach\services\JdbcUtils.class
 com\bookingCoach\Alias\AliasTicket.class
 com\mycompany\datvexe\LoginGUIController.class
-com\bookingCoach\services\CoachStripService.class
 com\mycompany\datvexe\ChangeTicketController.class
 com\bookingCoach\pojo\TypeOfCoach.class
 com\bookingCoach\services\CoachService.class

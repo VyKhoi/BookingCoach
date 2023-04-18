@@ -207,6 +207,38 @@ public class CoachStripService {
         return !departureTime.before(currentTime);
     }
 
+    public int checkIdCoach(int idCoach) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = JdbcUtils.getConn();
+            String sql = "SELECT * FROM bus.coachs\n"
+                    + "where idCoach = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCoach);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return 1;
+            }
+        } catch (SQLException ex) {
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+
+            }
+        }
+        return -1;
+    }
+
 }
 
 //    public static void main(String[] args) {

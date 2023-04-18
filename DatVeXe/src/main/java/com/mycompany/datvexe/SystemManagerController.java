@@ -242,6 +242,7 @@ public class SystemManagerController implements Initializable {
             alert.showAndWait();
             return;
         }
+        //Kiểm tra nhập số cho mã xe
         try {
             int coach = Integer.parseInt(coachTextField.getText());
         } catch (NumberFormatException ex) {
@@ -252,7 +253,7 @@ public class SystemManagerController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        //Kiểm tra nhập số cho tiền
         try {
             double priceValue = Double.parseDouble(priceTextField.getText());
         } catch (NumberFormatException ex) {
@@ -263,7 +264,7 @@ public class SystemManagerController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        //Kiểm tra nhập số cho nhân viên
         try {
             int idStaff = Integer.parseInt(staffTextField.getText());
         } catch (NumberFormatException ex) {
@@ -274,7 +275,18 @@ public class SystemManagerController implements Initializable {
             alert.showAndWait();
             return;
         }
-
+        //Kiểm tra mã xe có tồn tại không 
+        CoachStripService csC = new CoachStripService();
+        int a = csC.checkIdCoach(Integer.parseInt(coachTextField.getText()));
+        if( a <0){
+             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đúng mã xe!");
+            alert.showAndWait();
+            return;
+        }
+        
         // Lấy dữ liệu từ các trường nhập
         int coach = Integer.parseInt(coachTextField.getText());
         double priceValue = Double.parseDouble(priceTextField.getText());
@@ -619,4 +631,8 @@ public class SystemManagerController implements Initializable {
         // Đóng Stage hiện tại
         currentStage.close();
     }
+    
+    
+    
+    
 }
