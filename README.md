@@ -42,4 +42,4 @@ this project have a hand in contributing of :
 - Võ Hữu Nghĩa : Dev / Test
 - Nguyễn Ngọc Luân : Main Test
 
-                                                                                                                Thank you ❤ ❤ ❤
+                        Thank you ❤ ❤ ❤
