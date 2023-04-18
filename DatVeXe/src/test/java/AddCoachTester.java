@@ -47,74 +47,67 @@
 //
 //    @Test
 //    public void testAddNewCoachWithExistingNumberCoach() throws SQLException {
-//        // Given
-//        
+//
 //        int numberCoach = 1;
 //        int capacity = 30;
 //        String typeOfCoach = "Xe khách";
 //
-//        // First, add a new coach with the given numberCoach
 //        cs.addNewCoach(numberCoach, capacity, typeOfCoach);
 //
-//        // When
 //        int result = cs.addNewCoach(numberCoach, capacity, typeOfCoach);
 //
-//        // Then
 //        Assertions.assertEquals(-1, result);
 //    }
 //
 //    @Test
 //    public void testCheckCoachExists() throws SQLException {
-//        // Given
-//        
+//
 //        int numberCoach = 1;
-//        // When
+//
 //        boolean result = cs.checkCoachExists(numberCoach);
-//        // Then
+//
 //        Assertions.assertTrue(result);
 //    }
 //
 //    @Test
 //    public void testAddNewCoachWithTypeOfCoachNull() throws SQLException {
-//        // Given
-//        
+//
 //        int numberCoach = 71;
 //        int capacity = 30;
 //        String typeOfCoach = null;
 //
-//        // When
 //        int result = cs.addNewCoach(numberCoach, capacity, typeOfCoach);
 //
-//        // Then
 //        Assertions.assertEquals(-1, result);
 //    }
 //
 //    @Test
 //    public void testAddNewCoachWithNegativeCapacity() throws SQLException {
-//        // Given
-//       
+//
 //        int numberCoach = 74;
 //        int capacity = -20;
 //        String typeOfCoach = "Xe khách";
 //
-//        // When
 //        int result = cs.addNewCoach(numberCoach, capacity, typeOfCoach);
 //
-//        // Then
+//        Assertions.assertEquals(-1, result);
+//    }
+//
+//    @Test
+//    public void testAddNewCoachWithInvalidCapacity() throws SQLException {
+//        
+//        int result = cs.addNewCoach(89, 5, "Xe Khách");
 //        Assertions.assertEquals(-1, result);
 //    }
 //
 //    @Test
 //    public void testAddNewCoachWithExceedingCapacity() throws SQLException {
-//        // Given
+//
 //        int numberCoach = 77;
 //        int capacity = 100;
 //        String typeOfCoach = "Xe khách";
-//
-//        // When
 //        int result = cs.addNewCoach(numberCoach, capacity, typeOfCoach);
 //
-//        // Then
 //        Assertions.assertEquals(-1, result);
 //    }
 //}

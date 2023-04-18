@@ -23,10 +23,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <!--<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="1010.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.SystemManagerController">-->
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="1004.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.SystemManagerController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="1004.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.datvexe.SystemManagerController">
 
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.33331298828125" minWidth="10.0" prefWidth="164.66667683919272" />
@@ -87,10 +86,10 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="619.0" layoutY="6.0" text="Tên nhân viên" />
+                  <Label layoutX="619.0" layoutY="6.0" />
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="56.0" prefWidth="53.0" />
 
-                  <Label fx:id="nameSatff" layoutX="619.0" layoutY="6.0" text="Tên nhân viên" />
+                  <Label fx:id="nameSatff" layoutX="619.0" layoutY="6.0" />
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="61.0" prefWidth="53.0" />
 
                   <Pane layoutX="518.0" layoutY="1.0" prefHeight="56.0" prefWidth="3.0" style="-fx-background-color: red;" />
@@ -220,7 +219,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                              </font>
                                           </Button>
-                                          <Label fx:id="lbMessage" alignment="CENTER" layoutX="145.0" layoutY="25.0" prefHeight="20.0" prefWidth="260.0" textFill="#e40b0b">
+                                          <Label fx:id="lbMessage" alignment="CENTER" layoutX="19.0" layoutY="25.0" prefHeight="20.0" prefWidth="492.0" textFill="#e40b0b">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -287,11 +286,6 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Label fx:id="messageLabel" layoutX="307.0" layoutY="372.0" prefHeight="19.0" prefWidth="224.0">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
                                     <TextField fx:id="staffTextField" layoutX="132.0" layoutY="170.0" promptText="Mã tài xế" style="-fx-background-color: white;">
                                        <font>
                                           <Font size="13.0" />

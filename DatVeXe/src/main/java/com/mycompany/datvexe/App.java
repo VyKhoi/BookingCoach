@@ -24,7 +24,7 @@ public class App extends Application {
         try {
 //        scene = new Scene(loadFXML("BookTicKet"));
 
-            scene = new Scene(loadFXML("ManagerSystem"));
+            scene = new Scene(loadFXML("LoginGUI"));
 
             stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);

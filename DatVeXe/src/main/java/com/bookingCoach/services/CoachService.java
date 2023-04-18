@@ -30,7 +30,7 @@ public class CoachService {
     }
 
     public int addNewCoach(int numberCoach, int capacity, String typeOfCoach) throws SQLException {
-        if (typeOfCoach == null || capacity < 0 || capacity > 50) {
+        if (typeOfCoach == null || capacity < 10 || capacity > 50) {
             return -1;
         }
         try (Connection conn = JdbcUtils.getConn()) {

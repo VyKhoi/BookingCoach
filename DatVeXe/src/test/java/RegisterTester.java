@@ -51,13 +51,13 @@
 //
 //    @Test
 //    public void testValidateRegisterWithValidInput() throws SQLException, NoSuchAlgorithmException {
-//        int result = rs.validateRegister("password123",
-//                "johndoe",
+//        int result = rs.validateRegister("Password123@",
+//                "johndoe123",
 //                "123 Main St",
 //                "Nhân viên",
 //                "John Doe",
 //                "Nam",
-//                "0923456781",
+//                "0383456782",
 //                LocalDate.parse("2000-01-01"));
 //
 //        Assertions.assertEquals(1, result);
@@ -71,7 +71,7 @@
 //                "invalidRole",
 //                "John Doe",
 //                "Nam",
-//                "0823456791",
+//                "0823456771",
 //                LocalDate.parse("1990-01-01"));
 //
 //        Assertions.assertEquals(-1, result);
@@ -85,7 +85,7 @@
 //                "Nhân Viên",
 //                "John Doe",
 //                "Nam",
-//                "123456789",
+//                "0123456689",
 //                LocalDate.parse("1998-01-01"));
 //
 //        Assertions.assertEquals(-1, result);
@@ -93,13 +93,13 @@
 //
 //    @Test
 //    public void testValidateRegisterWithInvalidUsername() throws SQLException, NoSuchAlgorithmException {
-//        int result = rs.validateRegister("leost123",
+//        int result = rs.validateRegister("leost1234@",
 //                "",
 //                "123 Main St",
 //                "Nhân viên",
 //                "Makima",
 //                "Nam",
-//                "123456789",
+//                "0123456789",
 //                LocalDate.parse("1990-01-01"));
 //
 //        Assertions.assertEquals(-1, result);
@@ -133,4 +133,9 @@
 //                    invalidDate);
 //        });
 //    }
+//    @Test
+//	public void testValidateRegisterWithInvalidNameStaff() throws NoSuchAlgorithmException, SQLException {
+//		int result = rs.validateRegister("Password@123", "validUsername11", "Valid Address", "Nhân Viên", "InvalidNameStaff123", "Nam", "0353456789", LocalDate.of(1997, 1, 1));
+//		Assertions.assertEquals(-1, result);
+//	}
 //}

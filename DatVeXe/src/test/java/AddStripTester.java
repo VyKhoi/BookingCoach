@@ -49,71 +49,64 @@
 //
 //    @Test
 //    public void testCheckExistingStrip() throws SQLException {
-//        // Given
+//    
 //        int startLocationId = 1;
 //        int endLocationId = 2;
 //
-//        // When
 //        boolean result = sv.checkExistingStrip(startLocationId, endLocationId);
 //
-//        // Then
+//
 //        Assertions.assertTrue(result);
 //    }
 //
 //    @Test
 //    public void testGetStationById() throws SQLException {
-//        // Given
+//
 //        int idStation = 1;
 //
-//        // When
 //        Station station = sv.getStationById(idStation);
 //
-//        // Then
 //        Assertions.assertEquals("Bến xe Miền Đông", station.getName());
 //    }
 //
 //    @Test
 //    public void testAddNewStrips() throws SQLException {
-//        // Given
+// 
 //        int distance = 100;
 //        LocalTime arrivalTime = LocalTime.of(12, 0);
-//        int idStationsStart = 2;
-//        int idStationsEnd = 4;
+//        int idStationsStart = 4;
+//        int idStationsEnd = 1;
 //
-//        // When
 //        int result = sv.addNewStrips(distance, arrivalTime, idStationsStart, idStationsEnd);
 //
-//        // Then
 //        Assertions.assertEquals(1, result);
 //    }
 //
 //    @Test
 //    public void testAddNewStripsWhenStripExists() throws SQLException {
-//        // Given
+//
 //        int distance = 100;
 //        LocalTime arrivalTime = LocalTime.of(12, 0);
 //        int idStationsStart = 1;
 //        int idStationsEnd = 2;
 //
-//        // When
+//
 //        int result = sv.addNewStrips(distance, arrivalTime, idStationsStart, idStationsEnd);
 //
-//        // Then
+//
 //        Assertions.assertEquals(-1, result);
 //    }
 //
 //    @Test
 //    public void testAddNewStripsWithDuplicateStartAndEndLocation() throws SQLException {
-//// Given
+//
 //        int distance = 100;
 //        LocalTime arrivalTime = LocalTime.of(12, 0);
 //        int idStationsStart = 4;
 //        int idStationsEnd = 4;
-//        
-//        // When
+//
 //    int result = sv.addNewStrips(distance, arrivalTime, idStationsStart, idStationsEnd);
 //
-//    // Then
 //    Assertions.assertEquals(-1, result);
 //    }
 //}
