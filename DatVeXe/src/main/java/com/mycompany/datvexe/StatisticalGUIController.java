@@ -7,20 +7,14 @@ package com.mycompany.datvexe;
 import com.bookingCoach.Alias.AliasStatistical;
 import com.bookingCoach.services.Login;
 import com.bookingCoach.services.StatisticalServices;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,9 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
-import org.w3c.dom.Document;
 
 /**
  * FXML Controller class
@@ -102,6 +94,31 @@ public class StatisticalGUIController implements Initializable {
         comboBoxYear.setValue("2023");
 
     }
+    
+      @FXML
+    private Button logoutButton;
+
+    public void logoutButtonOnAction(ActionEvent event) throws IOException {
+        Login.loginStaff = null; // xóa thông tin đăng nhập của nhân viên
+        Node source = (Node) event.getSource();
+        FadeTransition fadeOut = new FadeTransition(javafx.util.Duration.millis(500), source);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished((ActionEvent event1) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginGUI.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+            }
+        });
+        fadeOut.play();
+    }
+
+    
 //    hàm này để chạy thống kê theo ngày khi lick ok
     public void handleStatistical() throws SQLException {
         // clear dữ liệu cũ

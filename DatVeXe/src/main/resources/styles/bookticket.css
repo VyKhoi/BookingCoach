@@ -5,3 +5,6 @@
 .mainFxmlClass {
 
 }
+#bus{
+    -fx-background-image: url('../image/bus.jpg');
+}

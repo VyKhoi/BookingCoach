@@ -37,7 +37,7 @@ public class StatisticalTester {
         try {
             conn = JdbcUtils.getConn();
         } catch (SQLException ex) {
-            Logger.getLogger(ChangeTicketTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StatisticalTester.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         c = new ChangeTicketServices();
@@ -49,7 +49,7 @@ public class StatisticalTester {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(ChangeTicketTester.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(StatisticalTester.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

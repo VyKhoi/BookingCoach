@@ -28,8 +28,6 @@ import javafx.scene.control.TextField;
  * @author ACER
  */
 public class BookTicKet {
-    
-    
 
     public List<Coachstrips> getAllChuyenXe() {
         List<Coachstrips> chuyenXeList = new ArrayList<>();
@@ -171,7 +169,6 @@ public class BookTicKet {
             return null;
         }
     }
-    
 
     public List<Coachs> getListCoach(List<Integer> listIdCoach) {
         List<Coachs> listCoachs = new ArrayList<>();
@@ -303,33 +300,6 @@ public class BookTicKet {
         }
     }
 
-    
-    
-    public int getIdTicket(int idCSCS){
-        int idTicket = 0;
-        String mySQL = "SELECT idTicket FROM bus.ticket WHERE idCoachStripCoachSeat = ? ";
-        try {
-            Connection conn = JdbcUtils.getConn();
-
-            PreparedStatement statement = conn.prepareStatement(mySQL);
-            statement.setInt(1, idCSCS);
- 
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                idTicket = resultSet.getInt("idTicket");
-            }
-            statement.close();
-            conn.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return idTicket;
-    }
-    
-    
-    
-    
     public int getIdCus(String ten, String number, String Address) {
         int idCus = 0;
         String sql = "SELECT idCustomer FROM customer WHERE name = ? AND phoneNumber = ?";
@@ -369,8 +339,6 @@ public class BookTicKet {
     public void addTicKet(int idCus, int idCSCS, LocalDateTime Time) {
         try {
             Connection conn = JdbcUtils.getConn();
-
-            System.out.println("da chay toi addTiket");
             String insertSql = "INSERT INTO bus.ticket (idStationBuy, bookingDate, idCustomer, idStaff, status, idCoachStripCoachSeat) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement insertStatement = conn.prepareStatement(insertSql);
             insertStatement.setInt(1, 1);
@@ -381,7 +349,6 @@ public class BookTicKet {
             insertStatement.setInt(6, idCSCS);
             insertStatement.executeUpdate();
 
-            System.out.println("da add vao tick et moi");
 
             ResultSet generatedKeys = insertStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -398,7 +365,6 @@ public class BookTicKet {
     public void sellTicKet(int idCus, int idCSCS, LocalDateTime Time) {
         try {
             Connection conn = JdbcUtils.getConn();
-
             System.out.println("da chay toi addTiket");
             String insertSql = "INSERT INTO bus.ticket (idStationBuy, bookingDate, idCustomer, idStaff, status, idCoachStripCoachSeat) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement insertStatement = conn.prepareStatement(insertSql);
@@ -409,8 +375,6 @@ public class BookTicKet {
             insertStatement.setInt(5, 1);
             insertStatement.setInt(6, idCSCS);
             insertStatement.executeUpdate();
-
-            System.out.println("da add vao tick et moi");
 
             ResultSet generatedKeys = insertStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -427,9 +391,31 @@ public class BookTicKet {
     public static void main(String[] args) {
         BookTicKet ds = new BookTicKet();
 //      
-        int idTicket = ds.getIdTicket(300);
 
-        System.out.print(idTicket);
+
     }
+
+    public int getIdTicket(int idCSCS) {
+        int idTicket = 0;
+        String mySQL = "SELECT idTicket FROM bus.ticket WHERE idCoachStripCoachSeat = ? ";
+        try {
+            Connection conn = JdbcUtils.getConn();
+
+            PreparedStatement statement = conn.prepareStatement(mySQL);
+            statement.setInt(1, idCSCS);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                idTicket = resultSet.getInt("idTicket");
+            }
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return idTicket;
+    }
+
 
 }

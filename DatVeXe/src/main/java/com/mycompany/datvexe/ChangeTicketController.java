@@ -380,6 +380,15 @@ public class ChangeTicketController implements Initializable {
             this.tableViewSearch.getItems().clear();
 
             if (event.getCode() == KeyCode.ENTER) {
+                if (tSearchIdTicket.getText().length() != 10) {
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText("Nhập số điện thoại sai");
+//            alert.setContentText();
+
+                    alert.showAndWait();
+                    return;
+                }
                 System.out.println("nó vào key enter search numbetphone");
                 loadTableViewSearchNumberPhone();
             }
@@ -411,6 +420,8 @@ public class ChangeTicketController implements Initializable {
 
             alert.showAndWait();
         }
+
+        clear();
 
     }
 
@@ -455,6 +466,7 @@ public class ChangeTicketController implements Initializable {
                 alert.setTitle("Thông báo");
                 alert.setHeaderText("sửa thành công");
                 alert.showAndWait();
+                clear();
             } else {
                 if (runUpdate == -1) {
                     Alert alert = new Alert(AlertType.WARNING);
@@ -523,7 +535,25 @@ public class ChangeTicketController implements Initializable {
         currentStage.close();
     }
 
-//    bộ 3 hàm chuyển page 
+    public void clear() {
+        selectedItem = null;
+        // xóa trắng 
+        nameCustomerLabel.setText("");
+        phoneCustomerLabel.setText("");
+        addressCustomerLabel.setText("");
+        idTicketLabel.setText("");
+        dateBookingLabel.setText("");
+        coachNumberLabel.setText("");
+        nameStaffLabel.setText("");
+        nameStationStartLabel.setText("");
+        nameStationEndLabel.setText("");
+        departureTimeLabel.setText("");
+        comboBoxSeatOke.getItems().clear();
+        this.tableViewSearch.getColumns().clear();
+        this.tableViewSearch.getItems().clear();
+    }
+//    bộ 3 hàm chuyển page s
+
     public void switchStistical(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();

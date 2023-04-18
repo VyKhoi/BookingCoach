@@ -24,9 +24,7 @@ public class App extends Application {
         try {
 //        scene = new Scene(loadFXML("BookTicKet"));
 
-
             scene = new Scene(loadFXML("LoginGUI"));
-
 
             stage.setScene(scene);
 //        stage.initStyle(StageStyle.UNDECORATED);
@@ -36,9 +34,8 @@ public class App extends Application {
             stage.setMinHeight(480);
             stage.show();
 
-//         chạy cập nhật vé
-        ChangeTicketServices.autoUpdateTicket();
-        ChangeTicketServices.autoUpdateCSCS();
+            ChangeTicketServices.autoUpdateTicket();
+            ChangeTicketServices.autoUpdateCSCS();
 //           
         } catch (Exception ex) {
             System.out.println(ex.toString());
