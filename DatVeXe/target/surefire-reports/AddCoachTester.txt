@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: StatisticalTester
+Test set: AddCoachTester
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.862 s - in StatisticalTester
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.069 s - in AddCoachTester

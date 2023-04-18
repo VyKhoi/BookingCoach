@@ -106,31 +106,36 @@
                                     <ComboBox fx:id="time" layoutX="415.0" layoutY="61.0" onAction="#onTimeSelected" prefHeight="28.0" prefWidth="178.0" stylesheets="@../../../styles/changeticket.css" />
                                     <Label fx:id="timeOrder" layoutX="102.0" layoutY="345.0" text="Ngày đặt" textFill="#363131" wrapText="true" />
                                     <ComboBox fx:id="strips" layoutX="30.0" layoutY="61.0" onAction="#onStripsSelected" prefHeight="28.0" prefWidth="235.0" stylesheets="@../../../styles/changeticket.css" />
-                                    <Button layoutX="726.0" layoutY="330.0" mnemonicParsing="false" onAction="#orderTicKet" prefHeight="47.0" prefWidth="69.0" text="ĐẶT VÉ" />
-                                    <TextField fx:id="nameOfCus" layoutX="102.0" layoutY="188.0" prefHeight="38.0" prefWidth="170.0" />
+                                    <Button layoutX="717.0" layoutY="330.0" mnemonicParsing="false" onAction="#orderTicKet" prefHeight="47.0" prefWidth="69.0" text="ĐẶT VÉ" />
+                                    <TextField fx:id="nameOfCus" layoutX="102.0" layoutY="188.0" prefHeight="38.0" prefWidth="163.0" />
                                     <ComboBox fx:id="nameSeat" layoutX="715.0" layoutY="57.0" onMouseClicked="#renderNameSeat" prefHeight="28.0" prefWidth="73.0" stylesheets="@../../../styles/changeticket.css" />
-                                    <TextField fx:id="number" layoutX="689.0" layoutY="192.0" prefHeight="38.0" prefWidth="102.0" />
+                                    <TextField fx:id="number" layoutX="689.0" layoutY="192.0" prefHeight="38.0" prefWidth="98.0" />
                                     <TextField fx:id="address" layoutX="411.0" layoutY="192.0" prefHeight="38.0" prefWidth="178.0" />
-                                    <Button layoutX="534.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleClearAll" prefHeight="46.0" prefWidth="98.0" text="XÓA TẤT CẢ" />
+                                    <Button layoutX="504.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleClearAll" prefHeight="46.0" prefWidth="98.0" text="XÓA TẤT CẢ" />
                                     <Label layoutX="30.0" layoutY="207.0" text="Họ và tên: " />
                                     <Label layoutX="358.0" layoutY="211.0" text="Địa chỉ:" />
                                     <Label layoutX="650.0" layoutY="211.0" text="SĐT:" />
                                     <ComboBox fx:id="typeOfCar" layoutX="30.0" layoutY="137.0" prefHeight="30.0" prefWidth="234.0" stylesheets="@../../../styles/changeticket.css" />
                                     <Label layoutX="650.0" layoutY="61.0" text="Chọn ghế:" />
-                                    <Label layoutX="26.0" layoutY="38.0" text="Chọn tuyến xe" />
+                                    <Label layoutX="32.0" layoutY="38.0" text="Chọn tuyến xe" />
                                     <Label layoutX="346.0" layoutY="66.0" text="Chọn giờ:" />
-                                    <Label layoutX="26.0" layoutY="118.0" text="Chọn loại xe" />
-                                    <Label layoutX="361.0" layoutY="143.0" prefHeight="18.0" prefWidth="38.0" text="Số xe:" textFill="#363131" wrapText="true" />
-                                    <ComboBox fx:id="numberOfCar" layoutX="415.0" layoutY="137.0" prefHeight="30.0" prefWidth="175.0" stylesheets="@../../../styles/changeticket.css" />
+                                    <Label layoutX="32.0" layoutY="112.0" text="Chọn loại xe" />
+                                    <Label layoutX="353.0" layoutY="143.0" prefHeight="18.0" prefWidth="53.0" text="Số xe:" textFill="#363131" wrapText="true" />
+                                    <ComboBox fx:id="numberOfCar" layoutX="412.0" layoutY="137.0" prefHeight="30.0" prefWidth="178.0" stylesheets="@../../../styles/changeticket.css" />
                                     <Label layoutX="30.0" layoutY="345.0" text="Ngày đặt:" />
-                                    <Label layoutX="31.0" layoutY="247.0" prefHeight="35.0" prefWidth="62.0" text="GIÁ: " />
-                                    <Label fx:id="price" layoutX="102.0" layoutY="245.0">
+                                    <Label layoutX="30.0" layoutY="267.0" prefHeight="35.0" prefWidth="62.0" text="GIÁ: " />
+                                    <Label fx:id="price" layoutX="74.0" layoutY="265.0" prefHeight="40.0" prefWidth="127.0">
                                        <font>
                                           <Font size="28.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="637.0" layoutY="330.0" mnemonicParsing="false" onAction="#sellTicKet" prefHeight="46.0" prefWidth="82.0" text="BÁN VÉ" />
-                                    <Button fx:id="acceptChangeCoachStrip" layoutX="356.0" layoutY="331.0" mnemonicParsing="false" onAction="#changeTicKet" prefHeight="46.0" prefWidth="166.0" text="XÁC NHẬN ĐỔI CHUYẾN" />
+                                    <Button layoutX="615.0" layoutY="331.0" mnemonicParsing="false" onAction="#sellTicKet" prefHeight="46.0" prefWidth="90.0" text="BÁN VÉ" />
+                                    <Button fx:id="acceptChangeCoachStrip" layoutX="327.0" layoutY="331.0" mnemonicParsing="false" onAction="#changeTicKet" prefHeight="46.0" prefWidth="166.0" text="XÁC NHẬN ĐỔI CHUYẾN" />
+                                    <Label layoutX="174.0" layoutY="269.0" prefHeight="30.0" prefWidth="53.0" text="VNĐ">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </content>

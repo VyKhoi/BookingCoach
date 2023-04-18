@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: StatisticalTester
+Test set: CoachStripTester
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.862 s - in StatisticalTester
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.049 s - in CoachStripTester

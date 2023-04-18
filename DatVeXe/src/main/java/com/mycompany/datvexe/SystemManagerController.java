@@ -4,7 +4,6 @@
  */
 package com.mycompany.datvexe;
 
-
 import com.bookingCoach.pojo.CoachStripCoachSeat;
 import com.bookingCoach.pojo.Staff;
 import com.bookingCoach.pojo.Station;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,13 +50,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author Kiet
  */
-
-
 public class SystemManagerController implements Initializable {
 
     @FXML
@@ -89,8 +86,6 @@ public class SystemManagerController implements Initializable {
     @FXML
     private TextField staffTextField;
     @FXML
-    private Label messageLabel;
-    @FXML
     private Label staffLabel;
     @FXML
     private Label phoneLabel;
@@ -121,9 +116,7 @@ public class SystemManagerController implements Initializable {
     @FXML
     private Label coachStripInfoLabel;
     @FXML
-    private Label nameSatff = new Label();
-
-
+    private final Label nameSatff = new Label();
 
     public void signupButtonOnAction(ActionEvent e) throws SQLException, NoSuchAlgorithmException {
         String username = usernameTextField.getText();
@@ -133,6 +126,16 @@ public class SystemManagerController implements Initializable {
         String phone = phoneTextField.getText();
         String genderStr = "";
         LocalDate birthday = null;
+        // Kiểm tra các trường nhập liệu khác
+        if (username.trim().isEmpty() || password.trim().isEmpty() || namestaff.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty()) {
+            lbMessage.setText("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        // Kiểm tra các trường nhập liệu khác
+        if (username.trim().isEmpty() || password.trim().isEmpty() || namestaff.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty()) {
+            lbMessage.setText("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
         // Kiểm tra giới tính
         if (gender.getSelectedToggle() != null) {
             RadioButton selectedRadioButton = (RadioButton) gender.getSelectedToggle();
@@ -157,16 +160,45 @@ public class SystemManagerController implements Initializable {
         } else {
             birthday = birthdayPicker.getValue();
 
-            System.out.println(" ngay duoc pick " + birthday);
+//            System.out.println(" ngay duoc pick " + birthday);
+        }
+        // Kiểm tra định dạng tên đăng nhập (chứa ít nhất một chữ cái, một số và tối thiểu 6 ký tự)
+        if (!username.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")) {
+            lbMessage.setText("Tên đăng nhập phải chứa ít nhất 1 chữ cái, 1 số và tối thiểu 6 ký tự");
+            return;
+        }
+        // Kiểm tra định dạng tên nhân viên (phải chứa chữ cái và khoảng trắng) (có thể viết TV)
+        if (!namestaff.matches("^[\\p{L}]+(\\s[\\p{L}]+)+$")) {
+            lbMessage.setText("Tên nhân viên không hợp lệ, nên nhập tên theo vd: Nguyễn Văn A");
+            return;
         }
 
-        // Kiểm tra các trường nhập liệu khác
-        if (username.trim().isEmpty() || password.trim().isEmpty() || namestaff.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty()) {
-            lbMessage.setText("Vui lòng nhập đầy đủ thông tin");
+        // Kiểm tra định dạng địa chỉ (không chứa ký tự đặc biệt, chỉ chứa chữ)
+        if (!address.matches("^[a-zA-Z\\s]+$")) {
+            lbMessage.setText("Địa chỉ không hợp lệ, không được có số và ký tự đặc biệt");
+            return;
+        }
+// Kiểm tra định dạng mật khẩu (chứa ít nhất 1 chữ thường và 1 chữ haa, 1 số, ký tự đặc biệt và có độ dài tối thiểu 8 ký tự)
+        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=_\\-!?.><,*(){}\\[\\]:;|/~`]).{8,}$")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Lỗi định dạng mật khẩu");
+            alert.setContentText("Mật khẩu phải chứa ít nhất 1 chữ thường và chữ hoa, 1 số, 1 ký tự đặc biệt và có độ dài tối thiểu 8 ký tự");
+            alert.showAndWait();
             return;
         }
 
         RegisterService registerService = new RegisterService();
+
+        // Kiểm tra số điện thoại đã tồn tại chưa
+        if (registerService.checkPhoneNumberExist(phone)) {
+            lbMessage.setText("Số điện thoại đã tồn tại");
+            return;
+        }
+        if (registerService.checkUserNameExist(username)) {
+            lbMessage.setText("Tên đăng nhập đã tồn tại");
+            return;
+        }
+        // Validate thông tin đăng ký
         int result = registerService.validateRegister(password, username, address, selectedRole, namestaff, genderStr, phone, birthday);
         
         if (result > 0) {
@@ -201,36 +233,114 @@ public class SystemManagerController implements Initializable {
 
 
     public void coachstripcoachseatButtonAction(ActionEvent e) {
+        // Kiểm tra xem người dùng đã nhập đầy đủ thông tin hay chưa
+        if (coachTextField.getText().isEmpty() || priceTextField.getText().isEmpty() || departureTimeTextField.getText().isEmpty() || staffTextField.getText().isEmpty() || coachStripsComboBox.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đầy đủ thông tin");
+            alert.showAndWait();
+            return;
+        }
+        try {
+            int coach = Integer.parseInt(coachTextField.getText());
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Số xe phải là số. Vui lòng nhập lại !");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            double priceValue = Double.parseDouble(priceTextField.getText());
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Giá tiền phải là số. Vui lòng nhập lại !");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            int idStaff = Integer.parseInt(staffTextField.getText());
+        } catch (NumberFormatException ex) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Mã số nhân viên phải là số. Vui lòng nhập lại !");
+            alert.showAndWait();
+            return;
+        }
+
         // Lấy dữ liệu từ các trường nhập
         int coach = Integer.parseInt(coachTextField.getText());
         double priceValue = Double.parseDouble(priceTextField.getText());
         String departureTime = departureTimeTextField.getText();
         int idStaff = Integer.parseInt(staffTextField.getText());
-
-        // Chuyển đổi chuỗi đầu vào thành đối tượng LocalDateTime
-        LocalDateTime departureTimeParsed = LocalDateTime.parse(departureTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
         // Lấy giá trị đã chọn trong ComboBox
         int selectCB = coachStripsComboBox.getValue();
 
-        CoachStripCoachSeat trip = new CoachStripCoachSeat();
-        trip.setIdCoach(coach);
-        trip.setPrice(priceValue);
-        trip.setIdCoachStrips(selectCB);
+        try {
+            // Chuyển đổi chuỗi đầu vào thành đối tượng LocalDateTime
+            LocalDateTime departureTimeParsed = LocalDateTime.parse(departureTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            // Kiểm tra xem người dùng đã nhập đầy đủ thông tin hay chưa
 
-        trip.setDepartureTime(departureTimeParsed);
-        trip.setIdStaff(idStaff);
+            // Nếu ngày tháng nhập vào hợp lệ, tiến hành kiểm tra xem giờ khởi hành đã tồn tại chưa
+            CoachStripService sv = new CoachStripService();
+            if (sv.checkDepartureTimeExist(coach, Timestamp.valueOf(departureTimeParsed))) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Chuyến đi đã tồn tại !");
+                alert.showAndWait();
+                return;
+            }
+            LocalDateTime now = LocalDateTime.now();
+            if (departureTimeParsed.isBefore(now)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Giờ khởi hành phải lớn hơn thời gian hiện tại !");
+                alert.showAndWait();
+                return;
+            }
+            CoachStripCoachSeat trip = new CoachStripCoachSeat();
+            trip.setIdCoach(coach);
+            trip.setPrice(priceValue);
+            trip.setIdCoachStrips(selectCB);
 
-        // Gọi hàm thêm chuyến đi từ service và kiểm tra kết quả
-        CoachStripService service = new CoachStripService();
-        boolean result = service.addNewTrip(trip);
-        System.out.print(result);
+            trip.setDepartureTime(departureTimeParsed);
+            trip.setIdStaff(idStaff);
+            // Gọi hàm thêm chuyến đi từ service và kiểm tra kết quả
+            CoachStripService service = new CoachStripService();
+            boolean result = service.addNewTrip(trip);
+            System.out.print(result);
+            if (result) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Thêm chuyến đi thành công");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Thêm chuyến đi thất bại");
+                alert.showAndWait();
+            }
 
-        if (result) {
-            messageLabel.setText("Thêm chuyến đi thành công");
-        } else {
-            messageLabel.setText("Thêm chuyến đi thất bại");
+        } catch (DateTimeParseException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Định dạng ngày tháng không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd HH:mm:ss.");
+            alert.showAndWait();
+            return;
         }
+
     }
 
     @FXML
@@ -245,6 +355,7 @@ public class SystemManagerController implements Initializable {
             alert.showAndWait();
             return;
         }
+
         // Kiểm tra định dạng giờ nhập vào
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         try {
@@ -314,6 +425,14 @@ public class SystemManagerController implements Initializable {
         int capacity = Integer.parseInt(capacityTxt.getText());
         String selectedtypeCoach = typeofCoachCb.getValue();
 
+        if (capacity < 10 || capacity > 50) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Sức chứa phải nằm trong khoảng từ 10 đến 50.");
+            alert.showAndWait();
+            return;
+        }
         CoachService coachService = new CoachService();
         if (coachService.checkCoachExists(numberCoach)) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -342,16 +461,17 @@ public class SystemManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-         if (Login.loginStaff != null) {
+
+        if (Login.loginStaff != null) {
             nameSatff.setText(Login.loginStaff.getNameStaff());
         }
         // Thêm các vai trò vào ComboBox
         roleComboBox.getItems().addAll("Nhân Viên", "Tài xế");
 
         // Đặt giá trị mặc định cho ComboBox là "Nhân Viên"
-        roleComboBox.setValue("Nhân Viên");
+        roleComboBox.setValue("");
 
+        //Lấy thông tin tuyến đi từ cơ sở dữ liệu để render lên comboBox
         CoachStripService sv = new CoachStripService();
         coachStripsComboBox.setOnMouseClicked(event -> {
             coachStripsComboBox.getItems().clear();
@@ -359,6 +479,7 @@ public class SystemManagerController implements Initializable {
             coachStripsComboBox.getItems().addAll(coachStripIds);
             coachStripsComboBox.setValue(null);
         });
+        //Lấy thông tin của tuyến đi
         coachStripsComboBox.setOnAction(event -> {
             int selectedCoachStripId = coachStripsComboBox.getSelectionModel().getSelectedItem();
             // Lấy thông tin chuyến đi
@@ -401,6 +522,7 @@ public class SystemManagerController implements Initializable {
                 addressLabel.setText("");
             }
         });
+        //Lấy thông tin tuyến bắt đầu
         stationStartCb.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 StripService stripService = new StripService();
@@ -415,7 +537,7 @@ public class SystemManagerController implements Initializable {
                 stationStartLb.setText("");
             }
         });
-
+        //Lấy thông tin tuyến kết thúc
         stationEndCb.valueProperty().addListener((observable, oldValue, newValue) -> {
             // Lấy thông tin về tên bến xe
             StripService stripService = new StripService();
@@ -427,6 +549,9 @@ public class SystemManagerController implements Initializable {
                 stationEndLb.setText("");
             }
         });
+
+
+
         // ràng buộc số điện thoại
         phoneTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
@@ -443,9 +568,7 @@ public class SystemManagerController implements Initializable {
         });
     }
 
-
 //    nơi đây xử lý chuyển page
-    
     public void switchStistical(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
@@ -462,7 +585,7 @@ public class SystemManagerController implements Initializable {
         // Đóng Stage hiện tại
         currentStage.close();
     }
-    
+
     public void switchChangeTicket(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
@@ -479,7 +602,7 @@ public class SystemManagerController implements Initializable {
         // Đóng Stage hiện tại
         currentStage.close();
     }
-    
+
     public void switchBookTicket(ActionEvent e) throws IOException {
         Node node = (Node) e.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();

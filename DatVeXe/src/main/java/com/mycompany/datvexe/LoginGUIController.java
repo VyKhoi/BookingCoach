@@ -56,7 +56,7 @@ public class LoginGUIController implements Initializable {
             if (Login.loginStaff == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Thông báo");
-                alert.setHeaderText("Đăng nhập thất bại");
+                alert.setHeaderText("Tên đăng nhập hoặc mật khẩu không chính xác");
                 //            alert.setContentText();
 
                 alert.showAndWait();
@@ -70,7 +70,7 @@ public class LoginGUIController implements Initializable {
                 fadeOut.setOnFinished((ActionEvent event) -> {
                     try {
                         // Load trang mới
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeTicket.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookTicket.fxml"));
                         Parent root = loader.load();
                         Scene scene = new Scene(root);
                         Stage newStage = new Stage();
@@ -96,7 +96,7 @@ public class LoginGUIController implements Initializable {
 
             }
         } else {
-            loginMessageLabel.setText("Please enter username and password.");
+            loginMessageLabel.setText("Vui lòng nhập đầy đủ thông tin!!");
         }
     }
 

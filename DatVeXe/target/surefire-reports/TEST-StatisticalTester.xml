@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="StatisticalTester" time="0.752" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="StatisticalTester" time="0.862" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,9 +15,9 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.2.8-hotspot\bin"/>
-    <property name="sun.java.command" value="org.apache.maven.surefire.booter.ForkedBooter C:\Users\Vy Khoi\AppData\Local\Temp\surefire16511068637195013873 2023-04-18T07-47-22_924-jvmRun1 surefire4442211797317951482tmp surefire_08114330960341101021tmp"/>
+    <property name="sun.java.command" value="org.apache.maven.surefire.booter.ForkedBooter C:\Users\Vy Khoi\AppData\Local\Temp\surefire12834827528028218133 2023-04-18T21-19-04_852-jvmRun1 surefire11042866123625142029tmp surefire_06846104188803801806tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="StatisticalTester#testGetSumOfCoachsStripOfDay"/>
+    <property name="test" value="StatisticalTester"/>
     <property name="surefire.test.class.path" value="C:\Users\Vy Khoi\Desktop\KiemThu\KiemThuProject\DatVeXe\target\test-classes;C:\Users\Vy Khoi\.m2\repository\org\openjfx\javafx-controls\13\javafx-controls-13.jar;C:\Users\Vy Khoi\.m2\repository\org\openjfx\javafx-graphics\13\javafx-graphics-13.jar;C:\Users\Vy Khoi\.m2\repository\org\openjfx\javafx-base\13\javafx-base-13.jar;C:\Users\Vy Khoi\.m2\repository\org\openjfx\javafx-fxml\13\javafx-fxml-13.jar;C:\Users\Vy Khoi\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\Vy Khoi\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;C:\Users\Vy Khoi\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Vy Khoi\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.2\junit-jupiter-params-5.9.2.jar;C:\Users\Vy Khoi\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\Vy Khoi\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Vy Khoi\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\Vy Khoi\.m2\repository\com\mysql\mysql-connector-j\8.0.32\mysql-connector-j-8.0.32.jar;C:\Users\Vy Khoi\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\Vy Khoi\.m2\repository\com\itextpdf\itextpdf\5.5.13\itextpdf-5.5.13.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Vy Khoi"/>
@@ -60,5 +60,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testGetSumOfCoachsStripOfDay" classname="StatisticalTester" time="0.099"/>
+  <testcase name="testGetSumOfCoachsStripOfMonth" classname="StatisticalTester" time="0.182"/>
+  <testcase name="testABC" classname="StatisticalTester" time="0.001"/>
+  <testcase name="testGetSumOfCoachsStripOfDay" classname="StatisticalTester" time="0.053"/>
+  <testcase name="testGetSumOfCoachsStripOfDayNoData" classname="StatisticalTester" time="0.025"/>
+  <testcase name="testGetSumOfCoachsStripOfMonthNoData" classname="StatisticalTester" time="0.022"/>
 </testsuite>
