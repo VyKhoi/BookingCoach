@@ -49,6 +49,7 @@ public class RegisterService {
             return -1; // Không thể đăng ký với tên đăng nhập rỗng
         }
         if (!phone.matches("^0\\d{9}")) {
+
             return -1; // Không thể đăng ký với số điện thoại không hợp lệ
         }
         // Kiểm tra số điện thoại đã có
@@ -81,6 +82,7 @@ public class RegisterService {
             pstmt.setString(5, nameStaff);
             pstmt.setString(6, gender);
             pstmt.setString(7, phone);
+
             LocalDate birthStaff2 = birthStaff;
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -90,14 +92,17 @@ public class RegisterService {
                 throw new IllegalArgumentException("Invalid birth date", e);
             }
             int affectedRows = pstmt.executeUpdate();
+            
             if (affectedRows > 0) {
                 System.out.println(affectedRows + " record(s) inserted.");
                 return 1;
             } else {
+                System.out.print("loi vai lz lun");
                 return -1;
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+            System.out.print("loi vai lz lun11111");
             return -1;
         }
 

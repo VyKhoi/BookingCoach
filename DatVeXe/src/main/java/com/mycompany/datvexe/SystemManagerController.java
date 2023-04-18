@@ -198,7 +198,7 @@ public class SystemManagerController implements Initializable {
         }
         // Validate thông tin đăng ký
         int result = registerService.validateRegister(password, username, address, selectedRole, namestaff, genderStr, phone, birthday);
-
+        
         if (result > 0) {
             lbMessage.setText("Đăng ký thành công!");
         } else {
@@ -524,6 +524,8 @@ public class SystemManagerController implements Initializable {
                 stationEndLb.setText("");
             }
         });
+
+
 
         // ràng buộc số điện thoại
         phoneTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
