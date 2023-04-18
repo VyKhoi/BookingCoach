@@ -37,9 +37,9 @@ login it:
 to be continue.... in my project you can have databse, class diagram and system design analysis document.
 
 this project have a hand in contributing of :
-Đặng Vỹ Khôi : Dev / Test 
-Nguyễn Quốc Kỳ : Dev / Test 
-Võ Hữu Nghĩa : Dev / Test
-Nguyễn Ngọc Luân : Main Test
+- Đặng Vỹ Khôi : Dev / Test 
+- Nguyễn Quốc Kỳ : Dev / Test 
+- Võ Hữu Nghĩa : Dev / Test
+- Nguyễn Ngọc Luân : Main Test
 
                                                                                                                 Thank you ❤ ❤ ❤
