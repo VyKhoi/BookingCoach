@@ -1,4 +1,4 @@
-                                                                Booking Coach management
+                                    Booking Coach management
 Hello, nice to meet you, welcome to my project, this is the first time I work with JavaFX and use JUnit5 to write unit tests.
 it's just a simple project I hope it'll useful for you
 
