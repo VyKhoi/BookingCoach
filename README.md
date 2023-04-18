@@ -14,8 +14,8 @@ Some pictures of this project for you :
 
 1: Login 
 - You can use this account to log in: this account is granted admin rights
-username: nnl
-password: 123
+- username: nnl
+- password: 123
 
 login it:
 <img width="675" alt="image" src="https://user-images.githubusercontent.com/89650460/232818302-cecf6e15-316a-4b93-81c1-33519d0a3205.png">
