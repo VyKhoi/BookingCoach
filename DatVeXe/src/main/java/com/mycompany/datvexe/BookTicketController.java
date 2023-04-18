@@ -78,7 +78,7 @@ public class BookTicketController implements Initializable {
 
 //    vé được chuyển qua để thực hiện thay đổi chuyến
     public static AliasTicket ticketChangeCoachStrip = null;
-    
+
 //    public static AliasNhanVe 
     /**
      * Initializes the controller class.
@@ -296,7 +296,8 @@ public class BookTicketController implements Initializable {
         BookTicKet ds = new BookTicKet();
         int idCoach = Integer.parseInt(numberOfCar.getValue().toString());
         double prices = ds.getPrice(idCoach);
-        String pricesString = Double.toString(prices);
+        int intPrices = (int) prices;
+        String pricesString = Integer.toString(intPrices);
         price.setText(pricesString);
         int idCoachstrip = strips.getSelectionModel().getSelectedIndex() + 1;
         LocalDateTime localDateTime = (LocalDateTime) time.getValue();
@@ -756,36 +757,44 @@ public class BookTicketController implements Initializable {
 
     public void receiveTicket() throws URISyntaxException {
 
-        int idTicket = Integer.parseInt(idTicketLabel.getText());
-        String mySQL = "UPDATE bus.ticket SET status = 1 WHERE idTicket = ?";
-        try {
-            Connection conn = JdbcUtils.getConn();
-            PreparedStatement statement = conn.prepareStatement(mySQL);
-            statement.setInt(1, idTicket);
-            int rowsUpdated = statement.executeUpdate();
-            if(!"Đã nhận".equals(selectedItem.getStatusTicket()) && rowsUpdated > 0){
-                printTicketByReceive(idTicket);
-                Alert alert2 = new Alert(AlertType.INFORMATION);
-                alert2.setTitle("Thông báo");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Nhận vé thành công");
-                alert2.showAndWait();
+        
+        if ("".equals(idTicketLabel.getText())) {
+            Alert alert2 = new Alert(AlertType.INFORMATION);
+            alert2.setTitle("Thông báo");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Chưa nhập thông tin, không thể nhận vé");
+            alert2.showAndWait();
+        } else {
+            int idTicket = Integer.parseInt(idTicketLabel.getText());
+            String mySQL = "UPDATE bus.ticket SET status = 1 WHERE idTicket = ?";
+            try {
+                Connection conn = JdbcUtils.getConn();
+                PreparedStatement statement = conn.prepareStatement(mySQL);
+                statement.setInt(1, idTicket);
+                int rowsUpdated = statement.executeUpdate();
+                if (!"Đã nhận".equals(selectedItem.getStatusTicket()) && rowsUpdated > 0) {
+                    printTicketByReceive(idTicket);
+                    Alert alert2 = new Alert(AlertType.INFORMATION);
+                    alert2.setTitle("Thông báo");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Nhận vé thành công");
+                    alert2.showAndWait();
+                } else {
+                    Alert alert2 = new Alert(AlertType.INFORMATION);
+                    alert2.setTitle("Thông báo");
+                    alert2.setHeaderText(null);
+                    alert2.setContentText("Vé đã nhận rồi nên không nhận nữa");
+                    alert2.showAndWait();
+                }
+
+                statement.close();
+                conn.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            else{
-                Alert alert2 = new Alert(AlertType.INFORMATION);
-                alert2.setTitle("Thông báo");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Vé đã nhận rồi nên không nhận nữa");
-                alert2.showAndWait();
-            }
-
-            statement.close();
-            conn.close();
-
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
+
     }
 
     // hàm xử lí của changeTicKet
