@@ -116,7 +116,7 @@ public class SystemManagerController implements Initializable {
     @FXML
     private Label coachStripInfoLabel;
     @FXML
-    private final Label nameSatff = new Label();
+    private Label nameSatff = new Label();
 
     public void signupButtonOnAction(ActionEvent e) throws SQLException, NoSuchAlgorithmException {
         String username = usernameTextField.getText();
@@ -475,6 +475,7 @@ public class SystemManagerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         if (Login.loginStaff != null) {
+            System.out.println("co lay ten nhan vien");
             nameSatff.setText(Login.loginStaff.getNameStaff());
         }
         // Thêm các vai trò vào ComboBox

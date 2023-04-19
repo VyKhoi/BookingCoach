@@ -90,7 +90,7 @@
                   <Label layoutX="619.0" layoutY="6.0" />
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="56.0" prefWidth="53.0" />
 
-                  <Label fx:id="nameSatff" layoutX="619.0" layoutY="6.0" />
+                  <Label fx:id="nameSatff" layoutX="619.0" layoutY="6.0" prefHeight="17.0" prefWidth="169.0" />
                   
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="56.0" prefWidth="53.0" />
                   <Pane id="avatarStaff" layoutX="550.0" layoutY="2.0" prefHeight="61.0" prefWidth="53.0" />

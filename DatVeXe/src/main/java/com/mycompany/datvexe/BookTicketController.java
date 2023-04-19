@@ -78,7 +78,6 @@ public class BookTicketController implements Initializable {
     @FXML
     private Button logoutButton;
 
-    
 //    vé được chuyển qua để thực hiện thay đổi chuyến
     public static AliasTicket ticketChangeCoachStrip = null;
 
@@ -90,15 +89,27 @@ public class BookTicketController implements Initializable {
      * @param rb
      */
 //    private RequiredFieldValidator validator;
+    @FXML
+    private Button clearAllButton;
+    @FXML
+    private Button sellButton;
+    @FXML
+    private Button bookingticketButton;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         acceptChangeCoachStrip.setDisable(true);
+        cancelChange.setVisible(false);
         if (ticketChangeCoachStrip != null) {
             System.out.println("xuat thong tin ve chuyen " + ticketChangeCoachStrip.toString());
             nameOfCus.setText(ticketChangeCoachStrip.getNameCustomer());
             address.setText(ticketChangeCoachStrip.getAddressCus());
             number.setText(ticketChangeCoachStrip.getPhoneNumber());
             acceptChangeCoachStrip.setDisable(false);
+            cancelChange.setVisible(true);
+            clearAllButton.setDisable(true);
+            sellButton.setDisable(true);
+            bookingticketButton.setDisable(true);
         }
 
         renderStrips();
@@ -179,6 +190,8 @@ public class BookTicketController implements Initializable {
     private Label price;
     @FXML
     private Button acceptChangeCoachStrip;
+    @FXML
+    private Button cancelChange;
 
     // thuộc tính của nhận vé lấy từ changeTicKet
     ChangeTicketServices ctk = new ChangeTicketServices();
@@ -415,6 +428,7 @@ public class BookTicketController implements Initializable {
 //            alert.setHeaderText(null);
 //            alert.setContentText("Đặt vé thành công!");
 //            alert.showAndWait();
+            handleClearAll();
         } catch (Exception ex) {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
@@ -541,6 +555,7 @@ public class BookTicketController implements Initializable {
         nameOfCus.clear();
         address.clear();
         number.clear();
+        price.setText("");
     }
 
     public void switchStistical(ActionEvent e) throws IOException {
@@ -753,6 +768,7 @@ public class BookTicketController implements Initializable {
             alert2.setContentText("Bán vé thành công!");
             alert2.showAndWait();
 
+            handleClearAll();
         } catch (Exception ex) {
             System.out.println("loi ben ham orderTicket" + ex.toString());
         }
@@ -760,7 +776,6 @@ public class BookTicketController implements Initializable {
 
     public void receiveTicket() throws URISyntaxException {
 
-        
         if ("".equals(idTicketLabel.getText())) {
             Alert alert2 = new Alert(AlertType.INFORMATION);
             alert2.setTitle("Thông báo");
@@ -1160,5 +1175,14 @@ public class BookTicketController implements Initializable {
 //        ctk.updateSeatOfTicket(selectedItem, formattedDate, selectedSeat);
     }
 
+    public void cancelChangeTicket() {
+        handleClearAll();
+        ticketChangeCoachStrip = null;
+        acceptChangeCoachStrip.setDisable(true);
+        cancelChange.setVisible(false);
+          clearAllButton.setDisable(false);
+            sellButton.setDisable(false);
+            bookingticketButton.setDisable(false);
+    }
 //    bộ 3 hàm chuyển page 
 }
