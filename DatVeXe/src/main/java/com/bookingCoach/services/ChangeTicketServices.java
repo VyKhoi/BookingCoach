@@ -73,48 +73,48 @@ public class ChangeTicketServices {
                         + "INNER JOIN bus.stations st2 ON cs.idStationsEnd = st2.idStations\n"
                         + "WHERE cs.idCoachStips = ?;"; // sử dụng dấu ? thay cho biến idTicket
 
-                System.out.println("Chạy ra roi 2");
+              
 
                 PreparedStatement pstmt2 = conn.prepareStatement(query2);
 
-                System.out.println("Chạy ra roi 3");
+               
                 pstmt2.setInt(1, rs.getInt("idCoachStrips")); // set giá trị của biến idTicket vào câu lệnh truy vấn
 
-                System.out.println("Chạy ra roi 4");
+               
                 ResultSet rs2 = pstmt2.executeQuery();
 
-                System.out.println("Chạy ra roi 5");
+              
 
                 String nameCustomer = rs.getString("nameCustomer");
                 System.out.println(nameCustomer);
 
                 String phoneNumber = rs.getString("phoneNumber");
-                System.out.println("Chạy ra roi 6");
+            
                 String addressCus = rs.getString("addressCus");
-                System.out.println("Chạy ra roi 7");
+         
 
                 Timestamp bookingDateTimestamp = rs.getTimestamp("bookingDate");
                 Date bookingDate = new Date(bookingDateTimestamp.getTime());
 
-                System.out.println("Chạy ra roi 8");
+ 
                 int numberCoach = rs.getInt("numberCoach");
-                System.out.println("Chạy ra roi 9");
+          
                 String nameStaff = rs.getString("nameStaff");
-                System.out.println("Chạy ra roi 10");
+           
 
                 Timestamp departureTimestamp = rs.getTimestamp("departureTime");
                 Date departureTime = new Date(departureTimestamp.getTime());
 
-                System.out.println("Chạy ra roi 11");
+           
                 String nameSeat = rs.getString("nameSeat");
-                System.out.println("Chạy ra roi 12");
+              
                 int idCSCS = rs.getInt("idCSCS");
-                System.out.println("Chạy ra roi 13");
+              
                 int idCoachStrips = rs.getInt("idCoachStrips");
-                System.out.println("Chạy ra roi 14");
+              
                 rs2.next();
                 int idStart = rs2.getInt("idStart");
-                System.out.println("Chạy ra roi 15");
+             
                 String nameStartStation = rs2.getString("nameStartStation");
                 String addressStart = rs2.getString("addressStart");
                 int idEnd = rs2.getInt("idEnd");
@@ -157,7 +157,7 @@ public class ChangeTicketServices {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("Chạy ra roi");
+            
                 // get start and end station
                 String query2 = "SELECT st1.idStations idStart, st1.name nameStartStation , st1.address addressStart, st2.idStations idEnd, st2.name nameEndStation, st2.address addressEnd\n"
                         + "FROM bus.coachstrips cs\n"
@@ -165,56 +165,54 @@ public class ChangeTicketServices {
                         + "INNER JOIN bus.stations st2 ON cs.idStationsEnd = st2.idStations\n"
                         + "WHERE cs.idCoachStips = ?;"; // sử dụng dấu ? thay cho biến idTicket
 
-                System.out.println("Chạy ra roi 2");
+               
 
                 PreparedStatement pstmt2 = conn.prepareStatement(query2);
 
-                System.out.println("Chạy ra roi 3");
                 pstmt2.setInt(1, rs.getInt("idCoachStrips")); // set giá trị của biến idTicket vào câu lệnh truy vấn
 
-                System.out.println("Chạy ra roi 4");
                 ResultSet rs2 = pstmt2.executeQuery();
 
-                System.out.println("Chạy ra roi 5");
+             
 
                 int idTicket = rs.getInt("idTicket");
                 String nameCustomer = rs.getString("nameCustomer");
                 System.out.println(nameCustomer);
 
                 String phoneNumber = rs.getString("phoneNumber");
-                System.out.println("Chạy ra roi 6");
+       
                 String addressCus = rs.getString("addressCus");
-                System.out.println("Chạy ra roi 7");
+           
 
                 Timestamp bookingDateTimestamp = rs.getTimestamp("bookingDate");
                 Date bookingDate = new Date(bookingDateTimestamp.getTime());
 
-                System.out.println("Chạy ra roi 8");
+            
                 int numberCoach = rs.getInt("numberCoach");
-                System.out.println("Chạy ra roi 9");
+         
                 String nameStaff = rs.getString("nameStaff");
-                System.out.println("Chạy ra roi 10");
+              
 
                 Timestamp departureTimestamp = rs.getTimestamp("departureTime");
                 Date departureTime = new Date(departureTimestamp.getTime());
 
-                System.out.println("Chạy ra roi 11");
+           
                 String nameSeat = rs.getString("nameSeat");
-                System.out.println("Chạy ra roi 12");
+              
                 int idCSCS = rs.getInt("idCSCS");
-                System.out.println("Chạy ra roi 13");
+          
                 int idCoachStrips = rs.getInt("idCoachStrips");
-                System.out.println("Chạy ra roi 14");
+             
                 rs2.next();
                 int idStart = rs2.getInt("idStart");
-                System.out.println("Chạy ra roi 15");
+              
                 String nameStartStation = rs2.getString("nameStartStation");
                 String addressStart = rs2.getString("addressStart");
                 int idEnd = rs2.getInt("idEnd");
                 String nameEndStation = rs2.getString("nameEndStation");
                 String addressEnd = rs2.getString("addressEnd");
                 int status = rs.getInt("status");
-                System.out.println("het luôn");
+              
 
                 tickets = new AliasTicket(idTicket, nameCustomer, phoneNumber, addressCus, bookingDate, numberCoach, nameStaff, departureTime, nameSeat, idCSCS, idCoachStrips, idStart, nameStartStation, addressStart, idEnd, nameEndStation, addressEnd, status);
 
@@ -235,7 +233,7 @@ public class ChangeTicketServices {
     public ArrayList<CoachStripCoachSeat> getEmtySeat(int idTicket) throws SQLException {
         ArrayList<CoachStripCoachSeat> ds = new ArrayList<>();
         // hàm này lấy tất cả các ghế còn khả dụng ứng với chuyến mà vé đặt
-        System.out.println("da chay vo day");
+     
         try ( Connection conn = JdbcUtils.getConn()) {
             String query = "SELECT cscs.idCoachStrips, cscs.departureTime, cscs.idCoach FROM bus.ticket t,bus.coachstripcoachseat cscs\n"
                     + "where t.idCoachStripCoachSeat = cscs.idCSCS\n"
@@ -438,7 +436,7 @@ public class ChangeTicketServices {
             java.util.Date now = new java.util.Date();
 
             if (now.compareTo(depa60) > 0) {
-                System.out.println("Đéo sửa đc , sau 60 roi " + now + "  :  " + depa60);
+                System.out.println("khong sửa đc , sau 60 roi " + now + "  :  " + depa60);
                 return 0;
             }
 

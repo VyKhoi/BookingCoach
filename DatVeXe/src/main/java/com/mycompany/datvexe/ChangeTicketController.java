@@ -122,10 +122,10 @@ public class ChangeTicketController implements Initializable {
     // this is method to load tableview for search with id
     public void loadTableViewSearchId() throws SQLException, Exception {
         try {
-            System.out.println("dit me vo day");
+          
             AliasTicket dt = ctk.getTickets(Integer.parseInt(tSearchIdTicket.getText()));
             if (dt == null) {
-                throw new Exception("Không có vcl thông tin");
+                throw new Exception("Không có  thông tin");
             }
             // Khai báo các cột cho TableView
             TableColumn<AliasTicket, Integer> idTicketCol = new TableColumn<>("Mã vé");
@@ -237,7 +237,7 @@ public class ChangeTicketController implements Initializable {
             System.out.println("có chạy loadTableViewSearchNumberPhone()");
 
             if (ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).isEmpty()) {
-                throw new Exception("Không có dữ liệu trả adu về");
+                throw new Exception("Không có dữ liệu trả về");
             }
             System.out.println("co chay toi day");
             ctk.getTicketsWithNumberPhone(Integer.parseInt(tSearchIdTicket.getText())).forEach(h -> {
