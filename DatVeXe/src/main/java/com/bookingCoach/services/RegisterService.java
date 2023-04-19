@@ -41,8 +41,8 @@ public class RegisterService {
         if (passWord.length() < 6 || !passWord.matches(".*[a-z].*") || !passWord.matches(".*\\d.*")) {
             return -1; // Mật khẩu phải có ít nhất 6 ký tự, chứa ít nhất một chữ cái thường và một số
         }
-        // Kiểm tra address chỉ chứa chữ
-        if (!addressUser.matches(".*[a-zA-Z].*")) {
+        // Kiểm tra address chỉ chứa chữ có thể viết TV
+        if (!addressUser.matches("^[\\p{L}]+(\\s[\\p{L}]+)+$")) {
             return -1;
         }
         if (userName.isEmpty()) {

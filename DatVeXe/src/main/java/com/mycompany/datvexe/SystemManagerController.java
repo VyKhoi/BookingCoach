@@ -174,7 +174,7 @@ public class SystemManagerController implements Initializable {
         }
 
         // Kiểm tra định dạng địa chỉ (không chứa ký tự đặc biệt, chỉ chứa chữ)
-        if (!address.matches("^[a-zA-Z\\s]+$")) {
+        if (!address.matches("^[\\p{L}]+(\\s[\\p{L}]+)+$")) {
             lbMessage.setText("Địa chỉ không hợp lệ, không được có số và ký tự đặc biệt");
             return;
         }
