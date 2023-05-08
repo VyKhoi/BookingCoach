@@ -1,15 +1,18 @@
-                                    Booking Coach management
-Hello, nice to meet you, welcome to my project, this is the first time I work with JavaFX and use JUnit5 to write unit tests.
-it's just a simple project I hope it'll useful for you
+# Booking Coach management
 
-get start :
+- Hi there, Welcome to my project. I'm excited to share that I'm working with JavaFX for the first time and utilizing JUnit5 to develop unit tests. Although it's a relatively straightforward project, I hope it will prove beneficial to you.🔥🔥
 
-1: git clone https://github.com/VyKhoi/BookingCoach.git
+# get start
 
-2: Open it with NetBeans IDE then build all project
+Step 1:
+```
+git clone https://github.com/VyKhoi/BookingCoach.git
+```
+Step 2: Open it with NetBeans IDE then build all project
 
 3: Run the App
 
+#Preview
 Some pictures of this project for you :
 
 1: Login 
