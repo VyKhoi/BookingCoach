@@ -1,8 +1,8 @@
-# Booking Coach management
+# Booking Coach Management
 
 - Hi there, Welcome to my project. I'm excited to share that I'm working with JavaFX for the first time and utilizing JUnit5 to develop unit tests. Although it's a relatively straightforward project, I hope it will prove beneficial to you.🔥🔥
 
-# get start
+# Get start
 
 Step 1:
 ```
